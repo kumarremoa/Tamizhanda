@@ -1,0 +1,78 @@
+/*** Responsive Design ***/
+@media screen and (min-width:1349px)
+{
+    
+    
+}
+@media screen and (min-width:1280px)
+{
+    
+}
+@media screen and (max-width:1280px)
+{
+   
+    
+}
+@media screen and (max-width:1024px)
+{
+   
+}
+@media only screen and (max-width:800px)
+{
+   .fullImg
+	{
+		max-height:400px !important;
+	}
+}
+@media screen and (max-width:640px)
+{
+    .fullImg
+	{
+		max-height:400px !important;
+	}
+    
+}
+
+@media screen and (max-width:480px)
+{
+    .fullImg
+	{
+		max-height:200px !important;
+	}
+	
+}
+
+@media screen and (max-width:360px)
+{
+	.fullImg
+	{
+		max-height:200px !important;
+	}
+}
+
+    
+}
+@media screen and (min-width:240px) and (max-width:320px)
+{
+    
+}
+
+@media screen and (min-width:480px) and (max-width:800px)
+{
+    body,.createFormUl li label,.createInput, .createInput:focus, .createSelect,.searchInput,.inputBox,.commentBox
+	{
+		font-size:17px !important;
+	}
+	.s6 .card-image img
+    {
+        min-height:200px !important;
+        height:30% !important;
+        max-height:200px !important;
+    }
+	
+}
+@media screen and (min-height:657px)
+{  
+    
+   
+}

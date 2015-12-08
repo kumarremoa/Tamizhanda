@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html lang="ta">
+    <head>
+        <meta name="format-detection" content="telephone=no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <meta charset="utf-8" />
+        
+        <!-- Stylesheet -->
+        <!--<link rel="stylesheet" type="text/css" href="css/index.css" />-->
+        <link rel="stylesheet" type="text/css" href="css/style.css" /><link rel="stylesheet" type="text/css" href="css/setting.css" />
+        <link rel="stylesheet" type="text/css" href="css/style_nan.css" />
+        
+        <!-- Scripts -->
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+		<script type="text/javascript" src="js/cookie.js"></script>
+        
+        <!-- Materialize -->
+        <link rel="stylesheet" type="text/css" href="css/materialize.css" />
+        <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+        
+        <!-- Font Awesome -->
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
+        <link rel="stylesheet" type="text/css" href="css/tamilzandaFonts.css" />
+
+        
+        
+        
+        
+        <title>Tamizhanda</title>
+    </head>
+    <body>
+        <div class="app" style="display:none;">
+            <!-- Container Section -->
+            <section class="loginCont">
+				<img src="img/loginbg1.jpg" class="bgLogin" alt="" style="height:100%;" />
+				<div class="loginInnerForm">
+					<img src="img/logo_tamilzanda.png" class="logoTamilzanda" alt="Tamilzanda" />
+					<form action="javascript:;" class="loginForm">
+						<h3 class="loginHead">உங்கள் தொலைபேசி எண்ணை இடுக</h3>
+						<div class="inputGrpCont">
+							<!--<label class="grpLabel" for="mobileNo">+91</label>-->
+							<input type="tel" class="grpLabel" name="country_code" value="+91" />
+							<input type="tel" class="grpInput" name="phone_number" placeholder="" />
+						</div>
+						<div class="h10"></div>
+<!--						<input type="submit" class="cusBtn" value="ரகசிய எண் அனுப்பு " />-->
+						<button  class="cusBtn" type="submit" >இரகசிய எண்ணை பெற</button>
+						<div class="h10"></div>
+					</form>
+				</div>
+            </section>
+        </div>
+        
+        <!-- Custom -->
+        
+        <!-- Library -->
+        
+        <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="js/jqueryui-1.11.4.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/jqueryui-1.11.4.css" />
+        <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.js"></script>
+        
+        
+
+        
+        <script type="text/javascript">
+            $.noConflict();
+            (function( $ ) {
+                
+                
+              $(function() {
+				
+				/*window.localStorage.setItem("id", "32");
+				window.localStorage.setItem("full_name", "sharma");
+				window.localStorage.setItem("gender", "male");
+				window.localStorage.setItem("phone_number", "+919994914592");
+				//window.localStorage.setItem("auth_token", "5dbaa5de0721ef5e1637e581c378126b4026d062f840cf4525");
+				window.localStorage.setItem("auth_token", "216c35ce5e2300b336a6034b7fb02e98ec859ee715bea9d1aa");
+				*/
+			//token = null;
+				var token=window.localStorage.getItem("auth_token");
+				
+				if(token==null)
+				{
+					$('.app').css('display','block');
+				}
+				else
+				{
+					window.location.href = 'allnews.html';
+				}
+				
+                $('.loginCont').css({
+					height:$(window).height(),
+				});
+                $('.bgLogin').css('height',$(window).height());
+              });
+              
+              
+              
+              
+              $('body').on("click",".cusBtn",function() {
+                
+
+                var formData = {
+					'phone_number'              : $('input[name=phone_number]').val(),
+					'country_code'             : $('input[name=country_code]').val()
+				   
+				};
+        
+				$.ajax({
+					  type: "POST",
+					  crossDomain: true,
+					  url: "http://52.74.69.101:80/api/v1/users/send_verification_code.json",
+					  data:formData,
+					  dataType    : 'json',
+					  encode          : true,
+					  success : function(data){
+						console.log(data);
+						window.location='loginverify.html?m_number='+formData['phone_number'];
+					  },
+					  error: function (result, status, err) {
+					  if(result.responseJSON['errors']=="Phone number is invalid"){
+					   //alert(தொலைபேசி எண் விடுபட்டுள்ளது);
+					   Materialize.toast('<span style="white-space:nowrap;font-size:12px;">தொலைபேசி எண் விடுபட்டுள்ளது</span>', 2000)
+					  }
+					 //	alert(result.responseJSON['errors']);
+						//window.location='loginverify.html';
+					  }
+				  })
+				  
+				});
+        
+            })(jQuery);
+            
+        </script>
+        <script>
+        
+        
+
+        
+        </script>
+    </body>
+</html>

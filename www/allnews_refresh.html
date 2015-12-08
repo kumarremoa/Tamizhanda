@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="format-detection" content="telephone=no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <meta charset="utf-8" />
+        <!-- Stylesheet -->
+        <!--<link rel="stylesheet" type="text/css" href="css/index.css" />-->
+        <link rel="stylesheet" type="text/css" href="css/style.css" /><link rel="stylesheet" type="text/css" href="css/setting.css" />
+        <link rel="stylesheet" type="text/css" href="css/style_nan.css" />
+        <link rel="stylesheet" type="text/css" href="css/tamilzandaFonts.css" />
+	
+        
+        <!-- Scripts -->
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        
+        <!-- Library -->
+        <!--<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>-->
+		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="js/jquery-2.1.3.js"></script>
+        <!-- Materialize -->
+        <link rel="stylesheet" type="text/css" href="css/materialize.css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        
+        <script type="text/javascript" src="js/materialize.js"></script>
+        
+        
+        <script type="text/javascript" src="js/jquery.touchSwipe.js"></script>
+
+		<script src="js/prefixfree.min.js"></script>
+
+		<link rel="stylesheet" href="css/owl.carousel.css">
+		
+		<script src="js/owl.carousel.js"></script>
+
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
+        
+		<link rel="stylesheet" href="css/snap.css">
+		
+		<script src="js/snap.js"></script>
+        <!--
+        
+        <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css">
+		
+		<script src="js/jquery.mCustomScrollbar.js"></script>
+        -->
+		  <!-- Custom -->
+		<script type="text/javascript" src="js/custom.js"></script>
+
+      
+		<!-- pull to refresh-->
+		<script type="text/javascript" src="js/iscroll.js"></script>
+		<script type="text/javascript" src="js/pull_to_refresh.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/pull_to_refresh.css" />
+		
+		<script>
+			$(function(){
+				$('#tabCont-1').css('display','block');
+				$('#scroller').css({
+					height:$(window).height()-($('header').height()+$('footer').height()),
+					overflowY:'scroll'
+				})
+				var token=window.localStorage.getItem("auth_token");
+				var full_name=window.localStorage.getItem("full_name");
+				var notify_option=window.localStorage.getItem("is_notifications_enabled");
+				
+				
+				$('#full_name').html(full_name);
+				function setHeader(xhr) {
+				  xhr.setRequestHeader('Auth-Token', token);
+				}
+				
+				/* for profile img*/
+				var user_id = window.localStorage.getItem("id");
+				//var img_url = "http://dvw76oitljc1i.cloudfront.net/";
+				$.ajax({
+					type:"GET",
+					crossDomain: true,
+					url:"http://52.74.69.101:80/api/v1/users/"+user_id+".json",
+					dataType    : 'json',
+					encode          : true,
+					success:function(data){
+						console.log(data);
+						profile_img_url = data.profile_image_url;
+						if(profile_img_url === null || profile_img_url === "null" || profile_img_url === "" || profile_img_url === "http://dvw76oitljc1i.cloudfront.net/"){
+							$('.bgBigProfileImage').attr('src',"img/profile_bg.jpg");
+							$('.bgSmallProfileImage').attr('src',"img/profile_bg.jpg");
+						}
+						else {
+							$('.bgBigProfileImage').attr('src',profile_img_url);
+							$('.bgSmallProfileImage').attr('src',profile_img_url);
+						}
+					},
+					error: function (result, status, err) {
+						alert(result.responseJSON['errors']);
+						//window.location.href = 'allnews.html';
+					},
+					beforeSend : setHeader
+				});
+				
+				
+				
+				/** Listing All Categories  **/
+				
+				var catData = {
+					'per_page' : "10",
+					'page' : "1"
+				};
+				//console.log(catData);
+					
+				$.ajax({
+					type: "GET",
+					crossDomain: true,
+					url: "http://52.74.69.101:80/api/v1/categories.json",
+					data:catData,
+					dataType    : 'json',
+					encode          : true,
+					success : function(data){
+						//console.log(data);
+						//alert("Success");
+						$.fn.category_response(data);
+						
+						
+						
+
+					},
+					error: function (result, status, err) {
+						alert(result.responseJSON['errors']);
+						//window.location.href = 'allnews.html';
+					},
+					beforeSend : setHeader
+					  
+				});
+				
+				
+				
+				$.fn.category_response = function(categData) { 
+					var catContent = ''
+					$.each(categData, function (index, value) {
+						//console.log(paraData);
+						catContent += '<li><a href="categories.html?category='+value.id+'" class=""><i class=" "></i><span> '+value.name+'</span></a></li>';
+					})
+					$('#catList').html(catContent);
+				}
+				
+				/** Allnews Posts **/
+				
+				/**Refres Page script **/
+				$.fn.pull_refersh = function () {
+					var formData = {
+						'per_page' : "10",
+						'page' : "1",
+						'scope' :"all"
+						};
+						//console.log(formData);
+						
+					$.ajax({
+						type: "GET",
+						crossDomain: true,
+						url: "http://52.74.69.101:80/api/v1/posts.json",
+						//data:formData,
+						dataType    : 'json',
+						encode          : true,
+						success : function(data){
+							//alert(data);
+							//alert("Success");
+							$.fn.show_response(data);
+							//alert(data.id);
+							
+						},
+						error: function (result, status, err) {
+							alert(result.responseJSON['errors']);
+							//window.location.href = 'allnews.html';
+						},
+						beforeSend : setHeader
+						  
+					});
+				
+				}
+				
+				/** Onload post show **/
+				var formData = {
+					'per_page' : "10",
+					'page' : "1",
+					'scope' :"all"
+					};
+					//console.log(formData);
+					
+				$.ajax({
+					type: "GET",
+					crossDomain: true,
+					url: "http://52.74.69.101:80/api/v1/posts.json",
+					//data:formData,
+					dataType    : 'json',
+					encode          : true,
+					success : function(data){
+						//alert(data);
+						//alert("Success");
+						$.fn.show_response(data);
+						//alert(data.id);
+						
+					},
+					error: function (result, status, err) {
+						alert(result.responseJSON['errors']);
+						//window.location.href = 'allnews.html';
+					},
+					beforeSend : setHeader
+					  
+				});
+				
+				
+				$.fn.show_response = function(paraData) { 
+					//console.log(paraData);
+					var divContent = ''
+					if(paraData==''||paraData=='')
+					{
+						divContent += '<div style="color:rgba(0,0,0,0.4);font-size:16px;padding-top:30px;text-align:center;">பதிவுகள் இல்லை...</div>';
+						$('#allPostCont').html(divContent);
+					}
+					else
+					{
+						$.each(paraData, function (index, value) {
+							//console.log(index);
+							/*
+							$(".allPostDataFetch #postId").html(value.id);
+							$(".allPostDataFetch #postTitle").html(value.title);
+							$(".allPostDataFetch #postDescription").html(value.description);
+							$(".allPostDataFetch #postUserId").html(value.user_id);
+							$(".allPostDataFetch #postCategoryId").html(value.category_id);
+							$(".allPostDataFetch #postWeightage").html(value.weightage);
+							$(".allPostDataFetch #postSuperCount").html(value.super_count);
+							$(".allPostDataFetch #postNormalCount").html(value.normal_count);
+							$(".allPostDataFetch #postLaughCount").html(value.laugh_count);
+							$(".allPostDataFetch #postSharesCount").html(value.shares_count);
+							$(".allPostDataFetch #postCommentsCount").html(value.comments_count);
+							$(".allPostDataFetch #postPhoto").html(value.title_photo_url);
+							$(".allPostDataFetch #postVideo").html(value.video_url);
+							$(".allPostDataFetch #postAudio").html(value.audio_url);
+							$(".allPostDataFetch #postCategoryName").html(value.category_name);
+							
+							*/
+							if(index==0)
+							{
+								divContent += '<div class="col s12 ">';
+									divContent += '<div class="card">';
+										divContent += '<div class="card-image">';
+											divContent += '<a href="fullcontent.html?id='+value.id+'">';
+												//console.log(value.title_photo_url);
+										     if(value.title_photo_url==="null"||value.title_photo_url==''||value.title_photo_url=='null'||value.title_photo_url==null || value.title_photo_url === "http://dvw76oitljc1i.cloudfront.net/")
+												{
+													divContent += '<img src="img/defaultpostimg.png" alt="Image" style="height:150px;"/>';
+												}
+												else
+												{
+													divContent += '<img src="'+value.title_photo_url+'" alt="'+value.title_photo_url+'"/>';
+													//divContent += '<img src="img/profile_bg.jpg" alt="'+value.title_photo_url+'" style="height:150px;"/>';
+													
+												}
+											divContent += '</a>';
+										divContent += '</div>';
+										divContent += '<div class="card-action widthfull colorDullCont twoLnCont">';
+											divContent += '<a href="fullcontent.html?id='+value.id+'" class="card-title">'+value.title+'</a>';
+										divContent += '</div>';
+									divContent += '</div>';
+								divContent += '</div>';
+							}
+							else if(index%5==0)
+							{
+								divContent += '<div class="col s12 ">';
+									divContent += '<div class="card">';
+										divContent += '<div class="card-image">';
+											divContent += '<img src="img/bannerad.png"/>';
+										divContent += '</div>';
+									divContent += '</div>';
+								divContent += '</div>';
+								
+								divContent += '<div class="col s12 ">';
+									divContent += '<div class="card">';
+										divContent += '<div class="card-image">';
+											divContent += '<a href="fullcontent.html?id='+value.id+'">';
+												//console.log(value.title_photo_url);
+												if(value.title_photo_url==="null"||value.title_photo_url==''||value.title_photo_url=='null'||value.title_photo_url==null || value.title_photo_url === "http://dvw76oitljc1i.cloudfront.net/")
+												{
+													divContent += '<img src="img/defaultpostimg.png" alt="Image" style="height:150px;"/>';
+												}
+												else
+												{
+													divContent += '<img src="'+value.title_photo_url+'" alt="'+value.title_photo_url+'"/>';
+													//divContent += '<img src="img/profile_bg.jpg" alt="'+value.title_photo_url+'" style="height:150px;"/>';
+													
+												}
+											divContent += '</a>';
+										divContent += '</div>';
+										divContent += '<div class="card-action widthfull colorDullCont twoLnCont">';
+											divContent += '<a href="fullcontent.html?id='+value.id+'" class="card-title">'+value.title+'</a>';
+										divContent += '</div>';
+									divContent += '</div>';
+								divContent += '</div>';
+							}
+							
+							else
+							{
+								divContent += '<div class="col s6 ">';
+									divContent += '<div class="card">';
+										divContent += '<div class="card-image">';
+											divContent += '<a href="fullcontent.html?id='+value.id+'">';
+												//console.log(value.title_photo_url);
+												if(value.title_photo_url==="null"||value.title_photo_url==''||value.title_photo_url=='null'||value.title_photo_url==null || value.title_photo_url === "http://dvw76oitljc1i.cloudfront.net/")
+												{
+													divContent += '<img src="img/defaultpostimg.png" alt="Image"/>';
+												}
+												else
+												{
+													divContent += '<img src="'+value.title_photo_url+'" alt="'+value.title_photo_url+'"/>';
+													//divContent += '<img src="img/profile_bg.jpg" alt="'+value.title_photo_url+'"/>';
+												}
+											divContent += '</a>';
+										divContent += '</div>';
+										divContent += '<div class="card-action widthfull  colorDullCont twoLnCont">';
+											divContent += '<a href="fullcontent.html?id='+value.id+'" class="card-title"> '+value.title+'</a>';
+										divContent += '</div>';
+									divContent += '</div>';
+								divContent += '</div>';
+							}
+							
+							
+						})
+						$('#allPostCont').html(divContent)
+					}
+				}
+				
+				/** Trending Posts **/
+					
+				var trendingformData = {
+					'per_page' : "10",
+					'page' : "1",
+					'scope' :"recent"
+					};
+					//console.log(formData);
+					
+				$.ajax({
+					type: "GET",
+					crossDomain: true,
+					url: "http://52.74.69.101:80/api/v1/posts.json",
+					data:trendingformData,
+					dataType    : 'json',
+					encode          : true,
+					success : function(data){
+						//alert(data);
+						//alert("Success");
+						$.fn.trending_response(data);
+
+					},
+					error: function (result, status, err) {
+						alert(result.responseJSON['errors']);
+						//window.location.href = 'allnews.html';
+					},
+					beforeSend : setHeader
+					  
+				});
+				
+				
+				$.fn.trending_response = function(paraData) { 
+					//console.log(paraData);
+					var divContent = ''
+					if(paraData==''||paraData=='')
+					{
+						divContent += '<div style="color:rgba(0,0,0,0.4);font-size:16px;padding-top:30px;text-align:center;">பதிவுகள் இல்லை...</div>';
+						$('#trendingPostCont').html(divContent);
+					}
+					else
+					{
+						$.each(paraData, function (index, value) {
+							//console.log(index);
+							/*
+							if(index==0)
+							{
+								divContent += '<div class="col s12 ">';
+									divContent += '<div class="card">';
+										divContent += '<div class="card-image">';
+											divContent += '<a href="fullcontent.html?id='+value.id+'">';
+												divContent += '<img src="img/imgcont1.jpg"/>';
+											divContent += '</a>';
+										divContent += '</div>';
+										divContent += '<div class="card-action widthfull colorDullCont twoLnCont">';
+											divContent += '<a href="fullcontent.html?id='+value.id+'" class="card-title">'+value.title+'</a>';
+										divContent += '</div>';
+									divContent += '</div>';
+								divContent += '</div>';
+							}
+							else if(index%4==0)
+							{
+								divContent += '<div class="col s12 ">';
+									divContent += '<div class="card">';
+										divContent += '<div class="card-image">';
+											divContent += '<img src="img/bannerad.png"/>';
+										divContent += '</div>';
+									divContent += '</div>';
+								divContent += '</div>';
+							}
+							
+							else
+							{
+							*/
+								divContent += '<div class="col s6 ">';
+									divContent += '<div class="card">';
+										divContent += '<div class="card-image">';
+											divContent += '<a href="fullcontent.html?id='+value.id+'">';
+												if(value.title_photo_url==="null"||value.title_photo_url==''||value.title_photo_url=='null'||value.title_photo_url==null || value.title_photo_url === "http://dvw76oitljc1i.cloudfront.net/")
+												{
+													divContent += '<img src="img/defaultpostimg.png" alt="Image"/>';
+												}
+												else
+												{
+													divContent += '<img src="'+value.title_photo_url+'" alt="'+value.title_photo_url+'"/>';
+													//divContent += '<img src="img/profile_bg.jpg" alt="'+value.title_photo_url+'"/>';
+												}
+											divContent += '</a>';
+										divContent += '</div>';
+										divContent += '<div class="card-action widthfull  colorDullCont twoLnCont">';
+											divContent += '<a href="fullcontent.html?id='+value.id+'" class="card-title"> '+value.title+'</a>';
+										divContent += '</div>';
+									divContent += '</div>';
+								divContent += '</div>';
+							/*}*/
+							
+							
+						})
+						$('#trendingPostCont').html(divContent)
+					}
+				}
+				
+				/** New Posts **/
+					
+				var formNewData = {
+					'per_page' : "10",
+					'page' : "1",
+					'scope' :"all_new"
+					};
+					//console.log(formData);
+					
+				$.ajax({
+					type: "GET",
+					crossDomain: true,
+					url: "http://52.74.69.101:80/api/v1/posts.json",
+					data:formNewData,
+					dataType    : 'json',
+					encode          : true,
+					success : function(data){
+						//alert(data);
+						//alert("Success");
+						$.fn.new_post_response(data);
+
+					},
+					error: function (result, status, err) {
+						alert(result.responseJSON['errors']);
+						//window.location.href = 'allnews.html';
+					},
+					beforeSend : setHeader
+					  
+				});
+				
+				
+				$.fn.new_post_response = function(paraData) {
+					//console.log(paraData);
+					var divContent = ''
+					if(paraData==''||paraData=='')
+					{
+						divContent += '<div style="color:rgba(0,0,0,0.4);font-size:16px;padding-top:30px;text-align:center;">பதிவுகள் இல்லை...</div>';
+						$('#newPostCont').html(divContent);
+					}
+					else
+					{
+						$.each(paraData, function (index, value) {
+							//console.log(index);
+							/*
+							if(index==0)
+							{
+								divContent += '<div class="col s12 ">';
+									divContent += '<div class="card">';
+										divContent += '<div class="card-image">';
+											divContent += '<a href="fullcontent.html?id='+value.id+'">';
+												divContent += '<img src="img/imgcont1.jpg"/>';
+											divContent += '</a>';
+										divContent += '</div>';
+										divContent += '<div class="card-action widthfull colorDullCont twoLnCont">';
+											divContent += '<a href="fullcontent.html?id='+value.id+'" class="card-title">'+value.title+'</a>';
+										divContent += '</div>';
+									divContent += '</div>';
+								divContent += '</div>';
+							}
+							else if(index%4==0)
+							{
+								divContent += '<div class="col s12 ">';
+									divContent += '<div class="card">';
+										divContent += '<div class="card-image">';
+											divContent += '<img src="img/bannerad.png"/>';
+										divContent += '</div>';
+									divContent += '</div>';
+								divContent += '</div>';
+							}
+							
+							else
+							{*/
+								divContent += '<div class="col s6 ">';
+									divContent += '<div class="card">';
+										divContent += '<div class="card-image">';
+											divContent += '<a href="fullcontent.html?id='+value.id+'">';
+												if(value.title_photo_url==="null"||value.title_photo_url==''||value.title_photo_url=='null'||value.title_photo_url==null || value.title_photo_url === "http://dvw76oitljc1i.cloudfront.net/")
+												{
+													divContent += '<img src="img/defaultpostimg.png" alt="Image"/>';
+												}
+												else
+												{
+													divContent += '<img src="'+value.title_photo_url+'" alt="'+value.title_photo_url+'"/>';
+													//divContent += '<img src="img/profile_bg.jpg" alt="'+value.title_photo_url+'"/>';
+												}
+											divContent += '</a>';
+										divContent += '</div>';
+										divContent += '<div class="card-action widthfull  colorDullCont twoLnCont">';
+											divContent += '<a href="fullcontent.html?id='+value.id+'" class="card-title"> '+value.title+'</a>';
+										divContent += '</div>';
+									divContent += '</div>';
+								divContent += '</div>';
+							/*}*/
+							
+							
+						})
+						$('#newPostCont').html(divContent)
+					}
+				}
+				
+				
+			});
+		</script>
+		
+		
+
+		<style type="text/css">
+			.colorDullCont *
+			{
+				color:rgba(0,0,0,0.7) !important;
+			}
+		</style>
+		
+		<script>
+			$(function(){
+			
+				
+             $('.helpDiv').css({
+					height:$(window).height(),
+					width:$(window).width()
+				});
+
+				b = 0;
+				$('.helpClose').click(function(){
+					$(this).parent().removeClass(classData[b]);
+					b = 0;
+					$('.helpDiv').addClass('helpMenu');
+					$('.helpImg').attr('src','img/'+imgData[b]+'.png');
+					$('.helpDiv').fadeOut(100);
+				})
+				$('.helpContLink').click(function(){
+					$(this).parent().parent().parent().hide();
+					$('.helpDiv').fadeIn(100);
+					
+				});
+
+				
+			  imgData = ['help_1', 'help_2', 'help_3','help_4','help_5','help_6','help_8','help_9','help_10','help_11','help_12','help_7'];
+			  classData=['helpMenu','helpHome','helpWorld','helpSearch','helpNoti','helpSettings','helpIcon1','helpIcon2','helpIcon3','helpIcon4','helpIcon5','helpPost'];
+			 
+			  $('body').on('click', '.helpNext', function() {
+			  $('.helpPrev').show();
+				if (b <= imgData.length - 1) {
+					$(this).parent().removeClass(classData[b]);
+					b++;
+					$(this).parent().addClass(classData[b])
+					$('.helpImg').attr('src','img/'+imgData[b]+'.png');
+					if (b == imgData.length-1) {
+						b = imgData.length - 1;
+						$('.helpNext').hide();
+						}
+				}
+			  });
+
+			  $('body').on('click', '.helpPrev', function() {
+				if (b >= 1) {
+				$(this).parent().removeClass(classData[b]);
+				 b--;
+				 if (b < 1) {
+					b = 0;
+					$('.helpPrev').hide();
+
+				  }
+				  $(this).parent().addClass(classData[b])
+				  $('.helpImg').attr('src','img/'+imgData[b]+'.png')
+				  $('.helpNext').show();
+				}
+			  });
+			  
+			  
+
+			});
+		</script>
+		
+		<title>Tamizhanda</title>
+    </head>
+    <body>
+        <div class="app">
+            <!-- Header Section -->
+            <div class="helpDiv helpMenu" style="display:none;">
+				<img class="helpImg" src="img/help_1.png"/>
+				<a href="javascript:;" style="display:none;" class="helpBtn helpPrev">மீண்டும்</a>
+				<a href="javascript:;" class="helpBtn helpClose"><img src="img/helpClose.png" /></a>
+				<a href="javascript:;" class="helpBtn helpNext">அடுத்த</a>
+			</div>
+			<div class="snap-drawers">
+				<div class="snap-drawer snap-drawer-left">
+					<ul class="sideNav">
+						<li>
+							<div class="profileImgCont">
+								<img src="img/profile_bg.jpg" class="bgBigProfileImage"/>
+								<div class="proInnerImgCont">
+									<img src="img/profile_bg.jpg" class="bgSmallProfileImage"/>
+									<span class="profileNameSpan" id="full_name"></span>
+								</div>
+							</div>
+						</li>
+						<li><a href="allnews.html" class=""><i class="bgBlu borderGrey icon-read"></i> <span>அனைத்தும் படிக்க</span></a></li>
+						<li><a href="bookmarkpage.html" class=""><i class="bgGree borderGrey icon-offline"></i><span> நான் குறித்தது</span></a></li>
+						<li><a href="javascript:;" class=""><i class="bgOrang borderGrey icon-hot"></i><span> பரபரப்பானது</span></a></li>
+						<li><a href="superpage.html" class=""><i class="bgBlu borderGrey icon-like"></i><span> சூப்பர்</span></a></li>
+						<li><a href="sumarpage.html" class=""><i class="bgGree borderGrey icon-dislike"></i><span> சுமார்</span></a></li>
+						<li><a href="hahapage.html" class=""><i class="bgOrang borderGrey  icon-smile"></i><span> ஹா.. ஹா</span></a></li>
+						<li><a href="mostcreatepage.html" class=""><i class="bgBlu borderGrey icon-top-author"></i><span> அதிகம் படைத்தவர்கள்</span></a></li>
+						<li><a href="javascript:;" class=""><i class="bgGree borderGrey icon-follow"></i><span>நான் பின்பற்றுபவர்கள்</span></a></li> 
+						<li><a href="javascript:;" class="postCategoryHead"><i class="bgOrang borderGrey icon-squares36"></i><span> பிரிவுகள்</span></a>
+							<ul class="menuSubUl" id="catList" style="display:none;">	
+								<li><a href="categories.html?category=1" class=""><i class=" "></i><span> அரசியல்</span></a></li>
+								<li><a href="categories.html?category=2" class=""><i class=" "></i><span> மதம்</span></a></li>
+								<li><a href="categories.html?category=3" class=""><i class=" "></i><span> விளையாட்டு</span></a></li>
+								<li><a href="categories.html?category=4" class=""><i class=" "></i><span> நகைச்சுவை</span></a></li>
+								
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+            
+            <!-- Container Section -->
+			<section class="contentContainer snap-content" id="content">
+				<header>
+					<nav>
+						<div class="nav-wrapper">
+							<ul class="left widthfull navUl">
+								<!--<li><a href="javascript:;" id="open-left" class="sideNavLink"><i class="fa fa-bars"></i></a></li>-->
+                                <li><a href="javascript:;" style="padding:0 4px" id="open-left" class="sideNavLink"><img src="img/logo.png" height="36px" style="padding:4px 0 4px 0;" /></a></li>
+								
+								<li><a href="allnews.html" class="active"><i class="icon-home"></i></a></li>
+								<li><a href="mypage.html"><i class="icon-world"></i></a></li>
+								<li><a href="search.html"><i class="icon-search"></i></a></li>
+								<li class="fRight"><a href="javascript:;" class="subLink"><i class="fa fa-ellipsis-v "></i></a></li>
+								<li class="fRight"><a href="notice.html"><i class="icon-noti"></i></a></li>
+							</ul>
+						</div>
+					</nav>
+					<div class="subLinkCont subLinkContVisible" style="display:none;">
+						<ul class="subLinkUl">
+							<li><a href="myprofile.html"><i class="fa fa-user bgBlue"></i> சுய விவரம்</a></li>
+							<li><a href="settings.html"><i class="fa fa-cog bgGreen"></i> அமைப்புகள்</a></li>
+							<li><a href="feedback.html"><i class="fa fa-microphone bgOrange"></i> கருத்து</a></li>
+							<li><a class="modal-trigger" href="#ratingModal"><i class="fa fa-star bgTeal"></i> எங்களை மதிப்பிட  </a></li>
+							<li><a class="helpContLink" href="javascript:;"><i class="fa  fa-question bgBlack"></i> உதவி பக்கம்  </a></li>
+						</ul>
+					</div>
+
+					
+
+					<div class="headBotLink pad0px" id="header">  
+						<div id="tabMenu" class="owl-carousel">
+							 <div>
+								<a href="javascript:;" id="tab-1" class="tabLink active">அனைத்தும்</a>
+							 </div>
+							 <div>
+								<a href="javascript:;" id="tab-2" class="tabLink">பரபரப்பானது</a>
+							 </div>
+							 <div>
+								<a href="javascript:;" id="tab-3" class="tabLink">புதுசு</a>
+							 </div>
+						</div>
+					</div>
+				</header>
+				<div class="headerClear"></div>
+
+				<div class="mainSection">
+					<div id="wrapper">
+						<div id="scroller">
+							<div id="pullDown">
+								<span class="pullDownIcon"></span><span class="pullDownLabel" style="display:none;"></span><span class="pullDownIco"><i class="fa fa-repeat"></i></span>
+							</div>
+						
+							<div id="tabCont-1" class="tabData " style="display:block;">
+							  
+								<div class="row" id="allPostCont">
+									<img src="img/gear.gif" class="ajaxLoader">
+								</div>
+							</div>
+						
+							<div id="tabCont-2"  class="tabData">
+								
+								<div class="row" id="trendingPostCont">
+									<img src="img/gear.gif" class="ajaxLoader">
+								</div>  
+							</div>
+							
+							<div class="tabData" id="tabCont-3">
+								<div class="row" id="newPostCont">
+									<img src="img/gear.gif" class="ajaxLoader">
+								</div>
+							</div>	
+							
+						
+							<div id="pullUp" style="display:none;">
+								<span class="pullUpIcon"></span><span class="pullUpLabel">Pull up to refresh...</span>
+							</div>
+					
+						</div>
+					</div>
+				</div>
+			</div>
+                <!-- Footer Section  -->
+				<div class="footerClear"></div>
+				<footer>
+					<div class="commentInputCont">
+						<input type="button" class="commentInputBox" value="என்ன  சொல்ல விருப்பம்? ">
+						<a class="commentEditIco inBlock bgGreen" href="javascript:;">
+							<i class="icon-post"></i>
+						</a>
+					</div>
+				</footer>
+
+			</section>
+			
+			<!-- Modal Structure -->
+			<!-- Modal Structure -->
+			<div id="ratingModal" class="modal">
+				<div class="modal-content pad15px">
+					<h3 class="modalTitle " style="border-bottom:1px solid rgba(0,0,0,0.2);"><span class="emoIco inBlock bgTeal marRt5px"><i class="fa fa-star "></i></span><span class="inBlock noWrap"> எங்களை மதிப்பிட </span>  </a> </h3>
+					<p class="feedTopText">உங்களின் மதிப்பிடல் வரவேற்கப்படுகிறது</p>
+					<div class="h10"></div>
+					<div style="text-align:center;padding:20px 0; font-size:30px;">
+						<i class="fa fa-star colorYellow"> </i> <i class="fa fa-star colorYellow"></i> <i class="fa fa-star colorYellow"> </i> <i class="fa fa-star colorYellow"> </i> <i class="fa fa-star"></i>
+					</div>
+					<button class="sendBtn modal-close">Send</button>
+					<div class="clr"></div>
+				</div>
+			</div>
+			
+        </div>
+
+	  
+	
+    </body>
+</html>
+

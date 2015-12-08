@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+
+         <meta name="format-detection" content="telephone=no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <meta charset="utf-8" />
+        <!-- Stylesheet -->
+        <!--<link rel="stylesheet" type="text/css" href="css/index.css" />-->
+        <link rel="stylesheet" type="text/css" href="css/style.css" /><link rel="stylesheet" type="text/css" href="css/setting.css" />
+        <link rel="stylesheet" type="text/css" href="css/style_nan.css" />
+        <link rel="stylesheet" type="text/css" href="css/tamilzandaFonts.css" />
+        
+        <!-- Scripts -->
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        
+        <!-- Library -->
+        <!--<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>-->
+		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="js/jquery-2.1.3.js"></script>
+        <!-- amazonaws -->
+        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.2.15.min.js"></script>
+        
+		
+		<!-- Materialize -->
+        <link rel="stylesheet" type="text/css" href="css/materialize.css" />
+        <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+        
+        <script type="text/javascript" src="js/materialize.js"></script>
+        
+        
+        <script type="text/javascript" src="js/jquery.touchSwipe.js"></script>
+
+		<script src="js/prefixfree.min.js"></script>
+
+		<link rel="stylesheet" href="css/owl.carousel.css">
+		
+		<script src="js/owl.carousel.js"></script>
+
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
+        
+		<link rel="stylesheet" href="css/snap.css">
+		
+		<script src="js/snap.js"></script>
+		
+		<style type="text/css">
+			input.createOption.with-gap[type="radio"] + label::before
+			{
+				border-color:#888 !important;
+			}
+			input.createOption.with-gap[type="radio"]:checked + label::before
+			{
+				border-color:#26a69a !important;
+			}
+		</style>
+		
+         <!-- Custom -->
+        <script type="text/javascript" src="js/custom.js"></script>
+
+        
+        
+        <title>Tamizhanda</title>
+		
+		
+		<script>
+       
+
+		var pictureSource;   
+		var destinationType;  
+		var mediaType;
+		/** Ondevice ready **/
+		/** Reading File in Phonegap **/
+		function ReadFile(imageURI){
+			window.resolveLocalFileSystemURI(imageURI, onResolveSuccess, fail);
+			
+			
+		}
+		function onFileSystemSuccess(fileSystem) {
+			console.log(fileSystem.name);
+		}
+
+		function onResolveSuccess(fileEntry) {
+			fileEntry.file(function(file){
+				var file_reader = new FileReader();
+				var file_name = file.name;
+				var file_type = file.type;
+				file_reader.onloadend = function (evt) {
+					console.log("Read as data URL");
+					console.log(evt.target.result);
+				};
+				file_reader.readAsArrayBuffer(file);
+				file_reader.onload=function(){					
+					//Uploading to S3
+					//console.log("reader  "+file_reader.result);
+					//alert("name  "+file_name);
+					//alert("type  "+file_type);
+					UploadFileToS3(file_reader.result,file_name,file_type);	
+				};
+				
+			},fail);
+		}
+
+		function fail(evt) {
+			console.log(evt.target.error.code);
+		}
+		
+		/* S3 Uploading Action */
+		function UploadFileToS3(imageData,fileName,fileType){	
+			var fileName = "" + (new Date()).getTime() + "_"+fileName;
+			var file_data = imageData;			
+			var file_type = fileType;						
+			document.getElementById('fileName').value = fileName;			
+			AWS.config.update({accessKeyId: 'AKIAIIXQPW33VP55475A', secretAccessKey: '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'});
+			AWS.config.region = 'us-east-1';
+			var bucket = new AWS.S3({params: {Bucket: 'tamizhandabucket'}});
+			
+			var params = {
+				Key: fileName, 
+				ContentType: file_type, 
+				Body: file_data
+				};
+			bucket.upload(params, function (err, data) {
+				if(err){
+					alert("ERROR!"+err);
+				}
+				else
+				{
+					console.log('UPLOADED.');
+				}
+				console.log(data);
+				$(function(){$('#loading').hide();});
+			});
+			
+		}
+			
+		// Image Action Event			
+		/** Called when a photo is successfully retrieved  **/			
+		function onPhotoURISuccess(imageURI) {			  
+		  var titleImage = document.getElementById('profileSrc');
+		  titleImage.src = imageURI;
+		 // $(function(){$('#loading').show();});
+
+		  ReadFile(imageURI);
+		  document.getElementById('fileTypeCont').value = 'photo'; 			
+		  
+		}
+		function onFail(message) {
+		  alert('Failed because: ' + message);
+		}
+			
+		/** Image Capture Event **/
+		function getPhoto(source) {
+			navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50, 
+			destinationType: navigator.camera.DestinationType.FILE_URI,
+			allowEdit: true,
+			sourceType: source });
+		}
+		
+		/** Common Function**/
+		function captureSuccess(mediaFiles) {
+			var i, len;
+			for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+				imageURI = mediaFiles[i].fullPath;
+				ReadFile(imageURI);
+			}
+		}
+		
+		// capture error callback
+		var captureError = function(error) {
+			//navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+		};
+		</script>
+		
+		
+  
+	<script>
+		$(function(){
+			console.log($('.ProfileImage').attr('src'));
+		
+		 $('body').on("click",'.postCategoryHead',function(){
+					$('.menuSubUl').slideToggle(200);
+				})
+                
+				   $('.app').css('height',$(window).height());
+					 setTimeout(function(){
+			         $('#content').fadeIn(500,function(){
+					 $('.snap-drawers').show();
+					})
+			    },1000);
+				
+				var token=window.localStorage.getItem("auth_token");
+				var full_name=window.localStorage.getItem("full_name");
+				var notify_option=window.localStorage.getItem("is_notifications_enabled");
+				//var age_range=window.localStorage.getItem("age_range");
+				
+				$('#full_name').html(full_name);
+				//$('select[name=age_range]').val(age_range);
+				//alert(age_range);
+				
+				function setHeader(xhr) {
+				  xhr.setRequestHeader('Auth-Token', token);
+				}
+				
+				/* for profile img*/
+				var user_id = window.localStorage.getItem("id");
+				//var img_url = "http://dvw76oitljc1i.cloudfront.net/";
+				
+				$.ajax({
+					type:"GET",
+					crossDomain: true,
+					url:"http://52.74.69.101:80/api/v1/users/"+user_id+".json",
+					dataType    : 'json',
+					encode          : true,
+					success:function(data){
+						console.log(data);
+						profile_img_url = data.profile_image_url;
+						$('select#ageRange option[value='+data.age_range+']').attr("selected","selected");
+						if(profile_img_url === null || profile_img_url === "null" || profile_img_url === "" || profile_img_url === "http://dvw76oitljc1i.cloudfront.net/"){
+							if(data.gender=='male')
+							{
+								$('.ProfileImage').attr('src',"img/male.png");
+								user_gender = 'male';
+							}
+							else
+							{
+								$('.ProfileImage').attr('src',"img/female.png");
+								user_gender = 'female';
+							}
+						}
+						else {
+							$('.ProfileImage').attr('src',profile_img_url);
+						}
+					},
+					error: function (result, status, err) {
+						alert(result.responseJSON['errors']);
+						//window.location.href = 'allnews.html';
+					},
+					beforeSend : setHeader
+				});
+
+					/** Listing All Categories  **/
+				var editData = {
+					'per_page' : "10",
+					'page' : "1"
+					
+				};
+				//console.log(catData);
+					
+				$.ajax({
+					type: "GET",
+					crossDomain: true,
+					url: "http://52.74.69.101:80/api/v1/categories.json",
+					data:editData,
+					dataType    : 'json',
+					encode          : true,
+					success : function(data){
+						//console.log(data);
+						//alert("Success");
+						$.fn.profile_response(data);
+					},
+					error: function (result, status, err) {
+						alert(result.responseJSON['errors']);
+						//window.location.href = 'allnews.html';
+					},
+					beforeSend : setHeader
+					  
+				});
+					
+				$.fn.profile_response = function(profileeditData) { 
+					var profileContent = ''
+					$.each(profileeditData, function (index, value) {
+						//console.log(paraData);
+						profileContent += '<li><a href="categories.html?category='+value.id+'" class=""><i class=" "></i><span> '+value.name+'</span></a></li>';
+					})
+					$('#catList').html(profileContent);
+				}
+				});
+		
+		</script>
+  </head>
+    <body>
+		
+		<div class="app">
+		 <!-- Header Section -->
+            
+
+			<div class="snap-drawers">
+				<div class="snap-drawer snap-drawer-left">
+					<ul class="sideNav">
+						<li>
+							<div class="profileImgCont">
+								<img src="img/profile_bg.jpg" class="bgBigProfileImage"/>
+								<div class="proInnerImgCont">
+									<img src="img/profile_bg.jpg" class="bgSmallProfileImage"/>
+									<span class="profileNameSpan" id="full_name"></span>    <!--user_name_cont"-->
+								</div>
+							</div>
+						</li>
+						<li><a href="allnews.html" class=""><i class="bgBlu  borderGrey icon-read"></i> <span>மதிப்பிட்டவை</span></a></li>
+						<li><a href="bookmarkpage.html" class=""><i class="bgGree  borderGrey icon-offline"></i><span> நான் குறித்தது</span></a></li>
+						<li><a href="trendingpage.html" class=""><i class="bgOrang  borderGrey icon-hot"></i><span> பரபரப்பு</span></a></li>
+						<li><a href="superpage.html" class=""><i class="bgBlu  borderGrey icon-like"></i><span> சூப்பர்</span></a></li>
+						<li><a href="sumarpage.html" class=""><i class="bgGree  borderGrey icon-dislike"></i><span> சுமார்</span></a></li>
+						<li><a href="hahapage.html" class=""><i class="bgOrang  borderGrey icon-smile"></i><span> ஹா.. ஹா</span></a></li>
+						<li><a href="mostcreatepage.html" class=""><i class="bgBlu  borderGrey icon-top-author"></i><span> அதிகம் படைத்தவர்கள்</span></a></li>
+						<li><a href="followpage.html" class=""><i class="bgGree borderGrey icon-follow"></i><span>நான் பின்பற்றுபவர்கள்</span></a></li> 
+
+						<li><a  href="javascript:;" class="postCategoryHead"><i class="bgOrang  borderGrey icon-squares36"></i><span> பிரிவை தேர்ந்தெடுக்க</span></a>
+													
+						<ul class="menuSubUl" id="catList" style="display:none;">	
+								<li><a href="categories.html?category=1" class=""><i class=" "></i><span> அரசியல்</span></a></li>
+								<li><a href="categories.html?category=2" class=""><i class=" "></i><span> மதம்</span></a></li>
+								<li><a href="categories.html?category=3" class=""><i class=" "></i><span> விளையாட்டு</span></a></li>
+								<li><a href="categories.html?category=4" class=""><i class=" "></i><span> நகைச்சுவை</span></a></li>
+								
+							</ul>
+						</li>						
+					</ul>
+				</div>
+			</div>
+
+			
+			<!-- Container Section -->
+			<section class="contentContainer snap-content contentScrTamil" id="content">
+			<div id="popup-imgUpload-cont" class="popup-cus-cont" data-role="none" style="display: none;">
+					<div class="popup-cus-inner-cont">
+						<a href="javascript:;" class="close-btn popup-cus-link" data-role="none">X</a>
+						<p>
+							தேர்வு செய்யவும்...<br />
+							<a href="javascript:;" class="popup-cus-link" onclick="getPhoto(navigator.camera.PictureSourceType.CAMERA);" >படம் எடுக்க</a><br />
+							<a href="javascript:;" class="popup-cus-link" onclick="getPhoto(navigator.camera.PictureSourceType.PHOTOLIBRARY);">படத்தை பதிவேற்ற</a><br />
+						</p>
+					</div>
+				</div>
+
+				<header>
+					<nav>
+						<div class="nav-wrapper">
+							<ul class="left widthfull navUl">
+							  	<li><a href="javascript:;" id="open-left" style="padding:0 4px;" class="sideNavLink"><img src="img/logo.png" height="36px" style="padding:4px 0 4px 0;" /></a></li>
+																
+								<!--<li><a href="javascript:;" id="open-left" class="sideNavLink"><i class="fa fa-bars"></i></a></li><li><a href="javascript:;" style="padding:0"><img src="img/logo.png" height="36px" style="padding:4px 0 4px 0;" /></a></li>
+								<li><a href="allnews.html" class="active"><i class="icon-home"></i></a></li>
+								<li><a href="mypage.html"><i class="icon-world"></i></a></li>
+								<li><a href="search.html"><i class="icon-search"></i></a></li>
+								<li class="fRight"><a href="javascript:;" class="subLink"><i class="fa fa-ellipsis-v "></i></a></li>
+								<li class="fRight"><a href="notice.html"><i class="icon-noti"></i></a></li>  -->
+							
+							</ul>
+						</div>
+					</nav>
+					<div class="subLinkCont subLinkContVisible" style="display:none;">
+						<ul class="subLinkUl">
+							<li><a href="myprofile.html"><i class="fa fa-user bgBlue"></i> சுய விவரம்</a></li>
+							<li><a href="settings.html"><i class="fa fa-cog bgGreen"></i> அமைப்புகள்</a></li>
+							<li><a href="feedback.html"><i class="fa fa-microphone bgOrange"></i> கருத்து</a></li>
+							<li><a href="javascript:;"><i class="fa fa-star bgTeal"></i> எங்களை மதிப்பிட  </a></li>
+							<li><a class="modal-trigger" href="#aboutModal"><img src="img/ic_launcher.png" style="width: 25px; vertical-align: middle;"/> எங்களை பற்றி  </a></li>
+						</ul>
+					</div>
+
+					<div class="headBotLink">   
+						<a class="backIco waves-effect waves-dark" href="allnews.html"><i class="fa fa-arrow-left"></i></a><span class="pageTitleText inBlock marTp5px">சுய விவரம்  மேம்படுத்த</span>
+						<!--
+						<div class="right">
+							<a href="javascript:;" class="inBlock" style="margin-top:5px;"><span class="emoIco inBlock"><i class="icon-offline"></i> </span><span class="inBlock" style="line-height:24px;">  நான் குறித்தது</span></a>
+							<a href="javascript:;" class="inBlock" style="margin-top:5px;"><span class="emoIco inBlock"><i class="icon-share"></i> </span><span class="inBlock" style="line-height:24px;">  மறுபகிர்வு</span></a>
+						</div>
+						-->
+					</div>
+				</header>
+				<div class="headerClear"></div>
+
+				<div class="mainSection">
+				
+					<div class="row">
+					<div id="loading" style="position: absolute; width: 100%; text-align: center; top: 180px; z-index: 99; height: 103%;display:none">
+							<img src="img/gear.gif" width="100px" height="100px" />
+						</div>
+						<section class="contentScrTamil">
+							<div class="bgWhite" style="">
+								<form action="javascript:;"  name="conversion" class="">
+									<input id="fileTypeCont" type="hidden" />
+									<input id="fileName" type="hidden"  value="" />
+									<a href="javascript:;" class="creatImgLink imgUpLink" style="background:#666;padding:0px;">
+										<i class="fa fa-user" style="color:#aaa;display:none"></i>
+										
+										<img id="profileSrc" class="ProfileImage" src="img/profile_bg.jpg" alt="" style="height:100%;margin:0 auto;width:100%;" />
+										
+									</a>
+									<ul class="createFormUl">
+										<li>
+											<label>பெயர்</label>
+											<input type="text" style="border-color:#666 !important;color:#333 !important;" id="userName" class="tamiltextbox createInput widthfull cadr" name="saisie" placeholder="பெயர்" readonly="readonly" />
+										</li>
+										<li>
+											<label> உங்கள்  வயது </label>
+											<select class="createSelect" name="age_range" id="ageRange" style="border-color:#666 !important;color:#333 !important;">
+												
+												<option value="18-25"> 18-25 வயது</option>
+												<option value="26-35">26-35 வயது</option>
+												<option value="36-45">36-45 வயது</option>
+												<option value="45-60">45-60 வயது</option>
+												<option value="60+">60+   வயது</option>
+												
+												
+												<!--<option value="18-22">18-22 வயது</option>
+												<option value="23-27">23-27 வயது</option>
+												<option value="28-32">28-32 வயது</option>
+												<option value="33-37">33-37   வயது</option>
+												<option value="38-42">38-42   வயது</option>
+												<option value="43-47"> 43-47 வயது</option>
+												<option value="48-52">48-52 வயது</option>
+												<option value="53-57">53-57 வயது</option>
+												<option value="58-62">58-62 வயது</option>-->
+											</select>
+										</li>
+										<li>
+											<input type="text" id="genInput" style="display:none;" />
+											<p class="inBlock">
+												<input type="radio" name="gender" class="with-gap createOption" id="male" checked="checked" value="male" /> <label  style="color:#333 !important;" for="male">ஆண்</label>
+											</p>
+											<p class="inBlock">
+												<input type="radio" name="gender" class="with-gap createOption" id="female"  value="female"  /> <label style="color:#333 !important;" for="female">பெண்</label>
+											</p>
+										</li>
+									</ul>
+									
+									<div class="h10"></div>
+									<div class="textCenter block">
+										<button id="verify_button" class="cusBtn" >மேம்படுத்து</button>
+									</div>
+									<div class="h10"></div>
+									
+								</form>
+								
+							</div>
+						</section>
+					</div>
+				</div>      
+				
+				<!-- Keyboard -->
+				<div style="display:none" id="tamilVirtualKeyboard" class="tamilVirtualKeyboard col s12">
+					<table border=0 cellspacing=2 cellpadding=0 class="tamilKeyboardTable">
+						<tbody>
+							<tr class="phase1"> 
+								<td><input class="bt" title="A" onclick="alpha('அ')" value="அ" type="button"/></td>
+								<td><input class="bt" title="AA" onclick="alpha('ஆ')" value="ஆ" type="button"/></td>	
+								<td><input class="bt" title="I" onclick="alpha('இ')" value="இ" type="button"/></td>
+								<td><input class="bt" title="II" onclick="alpha('ஈ')" value="ஈ" type="button"/></td>		
+								<td><input class="bt" title="U" onclick="alpha('உ')" value="உ" type="button"/></td>								
+								<td><input class="bt" title="UU" onclick="alpha('ஊ')" value="ஊ" type="button"/></td>
+								<td><input class="bt" title="E" onclick="alpha('எ')" value="எ" type="button"/></td>
+								<td colspan="2"><input class="bt fa" type="button" onclick="backspace()" value="&#xf177;"/></td>
+							</tr>
+							<tr class="phase1"> 
+								<td><input class="bt" title="EE" onclick="alpha('ஏ')" value="ஏ" type="button"/></td>
+								<td><input class="bt" title="AI" onclick="alpha('ஐ')" value="ஐ" type="button"/></td>
+								<td><input class="bt" title="O" onclick="alpha('ஒ')" value="ஒ" type="button"/></td>
+								<td><input class="bt" title="OO" onclick="alpha('ஓ')" value="ஓ" type="button"/></td>
+								<td><input class="bt" title="KA" onclick="alpha('க')" value="க" type="button"/></td>
+								<td><input class="bt" title="NGA" onclick="alpha('ங')" value="ங" type="button"/></td>
+								<td><input class="bt" title="CA" onclick="alpha('ச')" value="ச" type="button"/></td>
+								<td><input class="bt" title="NYA" onclick="alpha('ஞ')" value="ஞ" type="button"/></td>
+								<td><input class="bt" title="TTA" onclick="alpha('ட')" value="ட" type="button"/></td>
+							</tr>
+							<tr class="phase1"> 
+								<td><input class="bt" title="NNA" onclick="alpha('ண')" value="ண" type="button"/></td>
+								<td><input class="bt" title="TA" onclick="alpha('த')" value="த" type="button"/></td>
+								<td><input class="bt" title="NA" onclick="alpha('ந')" value="ந" type="button"/></td>		
+								<td><input class="bt" title="PA" onclick="alpha('ப')" value="ப" type="button"/></td>
+								<td><input class="bt" title="MA" onclick="alpha('ம')" value="ம" type="button"/></td>		
+								<td><input class="bt" title="YA" onclick="alpha('ய')" value="ய" type="button"/></td>								
+								<td><input class="bt" title="RA" onclick="alpha('ர')" value="ர" type="button"/></td>
+								<td><input class="bt" title="LA" onclick="alpha('ல')" value="ல" type="button"/></td>
+								<td><input class="bt" title="VA" onclick="alpha('வ')" value="வ" type="button"/></td>
+							</tr>							
+							<tr class="phase1"> 
+								<td><input class="bt" title="LLLA" onclick="alpha('ழ')" value="ழ" type="button"/></td>
+								<td><input class="bt" title="LLA" onclick="alpha('ள')" value="ள" type="button"/></td>
+								<td><input class="bt" title="RRA" onclick="alpha('ற')" value="ற" type="button"/></td>
+								<td><input class="bt" title="NNNA" onclick="alpha('ன')" value="ன" type="button"/></td>
+								<td><input class="bt" title="virama" onclick="alpha('்')" value="்" type="button"></td>
+								<td><input class="bt" title="AA " onclick="alpha('ா')" value="ா" type="button"/></td>
+								<td><input class="bt" title="I " onclick="alpha('ி')" value="ி" type="button"/></td>
+								<td><input class="bt" title="II " onclick="alpha('ீ')" value="ீ" type="button"/></td>
+								<td><input class="bt" title="E " onclick="alpha('ெ')" value="ெ" type="button"/></td>
+							</tr>
+							<tr class="phase1">
+								<td><input class="bt" title="EE " onclick="alpha('ே')" value="ே" type="button"/></td>
+								<td><input class="bt" title="U " onclick="alpha('ு')" value="ு" type="button"/></td>
+								<td><input class="bt" title="UU " onclick="alpha('ூ')" value="ூ" type="button"/></td>
+								<td><input class="bt" title="AI " onclick="alpha('ை')" value="ை" type="button"/></td>
+								<td><input class="bt" title="JA" onclick="alpha('ஜ')" value="ஜ" type="button"/></td>	
+								<td><input class="bt" title="SHA" onclick="alpha('ஷ')" value="ஷ" type="button"/></td>	
+								<td><input class="bt" title="sa" onclick="alpha('ஸ')" value="ஸ" type="button"/></td>	
+								<td><input class="bt" title="ha" onclick="alpha('ஹ')" value="ஹ" type="button"/></td>	
+								<td><input class="bt" title="visarga" onclick="alpha('ஃ')" value="ஃ" type="button"/></td>
+							</tr>
+							<tr class="num-spl">
+								<td><input class="bt" title="Koo" onclick="alpha('1')" value="1" type="button"/></td>	
+								<td><input class="bt" title="AI " onclick="alpha('2')" value="2" type="button"/></td>
+								<td><input class="bt" title="O " onclick="alpha('3')" value="3" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('4')" value="4" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('5')" value="5" type="button"/></td>
+								<td><input class="bt" title="Koo" onclick="alpha('6')" value="6" type="button"/></td>	
+								<td><input class="bt" title="AI " onclick="alpha('7')" value="7" type="button"/></td>
+								<td colspan="2"><input class="bt fa" type="button" onclick="backspace()" value="&#xf177;"/></td>
+																
+							</tr>
+							<tr class="num-spl">
+								<td><input class="bt" title="O " onclick="alpha('8')" value="8" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('9')" value="9" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('0')" value="0" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('{')" value="{" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('}')" value="}" type="button"/></td>	
+								<td><input class="bt" title="Koo" onclick="alpha('$')" value="$" type="button"/></td>	
+								<td><input class="bt" title="O " onclick="alpha('&')" value="&" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('(')" value="(" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha(')')" value=")" type="button"/></td>	
+							</tr>
+							<tr class="num-spl">
+								<td><input class="bt" title="Koo" onclick="alpha('+')" value="+" type="button"/></td>	
+								<td><input class="bt" title="AI " onclick="alpha('-')" value="-" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('[')" value="[" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha(']')" value="]" type="button"/></td>
+								<td><input class="bt" title="O " onclick="alpha('@')" value="@" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('_')" value="_" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('\')" value="\" type="button"/></td>
+								<td><input class="bt" title="O " onclick="alpha(':')" value=":" type="button"/></td>
+								<td><input class="bt" title="O " onclick="alpha(';')" value=";" type="button"/></td>
+							</tr>
+							<tr class="num-spl">
+								<td><input class="bt" title="OO " onclick="alpha('\')" value="\" type="button"/></td>
+								<td><input class="bt" title="O " onclick="alpha('*')" value="*" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('#')" value="#" type="button"/></td>
+								<td><input class="bt" title="AU " onclick=alpha("'") value="&#x00027;" type="button"/></td>
+								<td><input class="bt" title="OO " onclick=alpha('"') value="&#x00022;" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('!')" value="!" type="button"/></td>	
+								<td><input class="bt" title="Koo" onclick="alpha('<')" value="<" type="button"/></td>	
+								<td><input class="bt" title="O " onclick="alpha('>')" value=">" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('?')" value="?" type="button"/></td>
+							</tr>
+							<tr class="num-spl">
+								<td><input class="bt" title="AI " onclick="alpha('^')" value="^" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('%')" value="%" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('~')" value="~" type="button"/></td>
+								<td><input class="bt" title="Koo" onclick="alpha(',')" value="," type="button"/></td>	
+								<td><input class="bt" title="AI " onclick="alpha('.')" value="." type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('=')" value="=" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('|')" value="|" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="" value="" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="" value="" type="button"/></td>									
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="2"><input class="bt fa" type="button" value="..." id="bt-pahse" /></td>	
+								<td style="width:40px !important;"><input class="bt" type="button" value="123" style="font-size:10px !important;" id="bt-num-spl"/></td>
+								<td colspan="3"><input class="bt" onclick="alpha(' ')" value="&#x023B5;" type="button" style="background: rgba(0,0,0,0.1);font-size:30px !important;"/></td>
+								<td colspan="2"><input class="bt" onclick="alpha('\n')" value="&#x021B5;" type="button" style="background: rgba(0,0,0,0.1);font-size:30px !important;font-weight:bold"/></td>
+								<td><input class="bt fa kbdHide" type="button" value="&#x02193;"/></td>
+								<!--<td><input class="bt fa" type="button" onclick="backspace()" value="&#xf177;"/></td>-->
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				  
+				<!-- Footer Section  -->
+				
+				<div class="footerClear"></div>
+				<footer style="height:0;">
+					
+				</footer>
+			</section>
+			
+            <!-- Container Section -->
+            <!-- Pop up -->
+			
+				
+        </div>
+        <div id="aboutModal" class="modal">
+			<img src="img/About-Us.png" style="width: 100%; background: white none repeat scroll 0% 0%; max-height: 500px;"/>
+			<div>
+				<button class="privacyBtn modal-close">Privacy Policy</button>
+				<button class="appBtn modal-close">App Etiquette</button>
+			</div>
+			<div class="clr"></div>
+		</div>
+        <!-- Custom -->
+        
+        <!-- Library -->
+        
+        <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="js/jqueryui-1.11.4.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/jqueryui-1.11.4.css" />
+        <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.js"></script>
+        
+		<script type="text/javascript" src="js/custom.js"></script>
+		
+        <!-- Scripts -->
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        
+		<!--Tamil Keyboard -->
+		<style type="text/css">
+			.bt {cursor:pointer; font-size:8pt; color:#CC0033; font-family:Latha, Arial Unicode MS;width:100% }
+			.bt:hover {cursor:pointer; font-size:8pt; color:blue; font-family:Latha, Arial Unicode MS; } 
+			.bf {cursor:pointer; font-size:9pt; color:#666666; }
+			.lat { font-family:Arial; }
+			.cadr {color:blue; font-family:Latha, Arial Unicode MS; font-size:10pt; crollbar-base-color:transparent; scrollbar-track-color:transparent; }
+		</style>
+		<link href="TamilKeyboard/style.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="TamilKeyboard/comlat.js"></script>
+		<script type="text/javascript" src="TamilKeyboard/cartam.js"></script>
+		<script type="text/javascript" src="TamilKeyboard/jquery.js"></script>
+		<script type="text/javascript" src="TamilKeyboard/jquery.min.js"></script>
+
+		<script type="text/javascript" >
+		
+			$(function() {
+				console.log($('.ProfileImage').attr('src'));
+				$('.imgUpLink').click(function(){
+						$('#popup-imgUpload-cont').fadeIn(200);                
+					});
+					$('body').on('click','.popup-cus-link',function(){
+						$('#popup-proImg-cont').fadeOut(200);
+						$('#popup-imgUpload-cont').fadeOut(200);   
+						$('#popup-audUpload-cont').fadeOut(200);
+						$('#popup-vidUpload-cont').fadeOut(200);
+					})
+					
+					
+					
+					
+					
+				$('.createCont').css('height',$(window).height());
+				$('.headerClear').css('height',$('header').height());
+				
+				var token=window.localStorage.getItem("auth_token");
+				var userName=window.localStorage.getItem("full_name");
+				
+				$('#userName').val(userName);
+				
+				function setHeader(xhr) {
+				  xhr.setRequestHeader('Auth-Token', token);
+				}
+		
+				//Keyboard Actions
+				$('.num-spl').hide();
+				//$('.phase2').hide();
+				
+				$("#bt-num-spl").click(function(){
+					//$('.phase1').hide();
+					//$('.phase2').hide();
+					//$('.num-spl').show();
+					if($(this).val()=="123")
+					{
+						$(this).val("அஆஇ");
+					}
+					else
+					{
+						$(this).val("123");
+					}
+				
+					if($('.phase1').is(":visible")){
+						$('.phase1').hide();
+						$('.num-spl').show();
+
+					}else if($('.num-spl').is(":visible")){
+						$('.num-spl').hide();
+						$('.phase1').show();
+					}
+				
+				});
+				
+				$('.kbdHide').click(function(){
+					$('#tamilVirtualKeyboard').css('display','none');
+					$('.tamiltextbox').attr('data-id', '0');
+				})
+				
+				$('.tamiltextbox').click(function(){
+					var X=$(this).attr('data-id');
+					assignFocusElement($(this).attr("name"));
+					
+					if(X==1){
+						$('#tamilVirtualKeyboard').css('display','none');
+						$('#tamilVirtualKeyboard').css({
+							position:'fixed',
+							top:'100%',
+							bottom:'auto'
+						});
+						$(this).attr('data-id', '0');	
+					}else{
+						$('#tamilVirtualKeyboard').css('display','block');
+						$('#tamilVirtualKeyboard').css({
+							position:'fixed',
+							top:'auto',
+							bottom:'0'
+						});
+						$('.contentScrTamil').animate({scrollTop:document.body.scrollHeight},300);
+						$(this).attr('data-id', '1');
+						
+					}
+					
+					//$('#tamilVirtualKeyboard').css('display','block');
+					
+				});
+				
+				$("#tamilVirtualKeyboard").mouseup(function(){
+					return false
+				});
+				$(".tamiltextbox").mouseup(function(){
+					return false
+				});
+				
+				$(document).mouseup(function(){
+					$("#tamilVirtualKeyboard").hide();
+					$(".tamiltextbox").attr('data-id', '');
+				});
+				
+				$('.mainSection').on("touchstart",function(){
+					$("#tamilVirtualKeyboard").hide();
+					$(".tamiltextbox").attr('data-id', '');
+				});
+				
+				
+				$('.createOption').click(function(){
+					$('#genInput').val($(this).val());
+					if($('#genInput').val()=='female')
+					{
+						//alert('fe');
+						$('.ProfileImage').attr('src','img/female.png');
+					}
+					else
+					{
+						//alert('mal');
+						$('.ProfileImage').attr('src','img/male.png');
+					}
+				})
+				
+				$('body').on("click",".cusBtn",function() {
+						var formData = {
+						'full_name' : $('#userName').val(),
+						'age_range':$('select[name=age_range]').val(),
+						'gender':$('#genInput').val(),
+						'file_name':$('#fileName').val()
+					};
+					//console.log("form>>>"+formData.gender);
+					//console.log("form get>>>"+gender);
+					
+					if(formData.gender == ""){
+						formData.gender = gender;
+					}
+					//console.log("form>>>"+formData.gender);
+					if(formData.full_name == ""){
+					 Materialize.toast('<span style="white-space:nowrap;font-size:10px;">உங்கள் பெயரை பதிவுசெய்யவில்லை</span>', 2000)
+					}
+					else
+					{
+						$.ajax({
+							type: "PUT",
+							crossDomain: true,
+							url: "http://52.74.69.101:80/api/v1/users/update_profile.json",
+							data:formData,
+							dataType    : 'json',
+							encode          : true,
+							success : function(data){
+								console.log(data);
+								window.localStorage.setItem("full_name", data.full_name);
+								window.localStorage.setItem("gender", data.gender);
+								console.log('updated');
+								Materialize.toast('<span style="white-space:nowrap;font-size:12px;">தகவல் புதுப்பிக்கப்பட்டது</span>', 2000)
+								//alert("Successfully Updated..");
+								//window.location='home.html';
+								window.location='myprofile.html';
+							  },
+							error: function (result, status, err) {
+								alert(result.responseJSON['errors']);
+								console.log(result.responseJSON['errors']);
+								//window.location='allnews.html';
+							  },
+							  beforeSend: setHeader
+						  
+						});
+					}
+					
+				});
+				
+				
+				
+			});
+			
+		
+			
+			
+			
+			function hideKeyboard(element) {
+				element.attr('readonly', 'readonly'); // Force keyboard to hide on input field.
+				element.attr('disabled', 'true'); // Force keyboard to hide on textarea field.
+				setTimeout(function() {
+					element.blur();  //actually close the keyboard
+					// Remove readonly attribute after keyboard is hidden.
+					element.removeAttr('readonly');
+					element.removeAttr('disabled');
+				}, 100);
+			}
+			
+			
+		
+		
+		</script>
+
+	
+    </body>
+</html>

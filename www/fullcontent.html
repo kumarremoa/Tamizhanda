@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="format-detection" content="telephone=no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <meta charset="utf-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+
+        <!-- Stylesheet -->
+        <!--<link rel="stylesheet" type="text/css" href="css/index.css" />-->
+        <link rel="stylesheet" type="text/css" href="css/style.css" /><link rel="stylesheet" type="text/css" href="css/setting.css" />
+        <link rel="stylesheet" type="text/css" href="css/style_nan.css" />
+        <link rel="stylesheet" type="text/css" href="css/tamilzandaFonts.css" />
+        
+        <!-- Scripts -->
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        
+        <!-- Library -->
+        <!--<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>-->
+				<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="js/jquery-2.1.3.js"></script>
+        <!-- Materialize -->
+        <link rel="stylesheet" type="text/css" href="css/materialize.css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        
+        <script type="text/javascript" src="js/materialize.js"></script>
+        
+        
+        <script type="text/javascript" src="js/jquery.touchSwipe.js"></script>
+
+		<script src="js/prefixfree.min.js"></script>
+
+		<link rel="stylesheet" href="css/owl.carousel.css">
+		
+		<script src="js/owl.carousel.js"></script>
+
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
+        
+		<link rel="stylesheet" href="css/snap.css">
+		
+		<script src="js/snap.js"></script>
+		
+		
+		
+        <!-- Custom -->
+        <script type="text/javascript" src="js/custom.js"></script>
+        
+		<!--Tamil Keyboard -->
+		<style type="text/css">
+			.bt {cursor:pointer; font-size:8pt; color:#CC0033; font-family:Latha, Arial Unicode MS;width:100% }
+			.bt:hover {cursor:pointer; font-size:8pt; color:blue; font-family:Latha, Arial Unicode MS; } 
+			.bf {cursor:pointer; font-size:9pt; color:#666666; }
+			.lat { font-family:Arial; }
+			.cadr {color:blue; font-family:Latha, Arial Unicode MS; font-size:10pt; crollbar-base-color:transparent; scrollbar-track-color:transparent; }
+			video {  
+				width:100%; 
+				max-width:500px; 
+				height:150px; 
+			}
+			audio {  
+				width:100%; 
+				max-width:500px;
+			}
+		</style>
+		<link href="TamilKeyboard/style.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="TamilKeyboard/comlat.js"></script>
+		<script type="text/javascript" src="TamilKeyboard/cartam.js"></script>
+		<script type="text/javascript" src="TamilKeyboard/jquery.js"></script>
+		<script type="text/javascript" src="TamilKeyboard/jquery.min.js"></script>
+
+		
+
+		<script type="text/javascript">
+		 var gaJsHost = (("https:" == document.location.protocol) ? " https://ssl." : "http://www.");
+		 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js ' type='text/javascript'%3E%3C/script%3E"));
+		</script><script src="TamilKeyboard/ga.js" type="text/javascript"></script>
+		<script type="text/javascript">
+		 var pageTracker = _gat._getTracker("UA-122422-1");
+		 pageTracker._initData();
+		 pageTracker._trackPageview();
+		</script>
+		
+		<!-- JSON Data Fetching -->
+		<script>
+			var audio_playing = false;
+			var audio_media = null;
+            var mediaTimer = null;
+			
+				/** Audio Player **/
+				// Play audio        
+				function playAudio(src) {
+					//alert("Playing...."+src);
+					if (my_media == null) {
+						// Create Media object from src
+						my_media = new Media(src, onSuccess, onError);
+					} // else play current audio
+					// Play audio
+					my_media.play();
+
+					// Update my_media position every second
+					if (mediaTimer == null) {
+						mediaTimer = setInterval(function() {
+							// get my_media position
+							my_media.getCurrentPosition(
+								// success callback
+								function(position) {
+									if (position > -1) {
+										setAudioPosition((position) + " sec");
+									}
+								},
+								// error callback
+								function(e) {
+									alert("Error getting pos=" + e);
+									setAudioPosition("Error: " + e);
+								}
+							);
+						}, 1000);
+					}
+				}
+
+				// Pause audio        
+				function pauseAudio() {
+					if (my_media) {
+						my_media.pause();
+					}
+				}
+
+				// Stop audio
+				// 
+				function stopAudio() {
+					if (my_media) {
+						my_media.stop();
+					}
+					clearInterval(mediaTimer);
+					mediaTimer = null;
+				}
+
+				// onSuccess Callback
+				//
+				function onSuccess() {
+					alert("playAudio():Audio Success");
+				}
+
+				// onError Callback 
+				//
+				function onError(error) {
+					alert('code: '    + error.code    + '\n' + 
+						  'message: ' + error.message + '\n');
+				}
+
+				// Set audio position
+				// 
+				function setAudioPosition(position) {
+					document.getElementById('audio_position').innerHTML = position;
+				}
+
+				
+			
+			
+			$(function(){
+			     $('body').on("click",'.postCategoryHead',function(){
+					$('.menuSubUl').slideToggle(200);
+				})
+				//alert(shortName);
+				 $('.app').css('height',$(window).height());
+					 setTimeout(function(){
+			         $('#content').fadeIn(500,function(){
+					 $('.snap-drawers').show();
+					})
+			    },1000);
+			
+				var token=window.localStorage.getItem("auth_token");
+				var userId=window.localStorage.getItem("user_id");
+				
+				function setHeader(xhr) {
+				  xhr.setRequestHeader('Auth-Token', token);
+				}
+				
+				
+				/* for profile img*/
+				var user_id = window.localStorage.getItem("id");
+				var img_url = "http://dvw76oitljc1i.cloudfront.net/";
+				$.ajax({
+					type:"GET",
+					crossDomain: true,
+					url:"http://52.74.69.101:80/api/v1/users/"+user_id+".json",
+					dataType    : 'json',
+					encode          : true,
+					success:function(data){
+						//console.log(data);
+						profile_img_url = data.profile_image_url;
+						if(profile_img_url === null || profile_img_url === "null" || profile_img_url === "" || profile_img_url === "http://dvw76oitljc1i.cloudfront.net/"){
+							$('.bgBigProfileImage').attr('src',"img/profile_bg.jpg");
+							$('.bgSmallProfileImage').attr('src',"img/profile_bg.jpg");
+						}
+						else {
+							$('.bgBigProfileImage').attr('src',profile_img_url);
+							$('.bgSmallProfileImage').attr('src',profile_img_url);
+						}
+					},
+					error: function (result, status, err) {
+						alert(result.responseJSON['errors']);
+						//window.location.href = 'allnews.html';
+					},
+					beforeSend : setHeader
+				});
+				
+				db = window.openDatabase(shortName, version, displayName,maxSize);
+						
+				var parseQueryString = function() {
+					var str = window.location.search;
+					var objURL = {};
+					str.replace(
+						new RegExp( "([^?=&]+)(=([^&]*))?", "g" ),
+						function( $0, $1, $2, $3 ){
+							objURL[ $1 ] = $3;
+						}
+					);
+					return objURL;
+				};
+				
+				/** Getting post id  **/
+				var post_id = parseQueryString();
+					//console.log(post_id['id']);
+				
+				var cur_post_id;
+				var cur_post_title;
+				var cur_post_desc;
+				var cur_post_user_id;
+				var cur_post_category_id;
+				var cur_post_weightage;
+				var cur_post_super_count;
+				var cur_post_normal_count;
+				var cur_post_laugh_count;
+				var cur_post_shares_count;
+				var cur_post_comments_count;
+				var cur_post_title_photo;
+				var cur_post_photo;
+				var cur_post_video;
+				var cur_post_audio;
+				var cur_post_file_type;
+				var cur_post_category_name;
+				var cur_post_author_image_url;
+				var cur_post_user_emotion;
+				
+				var emo_value="super";
+				
+				
+				cur_post_id=post_id['id'];
+				
+				$('.emoValSel').click(function(){
+					emo_value=$(this).attr("data-desc");
+					$('.emoValSel').children('.footerLink').removeClass('active');
+					$(this).children('.footerLink').addClass('active');
+					
+					/** Post emotion marking **/
+					var emoData = {
+						"id": cur_post_id,
+						"emotion":emo_value
+					};
+						
+					$.ajax({
+						type: "PUT",
+						crossDomain: true,
+						url: "http://52.74.69.101:80/api/v1/posts/"+cur_post_id+"/mark_emotion.json",
+						data:emoData,
+						dataType    : 'json',
+						encode          : true,
+						success : function(data){
+							//alert('Your Rating for this post is '+emo_value);
+							//console.log('success');
+						},
+						error: function (result, status, err) {
+							alert(result.responseJSON['errors']);
+						},
+						beforeSend: setHeader
+							  
+					});
+					
+				});
+			
+				/** Calling Onload function **/
+				contentResponse();
+				commentResponse();
+				
+				var post_title = "";  //for social sharing..
+				/** Get the description for Post for display **/
+				
+				
+				
+				
+				function contentResponse(){
+				
+					var formData = {
+						"id": cur_post_id
+					};
+						
+					$.ajax({
+						type: "GET",
+						crossDomain: true,
+						url: "http://52.74.69.101:80/api/v1/posts/"+cur_post_id+".json",
+						data:formData,
+						dataType    : 'json',
+						encode          : true,
+						success : function(data){
+							//console.log(data);
+							//alert("Success");
+							$('.dbDataSelect').trigger('click');
+							$.fn.show_response(data);
+							post_title = data.title+" -via Tamizhanda"; //for social sharing..
+							if(data.abused==false){
+							$("#after-abuse").hide();
+							$(".abuseLink").show();
+							}
+							
+							//alert(post_title);
+
+						},
+						error: function (result, status, err) {
+							alert(result.responseJSON['errors']);
+						},
+						beforeSend: setHeader
+							  
+					});
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					$.fn.show_response = function(paraData) { 
+						 
+						$('#postCategory').html(paraData.category_name);
+						$('#getpostUserEmotion').html(paraData.user_emotion);
+						 
+						console.log(paraData);
+						 
+					
+						var postDesc = ''
+						
+						postDesc += '<div class="card-image">';				
+						if(paraData.file_type==''||paraData.file_type=='null'||paraData.file_type==null )
+						{
+							if(paraData.title_photo_url==="null"||paraData.title_photo_url==''||paraData.title_photo_url=='null'||paraData.title_photo_url==null || paraData.title_photo_url === "http://dvw76oitljc1i.cloudfront.net/")
+							{
+								postDesc +='<img id="postImage" style="height:150px;"  src="img/defaultpostimg.png"/>';
+							}
+							else
+							{
+								postDesc +='<img id="postImage" style="height:150px;" src="'+paraData.title_photo_url+'"/>';
+							}					
+						}
+						if(paraData.file_type==="photo")
+						{
+							if(paraData.title_photo_url==="null"||paraData.title_photo_url==''||paraData.title_photo_url=='null'||paraData.title_photo_url==null || paraData.title_photo_url === "http://dvw76oitljc1i.cloudfront.net/")
+							{
+								postDesc +='<img id="postImage" style="height:150px;"  src="img/defaultpostimg.png"/>';
+							}
+							else
+							{
+								postDesc +='<img id="postImage" style="height:150px;" src="'+paraData.title_photo_url+'"/>';
+							}					
+						}
+						else if(paraData.file_type==="audio")
+						{
+							if(paraData.title_photo_url==="null"||paraData.title_photo_url==''||paraData.title_photo_url==null ||paraData.title_photo_url==null || paraData.title_photo_url === "http://dvw76oitljc1i.cloudfront.net/")
+							{
+								var uri = paraData.audio_url;
+								var str = '<img id="postImage" style="height:150px;"  src="img/defaultaudioimg.png"/>';
+								str += '<audio controls><source src="'+paraData.audio_url+'" type="audio/mpeg"><source src="'+paraData.audio_url+'" type="audio/wav">Your browser does not support the audio tag.</audio>';
+								postDesc +=str;
+							}
+							else
+							{
+								var uri = paraData.audio_url;
+								var str = '<img id="postImage" style="height:150px;" src="'+paraData.title_photo_url+'"/>';
+								str += '<audio controls><source src="'+paraData.audio_url+'" type="audio/mpeg"><source src="'+paraData.audio_url+'" type="audio/wav">Your browser does not support the audio tag.</audio>';
+								postDesc +=str;							
+							}
+						}
+						else if(paraData.file_type==="video")
+						{
+							if(paraData.title_photo_url==="null"||paraData.title_photo_url==''||paraData.title_photo_url=='null'||paraData.title_photo_url==null)
+							{							
+								//var str = '<img id="postImage" style="height:150px;"  src="img/defaultvideoimg.png"/>';
+								var str = '<video  controls><source src="'+paraData.video_url+'" type="video/mp4">Your browser does not support the video tag.</video>';
+								postDesc +=str;
+							}
+							else
+							{							
+								//var str = '<img id="postImage" style="height:150px;" src="'+paraData.title_photo_url+'"/>';
+								var str = '<video  controls><source src="'+paraData.video_url+'" type="video/mp4">Your browser does not support the video tag.</video>';
+								postDesc +=str;							
+							}					
+						}
+						
+						
+						postDesc += '</div>';
+						postDesc += '<div class="card-action  widthfull">';
+							postDesc += '<div class="row borBt1px margin0px padBt5px">';
+								postDesc += '<div class="col s8">';
+									postDesc += '<div class="inBlock verTop">';
+										if(paraData.author_image_url === null || paraData.author_image_url === "null" || paraData.author_image_url === "" || paraData.author_image_url === "http://dvw76oitljc1i.cloudfront.net/"){
+											postDesc += '<img src="img/logo.png" alt="" class="author_img circle responsive-img" style="width:35px;height:35px; float:left;"/>';
+										}
+										else {
+											$('.author_img').attr('src',paraData.author_image_url);
+											postDesc += '<img src="'+paraData.author_image_url+'" alt="" class="author_img circle responsive-img" style="width:35px;height:35px; float:left;"/>';
+										}
+									postDesc += '</div>';
+									postDesc += '<div class="inBlock verTop">';
+									
+										if(paraData.author==="null"||paraData.author==''||paraData.author=='null'||paraData.author==null)
+										{
+											postDesc += '<span class="block authorSpan" id="author_name">தமிழன்டா அணி</span>';
+										}
+										else
+										{
+											postDesc += '<span class="block authorSpan" id="author_name">'+paraData.author+'</span>';
+										}
+										if(paraData.is_following == true){
+											console.log("follow>>>>>"+paraData.is_following);
+											postDesc += '<a id="" style="" class="following inBlock margin0px" href="javascript:;"><span class="emoIco bgOrange inBlock borderGrey"><i class="icon-follow"></i></span> <span class="inBlock">பின்பற்ற</span></a>';
+										}
+										else
+										{
+											postDesc += '<a id="" style="" class="toFollow inBlock margin0px" href="javascript:;"><span class="emoIco inBlock borderGrey"><i class="icon-follow"></i></span> <span class="inBlock">பின்பற்ற</span></a>';
+										}
+										
+									postDesc += '</div>';
+								postDesc += '</div>';
+								
+								postDesc += '<div style="padding:0px !important;" class="col s4 right textCenter countsCont marTp5px">';
+									postDesc += '<a href="javascript:;" class="bookmark_link notFoundDb inBlock margin0px"><span class="emoIco inBlock borderGrey marRt5px"><i class=" icon-offline"></i></span><span class="inBlock">குறிக்க</span></a>';
+								postDesc += '</div>';
+							postDesc += '</div>';
+							postDesc += '<div class="row">';
+								postDesc += '<div class="s12 pad5px overflowHid borBt1px">';
+									postDesc += '<input type="hidden" id="post-Id" value='+paraData.id+' />';
+									
+									postDesc += '<div class="col s3">';
+										postDesc += '<div class="verTop">';
+											postDesc += '<a href="javascript:;" id="aClickCount-1" class="postCommentLink verMid" style="margin-right:5px;">';
+												postDesc += '<span class="emoIco inBlock borderGrey addActive"><i class="icon-like"></i></span>';
+												postDesc += '<span class="select_me" data-psc="" id="postSuperCount"></span>';
+											postDesc += '</a>';
+										postDesc += '</div>';
+									postDesc += '</div>';
+									
+									postDesc += '<div class="col s3 ">';
+										postDesc += '<div class="verTop">';
+											postDesc += '<a href="javascript:;" id="aClickCount-2" class="postCommentLink verMid" style="margin-right:5px;">';
+												postDesc += '<span class="emoIco inBlock borderGrey addActive"><i class="icon-dislike"></i></span>';
+												postDesc += '<span class="select_me" data-pnc="" id="postNormalCount"></span>';
+											postDesc += '</a>';
+										postDesc += '</div>';
+									postDesc += '</div>';
+									postDesc += '<div class="col s3">';
+										postDesc += '<div class="verTop">';
+											postDesc += '<a href="javascript:;" id="aClickCount-3" class="postCommentLink verMid" style="margin-right:5px;">';
+												postDesc += '<span class="emoIco inBlock borderGrey addActive"><i class="icon-smile"></i></span>';
+												postDesc += '<span class="select_me" data-plc="" id="postLaughCount"></span>';
+											postDesc += '</a>';
+										postDesc += '</div>';
+									postDesc += '</div>';
+									postDesc += '<div style="padding:0px !important;" class="col s3">';
+										postDesc += '<a href="javascript:;" class="commentTrigger postCommentLink margin0px verMid">';
+											postDesc += '<span class="emoIco inBlock borderGrey"><i class="icon-comment"></i></span>';
+											postDesc += '<span id="postCommentsCount"></span>';
+										postDesc += '</a>';
+									postDesc += '</div>';
+								postDesc += '</div>';
+							postDesc += '</div>';
+							
+							
+							postDesc += '<div class="">'; 
+								postDesc += '<div class="col s12 postCont">';
+										postDesc += '<h3 class="postDescTitle">'+paraData.title+'</h3>'
+									postDesc += '<span class="postDescSpan">'+paraData.description+'</span>';
+								postDesc += '</div>';
+							postDesc += '</div>';
+						postDesc += '</div>';
+						
+						
+						$('#insidePostCont').html(postDesc);
+						
+						if(paraData.abused==true)
+						{
+							$('.abuseLink').removeClass('toAbuse');
+							$('.abuseLink').addClass('colorRed');
+						}
+						else
+						{
+							$('.abuseLink').addClass('toAbuse');
+							$('.abuseLink').removeClass('colorRed');
+						}
+						
+						
+						if(paraData.user_emotion==''||paraData.user_emotion=='null'||paraData.user_emotion==null)
+						{
+							
+						}
+						else if(paraData.user_emotion=='super'){
+							$('#aClickCount-1').children('span.emoIco').addClass('bgBlue');
+//							$('.postCommentLink').attr('id','');
+						}
+						else if(paraData.user_emotion=='normal'){
+							$('#aClickCount-2').children('span.emoIco').addClass('bgBlue');
+//							$('.postCommentLink').attr('id','');
+						}else if(paraData.user_emotion=='laugh'){
+							$('#aClickCount-3').children('span.emoIco').addClass('bgBlue');
+//							$('.postCommentLink').attr('id','');
+						}
+									
+						cur_post_desc=paraData.description;
+						cur_post_title=paraData.title;
+						cur_post_user_id=paraData.user_id;
+						cur_post_category_id=paraData.category_id;
+						cur_post_weightage=paraData.weightage;
+						cur_post_super_count=paraData.super_count;
+						cur_post_normal_count=paraData.normal_count;
+						cur_post_laugh_count=paraData.laugh_count;
+						cur_post_shares_count=paraData.shares_count;
+						cur_post_comments_count=paraData.comments_count;
+						cur_post_title_photo=paraData.title_photo_url;
+						cur_post_photo=paraData.photo_url;
+						cur_post_video=paraData.video_url;
+						cur_post_audio=paraData.audio_url;
+						cur_post_file_type=paraData.file_type;
+						cur_post_category_name=paraData.emotions_count;
+						cur_post_author_image_url=paraData.author_image_url;
+						
+						//console.log('inside');
+						$("#postId").html(cur_post_id);
+						$("#post-Id").val(cur_post_id);
+						$("#postTitle").html(cur_post_title);
+						$("#postDescription").html(cur_post_desc);
+						$("#postUserId").html(cur_post_user_id);
+						$("#postCategoryId").html(cur_post_category_id);
+						$("#postWeightage").html(cur_post_weightage);
+						$("#postSuperCount").html(cur_post_super_count);
+						$("#postSuperCount").attr('data-psc',cur_post_super_count);
+						$("#postNormalCount").html(cur_post_normal_count);
+						$("#postNormalCount").attr('data-pnc',cur_post_normal_count);
+						$("#postLaughCount").html(cur_post_laugh_count);
+						$("#postLaughCount").attr('data-plc',cur_post_laugh_count);
+						$("#postSharesCount").html(cur_post_shares_count);
+						$("#postCommentsCount").html(cur_post_comments_count);
+						$('#postTitlePhoto').html(cur_post_title_photo);
+						$("#postPhoto").html(cur_post_photo);
+						$("#postVideo").html(cur_post_video);
+						$("#postAudio").html(cur_post_audio);
+						$('#postFileType').html(cur_post_file_type);
+						$("#postCategoryName").html(cur_post_category_name);
+						$('#postAuthorImage').html(cur_post_author_image_url);
+						
+						
+						/** Value for Getting from **/
+						$("#getpostId").html(cur_post_id);
+						$("#getpostTitle").html(cur_post_title);
+						$("#getpostDescription").html(cur_post_desc);
+						$("#getpostUserId").html(cur_post_user_id);
+						$("#getpostCategoryId").html(cur_post_category_id);
+						$("#getpostWeightage").html(cur_post_weightage);
+						$("#getpostSuperCount").html(cur_post_super_count);
+						$("#getpostSuperCount").attr('data-psc',cur_post_super_count);
+						$("#getpostNormalCount").html(cur_post_normal_count);
+						$("#getpostNormalCount").attr('data-pnc',cur_post_normal_count);
+						$("#getpostLaughCount").html(cur_post_laugh_count);
+						$("#getpostLaughCount").attr('data-plc',cur_post_laugh_count);
+						$("#getpostSharesCount").html(cur_post_shares_count);
+						$("#getpostCommentsCount").html(cur_post_comments_count);
+						$('#getpostTitlePhoto').html(cur_post_title_photo);
+						$("#getpostPhoto").html(cur_post_photo);
+						$("#getpostVideo").html(cur_post_video);
+						$("#getpostAudio").html(cur_post_audio);
+						$('#getpostFileType').html(cur_post_file_type);
+						$("#getpostCategoryName").html(cur_post_category_name);
+						$('#getpostAuthorImage').html(cur_post_author_image_url);
+						
+						//Bind Button Event
+						$("#play-audio").on("click",function(){
+							var url = $(this).attr("url");
+							playAudio(url);						
+						});
+						$("#stop-audio").on("click",function(){
+							stopAudio();
+						});
+					}
+				
+				}
+				
+				/*social sharing */
+				// post_title  --- for title and via tamilanda
+				
+				var tha_icon = "www/img/share.png"
+				$("#google").on("touchend", function () { 
+					//alert("Welcome...");
+					//alert(post_title);
+					$(function(){$('#loading').show();});
+					window.plugins.socialsharing.shareVia('com.google.android.apps.plus',post_title, tha_icon /* img */, null /* url */, function() {$(function(){$('#loading').hide();});}, function(errormsg){alert(errormsg);$(function(){$('#loading').hide();});})
+					});
+				$("#whatsappsend").on("touchend", function () { 
+					//alert("Welcome...");
+					$(function(){$('#loading').show();});
+					window.plugins.socialsharing.shareViaWhatsApp(post_title, tha_icon, null, function(){$(function(){$('#loading').hide();});}, function(errormsg){alert(errormsg);$(function(){$('#loading').hide();});}); 
+					});
+				$("#facebook").on("touchend", function () { 
+					//alert("Welcome...");
+					$(function(){$('#loading').show();});
+					window.plugins.socialsharing.shareViaFacebookWithPasteMessageHint(post_title, tha_icon /* img */, null /* url */, 'Opening Facebook!', function() {$(function(){$('#loading').hide();});}, function(errormsg){alert(errormsg);$(function(){$('#loading').hide();});})
+					});
+				$("#sms").on("touchend", function () { 
+					//alert("Welcome...");
+					//var str = "Welcome Tamizhanda...";
+					$(function(){$('#loading').show();});
+					window.plugins.socialsharing.shareViaSMS(post_title, null /* see the note below */, function(msg) {console.log('ok: ' + msg);$(function(){$('#loading').hide();});}, function(msg) {alert('error: ' + msg);$(function(){$('#loading').hide();});});
+					});
+								
+				
+				//cur_post_id=$("#getpostId").text();
+				cur_post_title=$('#getpostTitle').text();
+				cur_post_desc=$('#getpostDescription').text();
+				cur_post_user_id=$('#getpostUserId').text();
+				cur_post_category_id=$('#getpostCategoryId').text();
+				cur_post_weightage=$('#getpostWeightage').text();
+				cur_post_super_count=$('#getpostSuperCount').text();
+				cur_post_normal_count=$('#getpostNormalCount').text();
+				cur_post_laugh_count=$('#getpostLaughCount').text();
+				cur_post_shares_count=$('#getpostSharesCount').text();
+				cur_post_comments_count=$('#getpostCommentsCount').text();
+				cur_post_title_photo=$('#getpostTitlePhoto').text();
+				cur_post_photo=$('#getpostPhoto').text();
+				cur_post_video=$('#getpostVideo').text();
+				cur_post_audio=$('#getpostAudio').text();
+				cur_post_file_type=$('#getpostFileType').text();
+				cur_post_category_name=$('#getpostCategoryName').text();
+				cur_post_author_image_url=$('#getpostAuthorImage').text();
+				
+				$('body').on('click','.dbDataSelect',function(){
+					//alert('clicked');
+					db.transaction(selectDB, errorCB);
+				});
+				
+				$('body').on('click','.bookmark_link.notFoundDb',function(){
+					db.transaction(populateDB, errorCB, successCB);
+				});
+				
+				$('body').on('click','.bookmark_link.foundDb',function(){
+					
+					$('#deletebookmark').triggerHandler('click');
+				
+					var confirmData = confirm("நான் குறித்தது பதிவிலிருந்து இருந்து இந்த இடுகையை அகற்ற வேண்டுமா?");
+					if (confirmData == true) {
+						db.transaction(deleteDB, errorCB);
+					} else {
+						
+					}
+					
+				});
+								
+				function selectDB(tx) {
+					tx.executeSql('CREATE TABLE IF NOT EXISTS bookmarkData (db_post_id, db_post_title,db_post_description, db_post_user_id,db_post_category_id, db_post_weightage,db_post_super_count,db_post_normal_count,db_post_laugh_count,db_post_shares_count,db_post_comments_count,db_post_title_photo,db_post_photo,db_post_video,db_post_audio,db_post_file_type,db_post_category_name,db_post_author_image_url)');
+					
+					tx.executeSql("SELECT * from bookmarkData where db_post_id=? and db_post_user_id=?", [cur_post_id,cur_post_user_id], querySuccess, errorCB);
+	 
+				}
+					
+				
+								
+				function populateDB(tx) {
+					 tx.executeSql('CREATE TABLE IF NOT EXISTS bookmarkData (db_post_id, db_post_title,db_post_description, db_post_user_id,db_post_category_id, db_post_weightage,db_post_super_count,db_post_normal_count,db_post_laugh_count,db_post_shares_count,db_post_comments_count,db_post_title_photo,db_post_photo,db_post_video,db_post_audio,db_post_file_type,db_post_category_name,db_post_author_image_url)');
+					 
+					 tx.executeSql("SELECT * from bookmarkData where db_post_id=? and db_post_user_id=?", [cur_post_id,cur_post_user_id], querySuccess, errorCB);
+					 
+					 ////tx.executeSql('INSERT INTO bookmarkData (db_post_id, db_post_title,db_post_description, db_post_user_id,db_post_category_id, db_post_weightage,db_post_super_count,db_post_normal_count,db_post_laugh_count,db_post_shares_count,db_post_comments_count,db_post_title_photo,db_post_photo,db_post_video,db_post_audio,db_post_file_type,db_post_category_name,db_post_author_image_url) VALUES ("'+cur_post_id+'", "'+cur_post_title+'", "'+cur_post_desc+'", "'+cur_post_user_id+'", "'+cur_post_category_id+'", "'+cur_post_weightage+'", "'+cur_post_super_count+'", "'+cur_post_normal_count+'", "'+cur_post_laugh_count+'", "'+cur_post_shares_count+'", "'+cur_post_comments_count+'", "'+cur_post_title_photo+'", "'+cur_post_photo+'", "'+cur_post_video+'", "'+cur_post_audio+'", "'+cur_post_file_type+'", "'+cur_post_category_name+'", "'+cur_post_author_image_url+'")');
+					 tx.executeSql('INSERT INTO bookmarkData (db_post_id, db_post_title,db_post_description, db_post_user_id,db_post_category_id, db_post_weightage,db_post_super_count,db_post_normal_count,db_post_laugh_count,db_post_shares_count,db_post_comments_count,db_post_title_photo,db_post_photo,db_post_video,db_post_audio,db_post_file_type,db_post_category_name,db_post_author_image_url) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[cur_post_id,cur_post_title,cur_post_desc,cur_post_user_id,cur_post_category_id,cur_post_weightage,cur_post_super_count,cur_post_normal_count,cur_post_laugh_count,cur_post_shares_count,cur_post_comments_count,cur_post_title_photo,cur_post_photo,cur_post_video,cur_post_audio,cur_post_file_type,cur_post_category_name,cur_post_author_image_url]);
+				}
+				
+				function deleteDB(tx) {
+				 tx.executeSql("DELETE FROM bookmarkData WHERE db_post_id =?", [cur_post_id],SuccessUpdate,errorCB);
+				}
+				function querySuccess(tx, results) {
+					var len = results.rows.length;
+					//console.log("DEMO table: " + len + " rows found.");
+					
+					if(len==0)
+					{
+						//console.log('data not found in DB');
+						console.log($('.bookmark_link').attr('class'));
+						return true;
+						
+					}
+					else
+					{
+						for (var i=0; i<=len; i++){
+							//console.log("Row = " + i + " = " + results.rows.item(i).db_post_id + " Data =  " + results.rows.item(i).db_post_user_id+ "Currentpost Id" +cur_post_id);
+						
+							if(results.rows.item(i).db_post_id==cur_post_id)
+							{
+								//alert('same');
+								$('.bookmark_link').removeClass('notFoundDb');
+								$('.bookmark_link').addClass('foundDb');
+								$('.bookmark_link').children('span.emoIco').addClass('bgGreen');
+								console.log($('.bookmark_link').attr('class'));
+							}
+							else
+							{
+								console.log($('.bookmark_link').attr('class'));
+							}
+							
+							return true;
+						}
+					}
+					return true;
+				}
+				
+				function errorCB(err) {
+					alert("Error processing SQL: "+err.message);
+				}
+
+				function successCB() {
+					$('.bookmark_link').children('span.emoIco').addClass('bgGreen');
+					//alert("இந்த பதிவு குறிகபட்டது");
+					 Materialize.toast('<span style="white-space:nowrap;font-size:10px;">இந்த பதிவு குறிக்கப்பட்டது</span>', 2000)
+				}
+				
+				function selectSuccessCB() {
+					//alert('select success');
+					//console.log('success');
+				}
+				
+				function deleteSuccessCB() {
+					//alert('select success');
+					$('.bookmark_link').children('span.emoIco').removeClass('bgGreen');
+					//console.log('successfully Deleted!');
+				}
+				function SuccessUpdate(tx,result){
+					if (!result.rowsAffected) {
+						alert("Nothing was deleted");
+					} else {
+						//alert("Delete successful");
+						$('.bookmark_link').removeClass('foundDb');
+						$('.bookmark_link').children('span.emoIco').removeClass('bgGreen');
+						$('.bookmark_link').addClass('notFoundDb');
+					}
+				}
+				
+				
+				
+				/** Post Comments to the post **/
+				$("#getText").click(function(){
+					var textValue = $("#textboxId").val();
+					
+					$.ajax({
+					  method: "POST",
+					  url: "http://52.74.69.101:80/api/v1/comments.json",
+					  data: { comment: textValue, user_id: userId,post_id: post_id['id']},
+					  success : function(data){
+						//console.log(data);
+						//alert('உங்கள் கருத்து பதிவானது');
+						Materialize.toast('<span style="white-space:nowrap;font-size:10px;">உங்கள் கருத்து பதிவானது</span>', 2000);
+						$("#textboxId").val('');
+						//window.location.reload();
+						contentResponse();
+						commentResponse();
+					  },
+					  error : function(result, status, err){
+						alert(result.responseJSON['errors']);
+					  },
+					  beforeSend : setHeader
+					});
+				});
+				
+				
+				/** Getting Comments For th e posts already posted  **/
+				function commentResponse(){
+					var commentData = {
+						'post_id' : post_id['id'],
+						'per_page' : "100",
+						'page' : "1"
+					};
+					//console.log(commentData);
+						
+					$.ajax({
+						type: "GET",
+						crossDomain: true,
+						//url: "http://52.74.69.101:80/api/v1/comments.json?post_id="+post_id["id"]+"&per_page=10&page=1",
+						url: "http://52.74.69.101:80/api/v1/comments.json",
+						data:commentData,
+						dataType    : 'json',
+						encode          : true,
+						success : function(data){
+							//console.log(data);
+							//alert("Success");
+							$.fn.comment_response(data);
+
+						},
+						error: function (result, status, err) {
+							alert(result.responseJSON['errors']);
+							//window.location.href = 'allnews.html';
+						},
+						beforeSend : setHeader
+						  
+					});
+			   
+											
+					
+					$.fn.comment_response = function(comData) { 
+						var comContent = ''
+						$.each(comData, function (index, value) {
+							//console.log(paraData);
+							comContent += '<div class="commentclass pad5px">';
+								comContent += '<div class="left padRt5px">';
+									if(value.user_image_url === null || value.user_image_url === "null" || value.user_image_url === "" || value.user_image_url === "http://dvw76oitljc1i.cloudfront.net/"){
+										comContent += '<img src="img/logo.png" alt="" class="circle responsive-img" style="width:50px;height:50px; float:left;"/>';
+									}
+									else {
+										comContent += '<img src="'+ value.user_image_url+'" alt="" class="circle responsive-img" style="width:50px;height:50px; float:left;"/>';
+									}
+								comContent += '</div>';
+								comContent += '<div class="left padLf5px width80per">';
+									comContent += '<span class="block commentName">'+value.user_name+'</span>';
+									comContent += '<p class="commentContent">'+value.comment+'</p>';
+								comContent += '</div> ';
+							comContent += '</div>';
+						})
+						$('#commentCont').html(comContent)
+					}
+				}
+				/** Follow Author **/
+				$('body').on('click','.toFollow',function(){
+					$(this).removeClass('toFollow');
+					$(this).addClass('following');
+					$(this).children('.emoIco').addClass('bgOrange');
+					
+					
+					var followData = {
+						'id' : cur_post_user_id
+					};
+					//console.log(commentData);
+						
+					$.ajax({
+						type: "PUT",
+						crossDomain: true,
+						url: "http://52.74.69.101:80/api/v1/users/"+cur_post_user_id+"/follow.json",
+						data:followData,
+						dataType    : 'json',
+						encode          : true,
+						success : function(data){
+							//console.log(data);
+							//alert("You are Following this author...");
+						},
+						error: function (result, status, err) {
+							alert(result.responseJSON['errors']);
+							//window.location.href = 'allnews.html';
+						},
+						beforeSend : setHeader
+						  
+					});
+				})
+				/** UnFollow Author **/
+				$('body').on('click','.following',function(){
+					$(this).removeClass('following');
+					$(this).children('.emoIco').removeClass('bgOrange');
+					$(this).addClass('toFollow');
+					
+					
+					var unFollowData = {
+						'id' : cur_post_user_id
+					};
+					//console.log(commentData);
+						
+					$.ajax({
+						type: "PUT",
+						crossDomain: true,
+						url: "http://52.74.69.101:80/api/v1/users/"+cur_post_user_id+"/unfollow.json",
+						data:unFollowData,
+						dataType    : 'json',
+						encode          : true,
+						success : function(data){
+							//console.log(data);
+							//alert("You are UNFOLLOW this author...");
+						},
+						error: function (result, status, err) {
+							alert(result.responseJSON['errors']);
+							//window.location.href = 'allnews.html';
+						},
+						beforeSend : setHeader
+						  
+					});
+				})
+				
+				
+				/** Listing Menu All Categories  **/
+				var fullData = {
+					'per_page' : "10",
+					'page' : "1"
+				};
+				//console.log(commentData);
+					
+				$.ajax({
+					type: "GET",
+					crossDomain: true,
+					url: "http://52.74.69.101:80/api/v1/categories.json",
+					data:fullData,
+					dataType    : 'json',
+					encode          : true,
+					success : function(data){
+						//console.log(data);
+						//alert("Success");
+						$.fn.full_response(data);
+
+					},
+					error: function (result, status, err) {
+						alert(result.responseJSON['errors']);
+						//window.location.href = 'allnews.html';
+					},
+					beforeSend : setHeader
+					  
+				});
+				
+				$.fn.full_response = function(fullcontentData) { 
+					var fullContent = ''
+					$.each(fullcontentData, function (index, value) {
+						//console.log(paraData);
+						fullContent += '<li><a href="categories.html?category='+value.id+'" class=""><i class=" "></i><span> '+value.name+'</span></a></li>';
+					})
+					$('#List').html(fullContent);
+				} 
+
+				/** Listing Share All Categories  **/
+				var fullData = {
+					'per_page' : "10",
+					'page' : "1"
+				};
+				//console.log(commentData);
+					
+				$.ajax({
+					type: "GET",
+					crossDomain: true,
+					url: "http://52.74.69.101:80/api/v1/categories.json",
+					data:fullData,
+					dataType    : 'json',
+					encode          : true,
+					success : function(data){
+						//console.log(data);
+						//alert("Success");
+						$.fn.fullList_response(data);
+
+					},
+					error: function (result, status, err) {
+						alert(result.responseJSON['errors']);
+						//window.location.href = 'allnews.html';
+					},
+					beforeSend : setHeader
+					  
+				});
+				
+				$.fn.fullList_response = function(fullcontentData) { 
+					var fullContent = ''
+					$.each(fullcontentData, function (index, value) {
+						//console.log(paraData);
+						fullContent += '<option data-id='+value.id+'>'+value.name+'</option>';
+					})
+					$('#catShareList').append(fullContent);
+				} 
+
+				
+				$('body').on('click','.shareBtn',function(){
+				//$('.shareBtn').click(function(){
+					var catSel=$('#catShareList option:selected').attr('data-id');
+					
+					
+					/** Share  **/
+					var shareData = {
+						'id' : cur_post_id,
+						'category_id' : catSel
+					};
+					//console.log(commentData);
+						
+					$.ajax({
+						type: "POST",
+						crossDomain: true,
+						url: "http://52.74.69.101:80/api/v1/posts/"+cur_post_id+"/reshare.json",
+						data:shareData,
+						dataType    : 'json',
+						encode          : true,
+						success : function(data){
+							//console.log(data);
+							//alert("Successfully Shared...");
+							//$.fn.category_response(data);
+
+						},
+						error: function (result, status, err) {
+							alert(result.responseJSON['errors']);
+							//window.location.href = 'allnews.html';
+						},
+						beforeSend : setHeader
+						  
+					});
+				})
+				
+				$('body').on('click','[id^="aClickCount-"]',function(){
+					var id = this.id;
+					var sid = new Array();
+					sid = (id.split("-"));
+					var fac_id = sid[sid.length-1];
+					
+					
+					if($(".addActive").hasClass('curActive')) {
+						var preActive =  $('.curActive').next('span').attr('id');
+						var prespancontent = $("#"+preActive).html();
+						var new_prespancount = parseInt(prespancontent) - 1;
+						$("#"+preActive).html(new_prespancount);
+						
+						$('.addActive').removeClass('bgBlue').removeClass('curActive');
+						$(this).find('.addActive').addClass('bgBlue').addClass('curActive');
+						
+						var spanId = $("#aClickCount-"+fac_id+" span:nth-child(2)").attr('id')
+						var spancontent = $("#"+spanId).html();
+						var newspancount = parseInt(spancontent) + 1;
+						$("#"+spanId).html(newspancount);
+					}else{
+						$('.addActive').removeClass('bgBlue').removeClass('curActive');
+						$(this).find('.addActive').addClass('bgBlue').addClass('curActive');
+						
+						var spanId = $("#aClickCount-"+fac_id+" span:nth-child(2)").attr('id')
+						var spancontent = $("#"+spanId).html();
+						var newspancount = parseInt(spancontent) + 1;
+						$("#"+spanId).html(newspancount);
+					}
+					
+					//console.log('found')
+					var curActive =  $('.curActive').next('span').attr('id');
+					//console.log(curActive);
+					if(curActive == 'postSuperCount'){
+						var emo_value = 'super';
+						var msg = 'Your rating for this post is '+emo_value;
+					}else if(curActive == 'postNormalCount'){
+						var emo_value = 'normal';
+						var msg = 'Your rating for this post is '+emo_value;
+					}else{
+						var emo_value = 'laugh';
+						var msg = 'Your rating for this post is '+emo_value;
+					}
+					//console.log($('#post-Id').val());
+					$.ajax({
+						type: "PUT",
+						crossDomain: true,
+						url: "http://52.74.69.101:80/api/v1/posts/"+cur_post_id+"/mark_emotion.json",
+						data: {
+							"id": cur_post_id,
+							"emotion":emo_value
+						},
+						dataType    : 'json',
+						encode          : true,
+						success : function(data){
+							//console.log(data);
+							console.log(msg);
+							//window.location.href = 'fullcontent.html'
+							//location.reload(); 
+						},
+						error: function (result, status, err) {
+							alert(result.responseJSON['errors']);
+							//window.location.href = 'allnews.html';
+						},
+						beforeSend : setHeader
+						  
+					});
+					//$('.addActive').removeClass('bgBlue').removeClass('curActive');
+					//$(this).find('.addActive').addClass('bgBlue').addClass('curActive');
+					
+				})
+				
+				$('body').on('click','.modal-confirm',function(){
+				   //alert("hai");
+				   
+					$('.abuseLink').addClass('colorRed');
+					$('.abuseLink').removeClass('toAbuse');
+					console.log($(this).attr('class'));
+					$.ajax({
+						type: "PUT",
+						crossDomain: true,
+						url:"http://52.74.69.101:80/api/v1/posts/"+cur_post_id+"/mark_abused.json",
+						dataType    : 'json',
+						encode          : true,
+						success : function(data){
+							console.log(data);
+							$("#after-abuse").show();
+							$(".abuseLink").hide();
+						},
+						error: function (result, status, err) {
+							alert(result.responseJSON['errors']);
+						},
+						beforeSend : setHeader
+						  
+					});
+				})
+			});
+			
+			function prevPage() {
+				history.go(-1);
+				navigator.app.backHistory();
+			}
+				
+		</script>
+
+
+      
+
+		
+		<title>Tamizhanda</title>
+    </head>
+    <body>
+        <div class="app" >
+		
+            <!-- Header Section -->
+			<div id="loading" style="position: absolute; text-align: center; z-index: 9999999; width: 26%; height: 14%; left: 125px; top: 292px; display:none;">
+				<img src="img/gear.gif" width="100px" height="100px" />
+			</div>
+                      
+			<div class="snap-drawers" >
+				<div class="snap-drawer snap-drawer-left" >
+					<ul class="sideNav">
+						<li>
+							<div class="profileImgCont">
+								<img src="img/profile_bg.jpg" class="bgBigProfileImage"/>
+								<div class="proInnerImgCont">
+									<img src="img/profile_bg.jpg" class="bgSmallProfileImage"/>
+									<span class="profileNameSpan" id="full_name"></span>
+								</div>
+							</div>
+						</li>
+						<li><a href="allnews.html" class=""><i class="bgBlu borderGrey icon-read"></i> <span>மதிப்பிட்டவை</span></a></li>
+						<li><a href="bookmarkpage.html" class=""><i class="bgGree borderGrey icon-offline"></i><span> நான் குறித்தது</span></a></li>
+						<li><a href="trendingpage.html" class=""><i class="bgOrang borderGrey icon-hot"></i><span> பரபரப்பு</span></a></li>
+						<li><a href="superpage.html" class=""><i class="bgBlu borderGrey icon-like"></i><span> சூப்பர்</span></a></li>
+						<li><a href="sumarpage.html" class=""><i class="bgGree borderGrey icon-dislike"></i><span> சுமார்</span></a></li>
+						<li><a href="hahapage.html" class=""><i class="bgOrang borderGrey  icon-smile"></i><span> ஹா.. ஹா</span></a></li>
+						<li><a href="mostcreatepage.html" class=""><i class="bgBlu borderGrey icon-top-author"></i><span> அதிகம் படைத்தவர்கள்</span></a></li>
+             			<li><a href="followpage.html" class=""><i class="bgGree borderGrey icon-follow"></i><span>நான் பின்பற்றுபவர்கள்</span></a></li>  
+						<li><a href="javascript:;" class="postCategoryHead"><i class="bgOrang borderGrey icon-squares36"></i><span> பிரிவை தேர்ந்தெடுக்க</span></a>  
+                        	<ul class="menuSubUl" id="List" style="display:none;">	
+								<li><a href="categories.html?category=1" class=""><i class=" "></i><span> அரசியல்</span></a></li>
+								<li><a href="categories.html?category=2" class=""><i class=" "></i><span> மதம்</span></a></li>
+								<li><a href="categories.html?category=3" class=""><i class=" "></i><span> விளையாட்டு</span></a></li>
+								<li><a href="categories.html?category=4" class=""><i class=" "></i><span> நகைச்சுவை</span></a></li>
+								
+							</ul>
+						</li>						
+					</ul>
+				</div>
+			</div>
+
+            
+            <!-- Container Section -->
+			<section class="contentContainer snap-content" id="content">
+				
+				<header>
+					<nav>
+						<div class="nav-wrapper">
+							<ul class="left widthfull navUl">
+								<li><a href="javascript:;" id="open-left" style="padding:0 4px;" class="sideNavLink"><img src="img/logo.png" height="36px" style="padding:4px 0 4px 0;" /></a></li>
+                              
+								<!--
+								<li><a href="allnews.html" class="active"><i class="icon-home"></i></a></li>
+								<li><a href="mypage.html"><i class="icon-world"></i></a></li>
+								<li><a href="search.html"><i class="icon-search"></i></a></li>
+								<li class="fRight"><a href="javascript:;" class="subLink"><i class="fa fa-ellipsis-v "></i></a></li>
+								<li class="fRight"><a href="notice.html"><i class="icon-noti"></i></a></li>-->
+
+							</ul>
+						</div>
+					</nav>
+					<div class="subLinkCont subLinkContVisible" style="display:none;">
+						<ul class="subLinkUl">
+							<li><a href="myprofile.html"><i class="fa fa-user bgBlue"></i> சுய விவரம்</a></li>
+							<li><a href="settings.html"><i class="fa fa-cog bgGreen"></i> அமைப்புகள்</a></li>
+							<li><a href="feedback.html"><i class="fa fa-microphone bgOrange"></i> கருத்து</a></li>
+							<li><a href="javascript:;"><i class="fa fa-star bgTeal"></i> எங்களை மதிப்பிட  </a></li>
+							<li><a class="modal-trigger" href="#aboutModal"><img src="img/ic_launcher.png" style="width: 25px; vertical-align: middle;"/> எங்களை பற்றி  </a></li>
+						</ul>
+					</div>
+
+					<div class="headBotLink">   
+						<a class="backIco waves-effect waves-dark" href="#" onclick="prevPage()"><i class="fa fa-arrow-left"></i></a>
+						<span class="pageTitleText inBlock marTp5px" id="postCategory"></span>
+						<ul class="right navBotUl margin5px">
+							<!--<li><a href="javascript:;" class=""><i class="fa fa-hand-stop-o"></i></a></li>-->
+							<li><a class="modal-trigger greenBgLink" href="#shareModal"><i class="icon-share"></i></a></li>
+						</ul>
+					</div>
+				</header>
+				<div class="headerClear"></div>
+
+				<div class="mainSection">
+				<a class="modal-trigger" id="deletebookmark" style="display:none; href="#book"></a>
+					<div class="row">
+						<div class="col s12">
+							<div class="card insidePostCard">
+								<a href="javascript:;" class="dbDataSelect" style="display:none;">Select Query</a>
+								<div style="display:none;">
+									<span id="getpostId"></span>
+									<span id="getpostTitle"></span>
+									<span id="getpostDescription"></span>
+									<span id="getpostUserId"></span>
+									<span id="getpostCategoryId"></span>
+									<span id="getpostWeightage"></span>
+									<span id="getpostSuperCount"></span>
+									<span id="getpostNormalCount"></span>
+									<span id="getpostLaughCount"></span>
+									<span id="getpostSharesCount"></span>
+									<span id="getpostCommentsCount"></span>
+									<span id="getpostTitlePhoto"></span>
+									<span id="getpostPhoto"></span>
+									<span id="getpostVideo"></span>
+									<span id="getpostAudio"></span>
+									<span id="getpostFileType"></span>
+									<span id="getpostCategoryName"></span>
+									<span id="getpostAuthorImage"></span>
+									<span id="getpostUserEmotion"></span>
+								</div>
+								
+								<div id="insidePostCont">
+									<img src="img/gear.gif" class="ajaxLoader">
+									
+									<!--
+									<div class="card-image">		
+										<img id="postImage" style="height:150px;"  src="img/defaultpostimg.png"/>
+									
+									</div>
+									<div class="card-action  widthfull">
+										<div class="row borBt1px margin0px padBt5px">
+											<div class="col s8">
+												<div class="inBlock verTop">
+													<img src="img/logo.png" alt="" class="author_img circle responsive-img" style="width:35px;height:35px; float:left;"/>
+												</div>
+												<div class="inBlock verTop">
+													<span class="block authorSpan" id="author_name">தமிழன்டா அணி</span>
+													<a id="" style="" class="toFollow inBlock margin0px" href="javascript:;"><span class="emoIco inBlock borderGrey"><i class="icon-follow"></i></span> <span class="inBlock">பின்பற்ற</span></a>
+												</div>
+											</div>
+											
+											<div style="padding:0px !important;" class="col s4 right textCenter countsCont marTp5px">
+												<a href="javascript:;" class="bookmark_link notFoundDb inBlock margin0px"><span class="emoIco inBlock borderGrey marRt5px"><i class=" icon-offline"></i></span><span class="inBlock">குறிக்க</span></a>
+											</div>
+										</div>
+										<div class="row">
+											<div class="s12 pad5px overflowHid borBt1px">
+												<input type="hidden" id="post-Id" value='+paraData.id+' />
+												
+												<div class="col s3">
+													<div class="verTop">
+														<a href="javascript:;" id="aClickCount-1" class="postCommentLink verMid" style="margin-right:5px;">
+															<span class="emoIco inBlock borderGrey addActive"><i class="icon-like"></i></span>
+															<span class="select_me" data-psc="" id="postSuperCount"></span>
+														</a>
+													</div>
+												</div>
+												
+												<div class="col s3 ">
+													<div class="verTop">
+														<a href="javascript:;" id="aClickCount-2" class="postCommentLink verMid" style="margin-right:5px;">
+															<span class="emoIco inBlock borderGrey addActive"><i class="icon-dislike"></i></span>
+															<span class="select_me" data-pnc="" id="postNormalCount"></span>
+														</a>
+													</div>
+												</div>
+												<div class="col s3">
+													<div class="verTop">
+														<a href="javascript:;" id="aClickCount-3" class="postCommentLink verMid" style="margin-right:5px;">
+															<span class="emoIco inBlock borderGrey addActive"><i class="icon-smile"></i></span>
+															<span class="select_me" data-plc="" id="postLaughCount"></span>
+														</a>
+													</div>
+												</div>
+												<div style="padding:0px !important;" class="col s3">
+													<a href="javascript:;" class="commentTrigger postCommentLink margin0px verMid">
+														<span class="emoIco inBlock borderGrey"><i class="icon-comment"></i></span>
+														<span id="postCommentsCount"></span>
+													</a>
+												</div>
+											</div>
+										</div>
+										
+										
+										<div class="">
+											<div class="col s12 postCont">
+													<h3 class="postDescTitle">தலைப்பு</h3>
+												<span class="postDescSpan">தலைப்பு தலைப்பு தலைப்பு தலைப்புதலைப்புதலைப்பு தலைப்புதலைப்புதலைப்புதலைப்பு தலைப்பு</span>
+											</div>
+										</div>
+									</div>
+									
+									-->
+									
+									
+									
+								</div>
+								<p class="abuseCont"><a href="#abusepopup" class="abuseLink toAbuse modal-trigger" style="font-size:10px;display:none;"><i class="fa fa-exclamation-triangle"></i> புகாரிட</a></p>
+								<p class="abuseCont"><a href="javascript:;" class="colorRed" id="after-abuse" style="font-size:10px;"><i class="fa fa-exclamation-triangle"></i> புகாரிட</a></p>
+								
+								<div class="commentCont" id="commentCont" style="display:none;">
+							
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>      
+				  
+				<!-- Footer Section  -->
+				
+				<!--<div class="footerClear"></div>-->
+				<footer style="position:fixed;bottom:0;">
+					<div class="commentInputOnlyCont commentInputCont">
+						<form class="" name="conversion">
+							<input type="text" placeholder="பதிவை பற்றிய கருத்து !!! " id="textboxId" name="saisie" class="tamiltextbox commentInputBox cadr"  readonly="readonly">
+							<a href="javascript:;" id="getText" class="commentEditIco inBlock bgGrey">
+								<i class="icon-comment"></i>
+							</a>
+						</form>
+					</div>
+				</footer>
+				<div style="display:none;" id="tamilVirtualKeyboard" class="tamilVirtualKeyboard col s12">
+					<table border=0 cellspacing=2 cellpadding=0 class="tamilKeyboardTable">
+						<tbody>
+							<tr class="phase1"> 
+								<td><input class="bt" title="A" onclick="alpha('அ')" value="அ" type="button"/></td>
+								<td><input class="bt" title="AA" onclick="alpha('ஆ')" value="ஆ" type="button"/></td>	
+								<td><input class="bt" title="I" onclick="alpha('இ')" value="இ" type="button"/></td>
+								<td><input class="bt" title="II" onclick="alpha('ஈ')" value="ஈ" type="button"/></td>		
+								<td><input class="bt" title="U" onclick="alpha('உ')" value="உ" type="button"/></td>								
+								<td><input class="bt" title="UU" onclick="alpha('ஊ')" value="ஊ" type="button"/></td>
+								<td><input class="bt" title="E" onclick="alpha('எ')" value="எ" type="button"/></td>
+								<td colspan="2"><input class="bt fa" type="button" onclick="backspace()" value="&#xf177;"/></td>
+							</tr>
+							<tr class="phase1"> 
+								<td><input class="bt" title="EE" onclick="alpha('ஏ')" value="ஏ" type="button"/></td>
+								<td><input class="bt" title="AI" onclick="alpha('ஐ')" value="ஐ" type="button"/></td>
+								<td><input class="bt" title="O" onclick="alpha('ஒ')" value="ஒ" type="button"/></td>
+								<td><input class="bt" title="OO" onclick="alpha('ஓ')" value="ஓ" type="button"/></td>
+								<td><input class="bt" title="KA" onclick="alpha('க')" value="க" type="button"/></td>
+								<td><input class="bt" title="NGA" onclick="alpha('ங')" value="ங" type="button"/></td>
+								<td><input class="bt" title="CA" onclick="alpha('ச')" value="ச" type="button"/></td>
+								<td><input class="bt" title="NYA" onclick="alpha('ஞ')" value="ஞ" type="button"/></td>
+								<td><input class="bt" title="TTA" onclick="alpha('ட')" value="ட" type="button"/></td>
+							</tr>
+							<tr class="phase1"> 
+								<td><input class="bt" title="NNA" onclick="alpha('ண')" value="ண" type="button"/></td>
+								<td><input class="bt" title="TA" onclick="alpha('த')" value="த" type="button"/></td>
+								<td><input class="bt" title="NA" onclick="alpha('ந')" value="ந" type="button"/></td>		
+								<td><input class="bt" title="PA" onclick="alpha('ப')" value="ப" type="button"/></td>
+								<td><input class="bt" title="MA" onclick="alpha('ம')" value="ம" type="button"/></td>		
+								<td><input class="bt" title="YA" onclick="alpha('ய')" value="ய" type="button"/></td>								
+								<td><input class="bt" title="RA" onclick="alpha('ர')" value="ர" type="button"/></td>
+								<td><input class="bt" title="LA" onclick="alpha('ல')" value="ல" type="button"/></td>
+								<td><input class="bt" title="VA" onclick="alpha('வ')" value="வ" type="button"/></td>
+							</tr>							
+							<tr class="phase1"> 
+								<td><input class="bt" title="LLLA" onclick="alpha('ழ')" value="ழ" type="button"/></td>
+								<td><input class="bt" title="LLA" onclick="alpha('ள')" value="ள" type="button"/></td>
+								<td><input class="bt" title="RRA" onclick="alpha('ற')" value="ற" type="button"/></td>
+								<td><input class="bt" title="NNNA" onclick="alpha('ன')" value="ன" type="button"/></td>
+								<td><input class="bt" title="virama" onclick="alpha('்')" value="்" type="button"></td>
+								<td><input class="bt" title="AA " onclick="alpha('ா')" value="ா" type="button"/></td>
+								<td><input class="bt" title="I " onclick="alpha('ி')" value="ி" type="button"/></td>
+								<td><input class="bt" title="II " onclick="alpha('ீ')" value="ீ" type="button"/></td>
+								<td><input class="bt" title="E " onclick="alpha('ெ')" value="ெ" type="button"/></td>
+							</tr>
+							<tr class="phase1">
+								<td><input class="bt" title="EE " onclick="alpha('ே')" value="ே" type="button"/></td>
+								<td><input class="bt" title="U " onclick="alpha('ு')" value="ு" type="button"/></td>
+								<td><input class="bt" title="UU " onclick="alpha('ூ')" value="ூ" type="button"/></td>
+								<td><input class="bt" title="AI " onclick="alpha('ை')" value="ை" type="button"/></td>
+								<td><input class="bt" title="JA" onclick="alpha('ஜ')" value="ஜ" type="button"/></td>	
+								<td><input class="bt" title="SHA" onclick="alpha('ஷ')" value="ஷ" type="button"/></td>	
+								<td><input class="bt" title="sa" onclick="alpha('ஸ')" value="ஸ" type="button"/></td>	
+								<td><input class="bt" title="ha" onclick="alpha('ஹ')" value="ஹ" type="button"/></td>	
+								<td><input class="bt" title="visarga" onclick="alpha('ஃ')" value="ஃ" type="button"/></td>
+							</tr>
+							<tr class="num-spl">
+								<td><input class="bt" title="Koo" onclick="alpha('1')" value="1" type="button"/></td>	
+								<td><input class="bt" title="AI " onclick="alpha('2')" value="2" type="button"/></td>
+								<td><input class="bt" title="O " onclick="alpha('3')" value="3" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('4')" value="4" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('5')" value="5" type="button"/></td>
+								<td><input class="bt" title="Koo" onclick="alpha('6')" value="6" type="button"/></td>	
+								<td><input class="bt" title="AI " onclick="alpha('7')" value="7" type="button"/></td>
+								<td colspan="2"><input class="bt fa" type="button" onclick="backspace()" value="&#xf177;"/></td>
+																
+							</tr>
+							<tr class="num-spl">
+								<td><input class="bt" title="O " onclick="alpha('8')" value="8" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('9')" value="9" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('0')" value="0" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('{')" value="{" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('}')" value="}" type="button"/></td>	
+								<td><input class="bt" title="Koo" onclick="alpha('$')" value="$" type="button"/></td>	
+								<td><input class="bt" title="O " onclick="alpha('&')" value="&" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('(')" value="(" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha(')')" value=")" type="button"/></td>	
+							</tr>
+							<tr class="num-spl">
+								<td><input class="bt" title="Koo" onclick="alpha('+')" value="+" type="button"/></td>	
+								<td><input class="bt" title="AI " onclick="alpha('-')" value="-" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('[')" value="[" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha(']')" value="]" type="button"/></td>
+								<td><input class="bt" title="O " onclick="alpha('@')" value="@" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('_')" value="_" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('\')" value="\" type="button"/></td>
+								<td><input class="bt" title="O " onclick="alpha(':')" value=":" type="button"/></td>
+								<td><input class="bt" title="O " onclick="alpha(';')" value=";" type="button"/></td>
+							</tr>
+							<tr class="num-spl">
+								<td><input class="bt" title="OO " onclick="alpha('\')" value="\" type="button"/></td>
+								<td><input class="bt" title="O " onclick="alpha('*')" value="*" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('#')" value="#" type="button"/></td>
+								<td><input class="bt" title="AU " onclick=alpha("'") value="&#x00027;" type="button"/></td>
+								<td><input class="bt" title="OO " onclick=alpha('"') value="&#x00022;" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('!')" value="!" type="button"/></td>	
+								<td><input class="bt" title="Koo" onclick="alpha('<')" value="<" type="button"/></td>	
+								<td><input class="bt" title="O " onclick="alpha('>')" value=">" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('?')" value="?" type="button"/></td>
+							</tr>
+							<tr class="num-spl">
+								<td><input class="bt" title="AI " onclick="alpha('^')" value="^" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('%')" value="%" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('~')" value="~" type="button"/></td>
+								<td><input class="bt" title="Koo" onclick="alpha(',')" value="," type="button"/></td>	
+								<td><input class="bt" title="AI " onclick="alpha('.')" value="." type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('=')" value="=" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('|')" value="|" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="" value="" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="" value="" type="button"/></td>									
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="2"><input class="bt fa" type="button" value="..." id="bt-pahse" /></td>	
+								<td style="width:40px !important;"><input class="bt" type="button" value="123" style="font-size:10px !important;" id="bt-num-spl"/></td>
+								<td colspan="3"><input class="bt" onclick="alpha(' ')" value="&#x023B5;" type="button" style="background: rgba(0,0,0,0.1);font-size:30px !important;"/></td>
+								<td colspan="2"><input class="bt" onclick="alpha('\n')" value="&#x021B5;" type="button" style="background: rgba(0,0,0,0.1);font-size:30px !important;font-weight:bold"/></td>
+								<td><input class="bt fa kbdHide" type="button" value="&#x02193;"/></td>
+								<!--<td><input class="bt fa" type="button" onclick="backspace()" value="&#xf177;"/></td>-->
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				
+			</section>
+		</div>
+		<!-- Modal Box -->
+			 
+		<div id="aboutModal" class="modal">
+			<img src="img/About-Us.png" style="width: 100%; background: white none repeat scroll 0% 0%; max-height: 500px;"/>
+			<div>
+				<button class="privacyBtn modal-close">Privacy Policy</button>
+				<button class="appBtn modal-close">App Etiquette</button>
+			</div>
+			<div class="clr"></div>
+		</div>
+			 
+		<!-- Modal Structure -->
+		
+		<div id="book" class="modal">
+			<div class="modal-content pad15px">
+				<button class="sendBtn modal-close rateBtn">ஓகே</button>
+				<button class="sendBtn modal-close rateBtn">ரத்து</button>
+				<div class="clr"></div>
+			</div>
+			
+		 </div>	
+		 
+		 <div id="abusepopup" class="modal">
+			<div class="modal-content pad15px">
+			<p>இப்பதிவை புகார் செய்ய வேண்டுமா? உறுதிபடுத்துங்கள்</p>
+				<button class="left waves-effect waves-dark modal-confirm sendBtn modal-close rateBtn">ஓகே</button>
+				<button class="right sendBtn modal-close rateBtn">ரத்து</button>
+				<div class="clr"></div>
+			</div>
+			
+		 </div>	
+	 
+		<!-- Modal Structure -->
+		<div id="shareModal" class="modal">
+			<div class="modal-content pad15px">
+				<h3 class="modalTitle">மறுபகிர்வு</h3>
+				<select class="shareSelect" id="catShareList">
+				<option data-id=''>பிரிவை தேர்ந்தெடுக்க</option>
+				</select>
+				<div class="h10"></div>
+					<button type="button" class="left btnCus shareBtn waves-effect waves-dark btn-flat modal-close">ஓகே</button>
+					<button type="button" class="right btnCus shareBtn waves-effect waves-dark btn-flat modal-close">ரத்து</button>
+					<div class="clr"></div>
+				
+				<div class="lineTitle">
+					<span>அல்லது</span>
+					</div>
+				<div class="h10"></div>
+				<ul class="shareUl">
+					<!--<li><a href="javascript:;" id="xfacebook" disabled="disabled"><i class="fa fa-facebook fbBg"></i> பேஸ்புக்</a></li>-->
+					<li><a href="javascript:;" id="sms" ><i class="fa fa-envelope-o fbBg"></i> SMS</a></li>
+					<li><a href="javascript:;" id="google"><i class="fa fa-google-plus gplusBg"></i> கூகிள்</a></li>
+					<li><a href="javascript:;" id="whatsappsend"><i class="fa fa-whatsapp whatsappBg"></i> வாட்ஸ் அப்</a></li>
+				</ul>
+				<!--<div class="h10"></div>
+				<button type="button" class="left btnCus shareBtn waves-effect waves-dark btn-flat modal-close">ஓகே</button>
+				<button type="button" class="right btnCus shareBtn waves-effect waves-dark btn-flat modal-close">ரத்து</button>
+				<div class="clr"></div>
+			</div>-->
+		</div>
+		
+		
+		<script type="text/javascript" >
+				$(function() {
+					//$('.mainSection').css('height','auto');
+					$('.headerClear').css('height',$('header').height());
+					//Keyboard Actions
+					$('.num-spl').hide();
+					//$('.phase2').hide();
+					
+					$("#bt-num-spl").click(function(){
+						//$('.phase1').hide();
+						//$('.phase2').hide();
+						//$('.num-spl').show();
+						if($(this).val()=="123")
+						{
+							$(this).val("அஆஇ");
+						}
+						else
+						{
+							$(this).val("123");
+						}
+						if($('.phase1').is(":visible")){
+							$('.phase1').hide();
+							$('.num-spl').show();
+
+						}else if($('.num-spl').is(":visible")){
+							$('.num-spl').hide();
+							$('.phase1').show();
+						}
+					
+					});
+					$('.kbdHide').click(function(){
+						$('#tamilVirtualKeyboard').css('display','none');
+						$('.tamiltextbox').attr('data-id', '0');
+					})
+					$('.tamiltextbox').click(function(){
+						var X=$(this).attr('data-id');
+						assignFocusElement($(this).attr("name"));
+						
+						//console.log($('.tamilVirtualKeyboard').height());
+						
+						if(X==1){
+							//$("#tamilVirtualKeyboard").hide();
+							$('#tamilVirtualKeyboard').css('display','none');
+							$(this).attr('data-id', '0');
+							
+							$('.footerClear').hide();
+							$('footer').css('bottom','0');
+							$('#tamilVirtualKeyboard').css({
+								position:'fixed',
+								top:'100%',
+								bottom:'auto'
+							});
+							
+						}else{
+							$('#tamilVirtualKeyboard').css('display','block');
+							//$('.contentScrTamil').animate({scrollTop:document.body.scrollHeight},300);
+							$('.footerClear').show();
+							$('footer').css('bottom',$('.tamilVirtualKeyboard').height());
+							$('#tamilVirtualKeyboard').css({
+								position:'fixed',
+								top:'auto',
+								bottom:'0'
+							});
+							$(this).attr('data-id', '1');
+							
+						}
+						
+						//$('#tamilVirtualKeyboard').css('display','block');
+						
+					});
+					
+					$("#tamilVirtualKeyboard").mouseup(function(){
+						return false
+					});
+					$(".tamiltextbox").mouseup(function(){
+						return false
+					});
+					
+					$(document).mouseup(function(){
+						$("#tamilVirtualKeyboard").hide();
+						$(".tamiltextbox").attr('data-id', '');
+						$('footer').css('bottom','0');
+					});
+					
+					$('.mainSection').on("touchstart",function(){
+						$("#tamilVirtualKeyboard").hide();
+						$('footer').css({
+							bottom:'0'
+						});
+						$(".tamiltextbox").attr('data-id', '');
+						
+					});
+					
+					
+					
+					
+				});
+				
+				function hideKeyboard(element) {
+					element.attr('readonly', 'readonly'); // Force keyboard to hide on input field.
+					element.attr('disabled', 'true'); // Force keyboard to hide on textarea field.
+					setTimeout(function() {
+						element.blur();  //actually close the keyboard
+						// Remove readonly attribute after keyboard is hidden.
+						element.removeAttr('readonly');
+						element.removeAttr('disabled');
+					}, 100);
+				}
+			
+			
+			</script>
+		
+    </body>
+</html>

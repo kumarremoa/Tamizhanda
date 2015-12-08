@@ -1,0 +1,806 @@
+﻿<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="format-detection" content="telephone=no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <meta charset="utf-8" />
+        <!-- Stylesheet -->
+        <!--<link rel="stylesheet" type="text/css" href="css/index.css" />-->
+        <link rel="stylesheet" type="text/css" href="css/style.css" /><link rel="stylesheet" type="text/css" href="css/setting.css" />
+        <link rel="stylesheet" type="text/css" href="css/style_nan.css" />
+        <link rel="stylesheet" type="text/css" href="css/tamilzandaFonts.css" />
+        
+        <!-- Scripts -->
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        
+        <!-- Library -->
+        <!--<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>-->
+		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="js/jquery-2.1.3.js"></script>
+        <!-- Materialize -->
+        <link rel="stylesheet" type="text/css" href="css/materialize.css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        
+        <script type="text/javascript" src="js/materialize.js"></script>
+        
+        
+        <script type="text/javascript" src="js/jquery.touchSwipe.js"></script>
+
+		<script src="js/prefixfree.min.js"></script>
+
+		<link rel="stylesheet" href="css/owl.carousel.css">
+		
+		<script src="js/owl.carousel.js"></script>
+
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
+        
+		<link rel="stylesheet" href="css/snap.css">
+		
+		<script src="js/snap.js"></script>
+		
+		<!-- Star rating -->
+		<link rel="stylesheet" href="css/jRating.jquery.css">
+		
+		<script src="js/jRating.jquery.js"></script>
+        
+
+        <!-- Custom -->
+        <script type="text/javascript" src="js/custom.js"></script>
+
+
+	<script>
+		
+	$.noConflict();
+	(function( $ ) {
+    
+    
+		$(function() {
+		
+			
+			/** beforeSend: function (xhr) {
+				username = "http://52.74.69.101/api/v1/swagger_doc";
+				password = "b0c63ac4392b030c8a4710f4bc73487d76678ab647a47fabf3";
+				xhr.setRequestHeader ("Authorization", "Basic " + btoa(username + ":" + password));
+			},*/
+
+               var token=window.localStorage.getItem("auth_token");
+				var full_name=window.localStorage.getItem("full_name");
+				var notify_option=window.localStorage.getItem("is_notifications_enabled");
+				
+				$('#full_name').html(full_name);
+				function setHeader(xhr) {
+				  xhr.setRequestHeader('Auth-Token', token);
+				}
+				   	/* for profile img*/
+				var user_id = window.localStorage.getItem("id");
+				//var img_url = "http://dvw76oitljc1i.cloudfront.net/";
+				$.ajax({
+					type:"GET",
+					crossDomain: true,
+					url:"http://52.74.69.101:80/api/v1/users/"+user_id+".json",
+					dataType    : 'json',
+					encode          : true,
+					success:function(data){
+						console.log(data);
+						profile_img_url = data.profile_image_url;
+						if(profile_img_url){
+							$('.bgBigProfileImage').attr('src',profile_img_url);
+							$('.bgSmallProfileImage').attr('src',profile_img_url);
+						}
+					},
+					error: function (result, status, err) {
+						alert(result.responseJSON['errors']);
+						//window.location.href = 'allnews.html';
+					},
+					beforeSend : setHeader
+				});
+				
+				
+			
+
+				/** Listing All Categories  **/
+				var myData = {
+					'per_page' : "100",
+					'page' : "1"
+				};
+				//console.log(catData);
+					
+				$.ajax({
+					type: "GET",
+					crossDomain: true,
+					url: "http://52.74.69.101:80/api/v1/categories.json",
+					data:myData,
+					dataType    : 'json',
+					encode          : true,
+					success : function(data){
+						//console.log(data);
+						//alert("Success");
+						$.fn.my_response(data);
+					},
+					error: function (result, status, err) {
+						alert(result.responseJSON['errors']);
+						//window.location.href = 'allnews.html';
+					},
+					beforeSend : setHeader
+					  
+				});
+					
+				$.fn.my_response = function(mypageData) { 
+					var myContent = ''
+					$.each(mypageData, function (index, value) {
+						//console.log(paraData);
+						myContent += '<li><a href="categories.html?category='+value.id+'" class=""><i class=" "></i><span> '+value.name+'</span></a></li>';
+					})
+					$('#catList').html(myContent);
+				}
+				
+				$('.rateBtn').click(function(){
+					//alert();
+					
+					var ratingData = {
+							'star' : $('#ratingInput').text()
+						};
+						//console.log(formData);
+						
+					$.ajax({
+						type: "POST",
+						crossDomain: true,
+						url: "http://52.74.69.101:80/api/v1/users/rating.json",
+						//url:'192.168.1.34',						
+						data:ratingData,
+						dataType    : 'json',
+						encode          : true,
+						success : function(data){
+							console.log(data);
+							//alert("Success");
+							//$.fn.new_post_response(data);
+
+						},
+						error: function (result, status, err) {
+							alert(result.responseJSON['errors']);
+							//window.location.href = 'allnews.html';
+						},
+						beforeSend : setHeader
+						  
+					});
+				})
+				
+				$(".starRating").jRating({
+					onSuccess : function(){
+						//alert(floatval($_POST['rate']));
+					}
+				});
+			});
+		})(jQuery);
+	</script>
+		
+
+        <title>Tamizhanda</title>
+    </head>
+    <body>
+
+		<div class="app">
+            <!-- Header Section -->
+			  <div class="helpDiv helpMenu" style="display:none;">
+				<img class="helpImg" src="img/help_1.png"/>
+				<a href="javascript:;" style="display:none;" class="helpBtn helpPrev">மீண்டும்</a>
+				<a href="javascript:;" class="helpBtn helpClose"><img src="img/helpClose.png" /></a>
+				<a href="javascript:;" class="helpBtn helpNext">அடுத்த</a>
+			</div>
+            <div class="snap-drawers">
+				<div class="snap-drawer snap-drawer-left">
+					<ul class="sideNav">
+						<li>
+							<div class="profileImgCont">
+								<img src="img/profile_bg.jpg" class="bgBigProfileImage"/>
+								<div class="proInnerImgCont">
+									<img src="img/profile_bg.jpg" class="bgSmallProfileImage"/>
+									<span class="profileNameSpan" id="full_name"></span>
+								</div>
+							</div>
+						</li>
+						<li><a href="allnews.html" class=""><i class="bgBlu borderGrey icon-read"></i> <span>மதிபிட்டவை</span></a></li>
+						<li><a href="bookmarkpage.html" class=""><i class="bgGree borderGrey icon-offline"></i><span> நான் குறித்தது</span></a></li>
+						<li><a href="trendingpage.html" class=""><i class="bgOrang borderGrey icon-hot"></i><span> பரபரப்பு</span></a></li>
+						<li><a href="superpage.html" class=""><i class="bgBlu borderGrey icon-like"></i><span> சூப்பர்</span></a></li>
+						<li><a href="sumarpage.html" class=""><i class="bgGree borderGrey icon-dislike"></i><span> சுமார்</span></a></li>
+						<li><a href="hahapage.html" class=""><i class="bgOrang borderGrey  icon-smile"></i><span> ஹா.. ஹா</span></a></li>
+						<li><a href="mostcreatepage.html" class=""><i class="bgBlu borderGrey icon-top-author"></i><span> அதிகம் படைத்தவர்கள்</span></a></li> 
+						<li><a href="followpage.html" class=""><i class="bgGree borderGrey icon-follow"></i><span>நான் பின்பற்றுபவர்கள்</span></a></li> 
+
+						<li><a href="javascript:;" class="postCategoryHead"><i class="bgOrang borderGrey icon-squares36"></i><span>பிரிவை தேர்ந்தெடுக்க</span></a>
+							
+							<ul class="menuSubUl" id="catList" style="display:none;">	
+								<li><a href="categories.html?category=1" class=""><i class=" "></i><span> அரசியல்</span></a></li>
+								<li><a href="categories.html?category=2" class=""><i class=" "></i><span> மதம்</span></a></li>
+								<li><a href="categories.html?category=3" class=""><i class=" "></i><span> விளையாட்டு</span></a></li>
+								<li><a href="categories.html?category=4" class=""><i class=" "></i><span> நகைச்சுவை</span></a></li>
+								
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+            
+            <!-- Container Section -->
+			<section class="contentContainer snap-content" id="content">
+				<header>
+					<nav>
+						<div class="nav-wrapper">
+							<ul class="left widthfull navUl">
+								<li><a href="javascript:;" id="open-left" style="padding:0 4px;" class="sideNavLink"><img src="img/logo.png" height="36px" style="padding:4px 0 4px 0;" /></a></li>
+								<li><a href="allnews.html"><i class="icon-home"></i></a></li>
+								<li><a href="mypage.html" class="active"><i class="icon-world"></i></a></li>
+								<li><a href="search.html"><i class="icon-search"></i></a></li>
+								<li class="fRight"><a href="javascript:;" class="subLink"><i class="fa fa-ellipsis-v "></i></a></li>
+								<li class="fRight posRel"><a href="notice.html"><i class="icon-noti"></i></a><span class="notifCont" id="notifCount">10</span></li>
+							</ul>
+						</div>
+					</nav>
+					<div class="subLinkCont subLinkContVisible" style="display:none;">
+						<ul class="subLinkUl">
+							<li><a href="myprofile.html"><i class="fa fa-user bgBlue"></i> சுய விவரம்</a></li>
+							<li><a href="settings.html"><i class="fa fa-cog bgGreen"></i> அமைப்புகள்</a></li>
+							<li><a href="feedback.html"><i class="fa fa-microphone bgOrange"></i> கருத்து</a></li>
+							<li><a class="modal-trigger" href="#ratingModal"><i class="fa fa-star bgTeal"></i> எங்களை மதிப்பிட  </a></li>
+							<li><a class="helpContLink" href="javascript:;"><i class="fa  fa-question bgBlack"></i> உதவி பக்கம்  </a></li>
+							<li><a class="modal-trigger" href="#aboutModal"><img src="img/ic_launcher.png" style="width: 25px; vertical-align: middle;"/> எங்களை பற்றி  </a></li>
+						</ul>
+					</div>
+
+					
+
+					<div class="headBotLink pad0px">  
+						<div id="tabMenu" class="owl-carousel">
+							 <div>
+								<a href="javascript:;" id="tab-1" class="tabLink active">என் பக்கம்</a>
+							 </div>
+							 <div>
+								<a href="javascript:;" id="tab-2" class="tabLink">என் பிரிவுகள்</a>
+							 </div>
+							 <div>
+								<a href="javascript:;" id="tab-3" class="tabLink">என் பதிவுகள்</a>
+							 </div>
+						</div>
+					</div>
+				</header>
+				<div class="headerClear"></div>
+
+				<div class="mainSection">
+					<div id="tabCont-1" class="tabData">
+						<div class="h10"></div>
+						<div class="row">
+							<div class="postIndSection">
+								<div class="lineTitle"><span class="">அனைத்து பதிவுகள்</span></div>
+								<div id="allnews" class="">
+									<div style="min-height:180px;position:relative;"><img style="height:60px;" src="img/gear.gif" class="ajaxLoader"></div>
+								</div>
+							
+							</div>
+							<div class="postIndSection">
+								<div class="lineTitle"><span class=""> கேள்விக்கென்ன பதில் </span></div>
+								<div id="qapost" class="">									
+									<div style="min-height:180px;position:relative;"><img style="height:60px;" src="img/gear.gif" class="ajaxLoader"></div>
+								</div>
+							</div>
+							
+							
+						</div>
+					</div>
+					<div id="tabCont-2"  class="tabData">
+										
+						<div class="row" id="myCategory">
+							
+						</div>
+						
+						
+					</div>  
+					<div id="tabCont-3"  class="tabData">
+						<img src="img/gear.gif" class="ajaxLoader">
+					</div>  
+				</div>
+    			<!-- Footer Section  -->
+    			<div class="footerClear"></div>
+    			<footer>
+    				<div class="commentInputCont">
+    					<input type="button" class="commentInputBox" value="உங்கள் பதிவை படைக்க ">
+    					<a class="commentEditIco inBlock bgGreen" href="javascript:;">
+    						<i class="icon-post"></i>
+    					</a>
+    				</div>
+    			</footer>
+    
+    			 
+           </section>
+
+		   <!-- Modal Structure -->
+		   <div id="aboutModal" class="modal">
+						<img src="img/About-Us.png" style="width: 100%; background: white none repeat scroll 0% 0%; max-height: 500px;"/>
+						<div>
+							<button class="privacyBtn modal-close">Privacy Policy</button>
+							<button class="appBtn modal-close">App Etiquette</button>
+						</div>
+						<div class="clr"></div>
+					</div>
+		   
+		   <div id="ratingModal" class="modal">
+				<div class="modal-content pad15px">
+					<h3 class="modalTitle " style="border-bottom:1px solid rgba(0,0,0,0.2);"><span class="emoIco inBlock bgTeal marRt5px"><i class="fa fa-star "></i></span><span class="inBlock noWrap"> எங்களை மதிப்பிட </span>  </a> </h3>
+					<p class="feedTopText">உங்களின் மதிப்பிடல் வரவேற்கப்படுகிறது</p>
+					<div class="h10"></div>
+					<div class="starRating" style="margin:0 auto;" data-average="4.5" data-id="1"></div>
+					<!--
+					-->
+					<button class="sendBtn modal-close rateBtn" style="margin-top:20px;">ஓகே</button>
+					<div class="clr"></div>
+				</div>
+			</div>
+			<div id="shareModal" class="modal" style="width:90%;">
+				<div class="modal-content pad15px">
+					<h3 class="modalTitle borderBt1pxDull font12px lineHt20px">நீங்கள் பின்பற்ற விரும்பும் பிரிவுகளை தேர்வு செய்யவும் </h3>
+					<div class="h10"></div>
+					<div id="catToLike" class="owl-carousel">
+						 <!-- <div>
+							<ul class="shareUl">
+								<li><button class="catButton borderedFlatBtn BorderGreen colorGreen">அரசியல்</button></li>
+								<li><button class="catButton borderedFlatBtn BorderGreen colorGreen" > பொழுதுபோக்கு</button></li>
+								<li><button class="catButton borderedFlatBtn "> சுகாதாரம்</button></a></li>
+								<li><button class="catButton borderedFlatBtn BorderGreen colorGreen"> விளையாட்டு</button></li>
+								<li><button class="catButton borderedFlatBtn BorderGreen colorGreen" > பொழுதுபோக்கு</button></li>
+							</ul>
+						 </div>
+						 <div>
+							<ul class="shareUl">
+								<li><button class="catButton borderedFlatBtn BorderGreen colorGreen">அரசியல்</button></li>
+								<li><button class="catButton borderedFlatBtn BorderGreen colorGreen" > பொழுதுபோக்கு</button></li>
+								<li><button class="catButton borderedFlatBtn "> சுகாதாரம்</button></a></li>
+								<li><button class="catButton borderedFlatBtn BorderGreen colorGreen"> விளையாட்டு</button></li>
+								<li><button class="catButton borderedFlatBtn BorderGreen colorGreen" > பொழுதுபோக்கு</button></li>
+							</ul>
+						 </div>
+						 <div>
+							<ul class="shareUl">
+								<li><button class="catButton borderedFlatBtn BorderGreen colorGreen">அரசியல்</button></li>
+								<li><button class="catButton borderedFlatBtn BorderGreen colorGreen" > பொழுதுபோக்கு</button></li>
+								<li><button class="catButton borderedFlatBtn "> சுகாதாரம்</button></a></li>
+								<li><button class="catButton borderedFlatBtn BorderGreen colorGreen"> விளையாட்டு</button></li>
+								<li><button class="catButton borderedFlatBtn BorderGreen colorGreen" > பொழுதுபோக்கு</button></li>
+							</ul>
+						 </div> -->
+					</div>
+					
+					
+					
+					
+					<div class="h10"></div>
+					<button class="fav_close autoCenter cusBtn block waves-effect waves-dark modal-close ">தொடர்க</button>
+					<div class="clr"></div>
+					<div id="favCatList" style="display:none;"></div>
+				</div>
+		   </div>
+		</div>
+		
+		
+		<script>
+		 (function( $ ) {
+				$(function() {
+					$('.createCont').css('height',$(window).height());
+					$('.createForm').css('height',$(window).height());
+				
+					
+					$('.catButton').click(function(){
+						$(this).toggleClass('BorderGreen colorGreen');
+					});
+					
+					
+					
+					var token=window.localStorage.getItem("auth_token");
+					var full_name=window.localStorage.getItem("full_name");
+					//alert(token);
+					
+					function setHeader(xhr) {
+					  xhr.setRequestHeader('Auth-Token', token);
+					}
+				
+				/** Listing All Categories  **/
+				var catData = {
+					'per_page' : "100",
+					'page' : "1"
+				};
+				//// console.log(catData);
+					
+				$.ajax({
+					type: "GET",
+					crossDomain: true,
+					url: "http://52.74.69.101:80/api/v1/categories.json",
+					data:catData,
+					dataType    : 'json',
+					encode          : true,
+					success : function(data){
+						// console.log(data);
+						//alert("Success");
+						$.fn.category_response(data);
+						
+						
+						
+
+					},
+					error: function (result, status, err) {
+						alert(result.responseJSON['errors']);
+						//window.location.href = 'allnews.html';
+					},
+					beforeSend : setHeader
+					  
+				});
+				
+				
+				
+				$.fn.category_response = function(categData) { 
+					var catContent = ''
+					$.each(categData, function (index, value) {
+						//// console.log(paraData);
+						catContent += '<li><a href="categories.html?name='+value.name+'" class=""><i class=" "></i><span> '+value.name+'</span></a></li>';
+					})
+					$('#catList').html(catContent);
+				}
+				
+				
+				
+				
+				
+				/** For fav section **/
+				$('body').on('click','.fav_close',function(){
+					$.fn.post_ajax(); // call post json function
+				});
+				
+				$('body').on('click','.follow',function(){
+					//alert("follow");
+					$(this).removeClass('follow');
+					$(this).addClass('unfollow');
+					$(this).toggleClass('borderGreen colorGreen ');
+					get_cat_id=$(this).attr("data-id");
+					
+					
+					var catFollowData = {
+						'id' : get_cat_id
+					};
+						
+					$.ajax({
+						type: "PUT",
+						crossDomain: true,
+						url: "http://52.74.69.101:80/api/v1/categories/"+get_cat_id+"/follow.json",
+						data:catFollowData,
+						dataType    : 'json',
+						encode          : true,
+						success : function(data){
+							console.log(data);
+							//alert("Category follow enabled Successfully...");
+							//location.reload();
+						},
+						error: function (result, status, err) {
+							alert(result.responseJSON['errors']);
+							//window.location.href = 'allnews.html';
+						},
+						beforeSend : setHeader
+						  
+					});
+					
+				
+				});
+				
+				$('body').on('click','.unfollow',function(){
+					//alert('unfollow');
+					$(this).removeClass('unfollow');
+					$(this).addClass('follow');
+					$(this).toggleClass('borderGreen colorGreen ');
+					get_cat_id=$(this).attr("data-id");
+					
+					var catUnFollowData = {
+						'id' : get_cat_id
+					};
+						
+					$.ajax({
+						type: "PUT",
+						crossDomain: true,
+						url: "http://52.74.69.101:80/api/v1/categories/"+get_cat_id+"/unfollow.json",
+						data:catUnFollowData,
+						dataType    : 'json',
+						encode          : true,
+						success : function(data){
+							console.log(data);
+							//alert("Category follow disabled Successfully...");
+							//location.reload();
+						},
+						error: function (result, status, err) {
+							alert(result.responseJSON['errors']);
+							//window.location.href = 'allnews.html';
+						},
+						beforeSend : setHeader
+					});
+					
+				});
+				
+				/** List Only favourite category **/
+				var favCatData;
+				
+				$.ajax({
+					type: "GET",
+					crossDomain: true,
+					url: "http://52.74.69.101:80/api/v1/categories/favourite.json",
+					data:favCatData,
+					dataType    : 'json',
+					encode          : true,
+					success : function(data){
+						//console.log(data);
+						//alert("Success");
+						$.fn.fav_category_response(data);
+
+					},
+					error: function (result, status, err) {
+						alert(result.responseJSON['errors']);
+						//window.location.href = 'allnews.html';
+					},
+					beforeSend : setHeader
+					  
+				});
+				
+				$.fn.fav_category_response = function(favCategData) { 
+					var favCatContent = ''
+					$.each(favCategData, function (index, value) {
+						
+						favCatContent += '<div class="favcatCont borderedFlatBtn marRt5px marBt5px inBlock" data-id="'+value.id+'">'+ value.name+'</div>';
+						//activeCategories();
+						//console.log($('.favcatCont').attr("data-id"));
+						//console.log(favName+"  "+catName);
+						
+						/** for button active **/
+						$('.catButton').each(function(){
+							a = $(this).attr("data-id");
+							//console.log(a+"   "+favName);
+							if(a == value.id){
+							$(this).removeClass('follow');
+							$(this).addClass("borderGreen colorGreen unfollow");
+								
+							}
+						});
+						
+					})
+					$('#favCatList').html(favCatContent);
+					
+				}
+				
+				
+				
+				
+				
+				
+				//post json function
+				$.fn.post_ajax = function(){
+				/** my category Posts **/
+				console.log("post ajax function working..");	
+				var formNewData = {
+					'per_page' : "100",
+					'page' : "1",
+					'scope' :"recent"
+					};
+					//console.log(formData);
+					
+				$.ajax({
+					type: "GET",
+					crossDomain: true,
+					url: "http://52.74.69.101:80/api/v1/posts.json",
+					data:formNewData,
+					dataType    : 'json',
+					encode          : true,
+					success : function(data){
+						//alert(data);
+						//alert("Success");
+						$.fn.my_category_response(data);
+
+					},
+					error: function (result, status, err) {
+						alert(result.responseJSON['errors']);
+						//window.location.href = 'allnews.html';
+					},
+					beforeSend : setHeader
+					  
+				});
+				}
+				
+				$.fn.post_ajax(); // call post json function
+				
+				
+				$.fn.my_category_response = function(paraData) {
+					//console.log(paraData);
+					var divContent = ''
+					if(paraData==''||paraData=='')
+					{
+						divContent += '<div style="color:rgba(0,0,0,0.4);font-size:16px;padding-top:30px;text-align:center;">உங்களை கவர்ந்த பிரிவை தேர்ந்து அதைப்பற்றிய புது செய்திய தெரிஞ்சுகோங்க...</div>';
+						/*divContent += '<div class="col s12" >';
+						divContent += <div class="btnCont textCenter marTpBt10px">';
+								divContent += '<a href="#shareModal" class="modal-trigger greenBgLink" style="width:96%;display:block;margin:0 auto;"><button class="cusBtn notoui" >நீங்கள் பின்பற்ற விரும்பும் பிரிவுகளை தேர்வு செய்யவும் </button></a>';
+							divContent += '</div>'; 
+						divContent += '</div>';*/
+						
+						$('#myCategory').html(divContent);
+					}
+					else
+					{   			
+						$.each(paraData, function (index, value) {
+							if(index==0)
+							{
+								divContent += '<div class="col s12" id="CatButtonCont" style="padding:10px 0;">';
+									divContent += '<div class="btnCont textCenter">';
+										divContent += '<a href="#shareModal" class="modal-trigger greenBgLink" style="width:96%;display:block;margin:0 auto;"><button class="cusBtn notoui" >நீங்கள் பின்பற்ற விரும்பும் பிரிவுகளை தேர்வு செய்யவும் </button></a>';
+									divContent += '</div>';
+								divContent += '</div>';
+							}
+							else if(index%6==0)
+							{
+								divContent += '<div class="col s6 ">';
+									divContent += '<div class="card">';
+										divContent += '<div class="card-image">';
+											divContent += '<a href="fullcontent.html?id='+value.id+'">';
+												if(value.title_photo_url==="null"||value.title_photo_url==''||value.title_photo_url=='null'||value.title_photo_url==null || value.title_photo_url === "http://dvw76oitljc1i.cloudfront.net/")
+												{
+													if(value.file_type=="audio"){
+													  divContent += '<img src="img/defaultaudioimg.png" alt="Image" style="height:150px;"/>';
+													 }else if(value.file_type=="video"){
+													  divContent += '<img src="img/defaultvideoimg.png" alt="Image" style="height:150px;"/>';
+													 }else{
+													  divContent += '<img src="img/defaultpostimg.png" alt="Image" style="height:150px;"/>';
+													 }
+												}
+												else
+												{
+													divContent += '<img src="'+value.title_photo_url+'" alt="'+value.title_photo_url+'"  style="height:150px;"/>';
+													//divContent += '<img src="img/profile_bg.jpg" alt="'+value.title_photo_url+'" style="height:150px;"/>';
+												}
+											divContent += '</a>';
+										divContent += '</div>';
+										divContent += '<div class="card-action widthfull  colorDullCont twoLnCont">';
+											divContent += '<a href="fullcontent.html?id='+value.id+'" class="card-title"> '+value.title+'</a>';
+										divContent += '</div>';
+
+									divContent += '</div>';
+								divContent += '</div>';
+								
+								/*divContent += '<div class="col s12 catbox" >';
+									divContent += '<div class="btnCont textCenter marTpBt10px">';
+										divContent += '<a href="#shareModal" class="modal-trigger greenBgLink" style="width:96%;display:block;margin:0 auto;"><button class="cusBtn notoui" >நீங்கள் பின்பற்ற விரும்பும் பிரிவுகளை தேர்வு செய்யவும் </button></a>';
+									divContent += '</div>';
+								divContent += '</div>';*/
+							}
+							else
+							{
+								divContent += '<div class="col s6 ">';
+									divContent += '<div class="card">';
+										divContent += '<div class="card-image">';
+											divContent += '<a href="fullcontent.html?id='+value.id+'">';
+												if(value.title_photo_url==="null"||value.title_photo_url==''||value.title_photo_url=='null'||value.title_photo_url==null || value.title_photo_url === "http://dvw76oitljc1i.cloudfront.net/")
+												{
+													divContent += '<img src="img/defaultpostimg.png" alt="Image"/>';
+												}
+												else
+												{
+													divContent += '<img src="'+value.title_photo_url+'" alt="'+value.title_photo_url+'"/>';
+													//divContent += '<img src="img/profile_bg.jpg" alt="'+value.title_photo_url+'"/>';
+												}
+											divContent += '</a>';
+										divContent += '</div>';
+										divContent += '<div class="card-action widthfull  colorDullCont twoLnCont">';
+											divContent += '<a href="fullcontent.html?id='+value.id+'" class="card-title"> '+value.title+'</a>';
+										divContent += '</div>';
+									divContent += '</div>';
+								divContent += '</div>';
+							}
+							
+						})
+						$('#myCategory').html(divContent)
+					}
+				}
+				
+				
+				/** Get Own posts **/
+					var formData = {
+						'per_page' : "100",
+						'page' : "1",
+						'scope' :"own"
+						};
+						// console.log(formData);
+						
+					$.ajax({
+						type: "GET",
+						crossDomain: true,
+						url: "http://52.74.69.101:80/api/v1/posts.json",
+						data:formData,
+						dataType    : 'json',
+						encode          : true,
+						success : function(data){
+							//alert(data);
+							//alert("Success");
+							$.fn.show_response(data);
+
+						},
+						error: function (result, status, err) {
+							alert(result.responseJSON['errors']);
+							//window.location.href = 'allnews.html';
+						},
+						beforeSend : setHeader
+						  
+					});
+					
+					$.fn.show_response = function(paraData) { 
+						// console.log(paraData);
+						var divContent = ''
+						if(paraData==''||paraData=='')
+						{
+							divContent += '<div style="color:rgba(0,0,0,0.4);font-size:16px;padding-top:30px;text-align:center;">உங்கள் எண்ணங்கள் வரவேற்கபடுகிறது! அதிகம் படைத்தது முன்னணிக்கு வாருங்கள்... </div>';
+							$('#tabCont-3').html(divContent);
+						}
+						else
+						{
+							$.each(paraData, function (index, value) {
+								//// console.log(paraData);
+								divContent += '<div class="row">';
+									divContent += '<div class="col s12">';
+										divContent += '<div class="card">';
+											divContent += '<div class="pad10px overHid">';
+												divContent += '<div class="card-image col s4">';
+													divContent += '<a href="fullcontent.html?id='+value.id+'" class="colorBlack cardDescLink">';
+														if(value.title_photo_url==="null"||value.title_photo_url==''||value.title_photo_url=='null'||value.title_photo_url==null)
+														{
+															divContent += '<img  class="ht100px" src="img/defaultpostimg.png" alt="Image"/>';
+														}
+														else
+														{
+															divContent += '<img class="ht100px"  src="'+value.title_photo_url+'" alt="'+value.title_photo_url+'"/>';
+														}
+													divContent += '</a>';
+												divContent += '</div>';
+												divContent += '<div class="col s8 card-action borderTp0px" style="padding-top:0px !important;">';
+													divContent += '<a href="fullcontent.html?id='+value.id+'" class="colorBlack cardDescLink">';
+														divContent += '<span class="desc-span">'+value.title+'</span>'
+													divContent += '</a>';
+													divContent += '<div class="divider"></div>';
+													divContent += '	<div class="colorDullCont">';
+														divContent += '<a href="javascript:;" class="margin0px col s3"><i class="icon-like"></i> '+value.super_count+'</a>';
+														divContent += '<a href="javascript:;" class="margin0px col s3" ><i class="icon-dislike"></i> '+value.normal_count+'</a>';
+														divContent += '<a href="javascript:;" class="margin0px col s3" ><i class="icon-smile"></i> '+value.laugh_count+'</a>';
+														divContent += '<a href="javascript:;" class="margin0px col s3"><i class="icon-comment"></i> '+value.comments_count+'</a>';
+													divContent += '</div>';
+												divContent += '</div>';
+											divContent += '</div>';
+										divContent += '</div>';
+									divContent += '</div>';
+								divContent += '</div>';
+							})
+							$('#tabCont-3').html(divContent)
+						}
+					}
+					
+					
+					
+					
+				});
+			})(jQuery);
+			
+		</script>
+		
+		
+		
+		
+		
+		
+		
+    </body>
+</html>
+
+
+
+       

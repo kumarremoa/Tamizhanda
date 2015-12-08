@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="format-detection" content="telephone=no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <meta charset="utf-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <!-- Stylesheet -->
+        <!--<link rel="stylesheet" type="text/css" href="css/index.css" />-->
+		<link rel="stylesheet" href="css/jquery-mobile/jquery.mobile-1.4.5.min.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css" /><link rel="stylesheet" type="text/css" href="css/setting.css" />
+        <link rel="stylesheet" type="text/css" href="css/style_nan.css" />
+        <!--<link rel="stylesheet" type="text/css" href="css/setting.css" />-->
+        <link rel="stylesheet" type="text/css" href="css/tamilzandaFonts.css" />
+        
+        <!-- Scripts -->
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        
+        <!-- Library -->
+        <!--<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>-->
+		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="js/jquery-2.1.3.js"></script>
+
+        
+		<script src="https://sdk.amazonaws.com/js/aws-sdk-2.2.15.min.js"></script>
+		
+		<!-- Materialize -->
+        <link rel="stylesheet" type="text/css" href="css/materialize.css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        
+        <script type="text/javascript" src="js/materialize.js"></script>
+        
+        <script src="js/snap.js"></script>
+		
+        
+        <!-- Camera -->
+		<!--
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/css/tooltip.min.css">
+        <link rel="stylesheet" href="dist/cropper.css">
+        <link rel="stylesheet" href="css/main.css">
+          -->
+        
+        
+		<!-- Custom -->
+        <script type="text/javascript" src="js/custom.js"></script>
+        
+		
+        <script type="text/javascript" src="js/jquery.touchSwipe.js"></script>
+
+		<script src="js/prefixfree.min.js"></script>
+
+		<link rel="stylesheet" href="css/owl.carousel.css">
+		
+		<script src="js/owl.carousel.js"></script>
+
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
+        
+		<link rel="stylesheet" href="css/snap.css">
+		
+		<!--Tamil Keyboard -->
+		<style type="text/css">
+			.bt {cursor:pointer; font-size:8pt; color:#CC0033; font-family:Latha, Arial Unicode MS;width:100% }
+			.bt:hover {cursor:pointer; font-size:8pt; color:blue; font-family:Latha, Arial Unicode MS; } 
+			.bf {cursor:pointer; font-size:9pt; color:#666666; }
+			.lat { font-family:Arial; }
+			.cadr {color:blue; font-family:Latha, Arial Unicode MS; font-size:10pt; crollbar-base-color:transparent; scrollbar-track-color:transparent; }
+		</style>
+		<link href="TamilKeyboard/style.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="TamilKeyboard/comlat.js"></script>
+		<script type="text/javascript" src="TamilKeyboard/cartam.js"></script>
+		<script type="text/javascript" src="TamilKeyboard/jquery.js"></script>
+		<script type="text/javascript" src="TamilKeyboard/jquery.min.js"></script>
+
+		<script type="text/javascript">
+		 var gaJsHost = (("https:" == document.location.protocol) ? " https://ssl." : "http://www.");
+		 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js ' type='text/javascript'%3E%3C/script%3E"));
+		</script><script src="TamilKeyboard/ga.js" type="text/javascript"></script>
+		<script type="text/javascript">
+		 var pageTracker = _gat._getTracker("UA-122422-1");
+		 pageTracker._initData();
+		 pageTracker._trackPageview();
+		</script>
+        
+		<script>
+			  $(function() {
+
+			   $('body').on("click",'.postCategoryHead',function(){
+					$('.menuSubUl').slideToggle(200);
+				})
+                
+				   $('.app').css('height',$(window).height());
+				   $('.headerClear').css('height',$('header').height());
+					 setTimeout(function(){
+			         $('#content').fadeIn(500,function(){
+					 $('.snap-drawers').show();
+					})
+			    },1000);
+
+					$('.imgUpLink').click(function(){
+						$('#popup-imgUpload-cont').fadeIn(200);                
+					});
+					/*
+					$('.imgUpLink').click(function(){
+						$('#popup-imgUpload-cont').fadeIn(200);                
+					});
+					*/
+					
+					$('.audUpLink').click(function(){
+						//$('#popup-audUpload-cont').fadeIn(200);      
+						$('#popup-audiorecord-cont').fadeIn(200);
+						$('.vidUpLink').hide();
+					});
+					//$('.vidUpLink').click(function(){
+					$('body').on('click','.vidUpLink',function(){
+						$('#popup-vidUpload-cont').fadeIn(200);   
+						$('.audUpLink').hide();
+					});
+					//$('.popup-cus-link').click(function(){
+					$('body').on('click','.popup-cus-link',function(){
+						$('#popup-proImg-cont').fadeOut(200);
+						$('#popup-imgUpload-cont').fadeOut(200);   
+						//$('#popup-audUpload-cont').fadeOut(200);
+						$('#popup-audiorecord-cont').fadeOut(200);
+						$('#popup-vidUpload-cont').fadeOut(200);
+					})
+			  });
+			
+		
+		</script>
+		
+        <title>Tamizhanda</title>
+    </head>
+    <body>
+	<div class="app">
+			
+			<div style="background:#ffF;width:100%;z-index:10;position:absolute;display:none;" class="clapCont"><img src="img/after-create.png" style="width:100%;padding-top:45%" /></div>
+	
+	
+	
+            <!-- Header Section -->
+			<div class="snap-drawers">
+				<div class="snap-drawer snap-drawer-left">
+					<ul class="sideNav">
+						<li>
+							<div class="profileImgCont">
+								<img src="img/profile_bg.jpg" class="bgBigProfileImage"/>
+								<div class="proInnerImgCont">
+									<img src="img/profile_bg.jpg" class="bgSmallProfileImage"/>
+									<span class="profileNameSpan" id="full_name"></span>
+								</div>
+							</div>
+						</li>
+						<li><a href="allnews.html" class=""><i class="bgBlu borderGrey icon-read"></i> <span>மதிப்பிட்டவை</span></a></li>
+						<li><a href="bookmarkpage.html" class=""><i class="bgGree borderGrey icon-offline"></i><span> நான் குறித்தது</span></a></li>
+						<li><a href="trendingpage.html" class=""><i class="bgOrang borderGrey icon-hot"></i><span> பரபரப்பு</span></a></li>
+						<li><a href="superpage.html" class=""><i class="bgBlu borderGrey icon-like"></i><span> சூப்பர்</span></a></li>
+						<li><a href="sumarpage.html" class=""><i class="bgGree borderGrey icon-dislike"></i><span> சுமார்</span></a></li>
+						<li><a href="hahapage.html" class=""><i class="bgOrang borderGrey  icon-smile"></i><span> ஹா.. ஹா</span></a></li>
+						<li><a href="mostcreatepage.html" class=""><i class="bgBlu borderGrey icon-top-author"></i><span> அதிகம் படைத்தவர்கள்</span></a></li>  
+						<li><a href="followpage.html" class=""><i class="bgGree borderGrey icon-follow"></i><span>நான் பின்பற்றுபவர்கள்</span></a></li> 
+
+						<li><a  href="javascript:;" class="postCategoryHead"><i class="bgOrang  borderGrey icon-squares36"></i><span>பிரிவை தேர்ந்தெடுக்க</span></a>
+																	
+						<ul class="menuSubUl" id="catList" style="display:none;">	
+								<li><a href="categories.html?category=1" class=""><i class=" "></i><span> அரசியல்</span></a></li>
+								<li><a href="categories.html?category=2" class=""><i class=" "></i><span> மதம்</span></a></li>
+								<li><a href="categories.html?category=3" class=""><i class=" "></i><span> விளையாட்டு</span></a></li>
+								<li><a href="categories.html?category=4" class=""><i class=" "></i><span> நகைச்சுவை</span></a></li>
+								
+							</ul>
+						</li>						
+					</ul>
+				</div>
+			</div>
+			
+            
+			<!-- hand clap for after create post-->
+			<div id="after-post" style="z-index: 999999; position: absolute; background: rgb(255, 255, 255) none repeat scroll 0% 0%; width: 100%; height: 100%;display:none;">
+				<img src="img/after-create.png" style="width: 100%; position: relative;top: 25%; ">
+			</div>
+            <!-- Container Section -->
+	
+			<section class="contentContainer snap-content contentScrTamil" id="content">
+				<!-- Pop up -->
+			
+				<div id="popup-imgUpload-cont" class="popup-cus-cont" data-role="none" style="display: none;">
+					<div class="popup-cus-inner-cont">
+						<a href="javascript:;" class="close-btn popup-cus-link" data-role="none">X</a>
+						<p>
+							தேர்வு செய்யவும்...<br />
+							<a href="javascript:;" class="popup-cus-link" onclick="getPhoto(navigator.camera.PictureSourceType.CAMERA);" >படம் எடுக்க</a><br />
+							<a href="javascript:;" class="popup-cus-link" onclick="getPhoto(navigator.camera.PictureSourceType.PHOTOLIBRARY);">படத்தை பதிவேற்ற</a><br />
+						</p>
+					</div>
+				</div>
+			
+				<div id="popup-audUpload-cont" class="popup-cus-cont" style="display: none;">
+					<div class="popup-cus-inner-cont">
+						<a href="javascript:;" class="close-btn popup-cus-link" >X</a>
+						<p>
+							தேர்வு செய்யவும்...<br />
+							<a href="javascript:;" class="popup-cus-link" onclick="getAudio();" > ஆடியோ பதிவு செய்ய</a><br />
+							<a href="javascript:;" class="popup-cus-link" onclick="getAudioFile(navigator.camera.PictureSourceType.PHOTOLIBRARY);">ஆடியோ பதிவேற்ற</a><br />
+						</p>
+					</div>
+				</div>
+				
+				<div id="popup-vidUpload-cont" class="popup-cus-cont" style="display: none;">
+					<div class="popup-cus-inner-cont">
+						<a href="javascript:;" class="close-btn popup-cus-link" >X</a>
+						<p>
+							தேர்வு செய்யவும்...<br />
+							<a href="javascript:;" class="popup-cus-link" onclick="getVideo();" >வீடியோ எடுக்க</a><br />
+							<a href="javascript:;" class="popup-cus-link" onclick="getVideoFile();">வீடியோவை பதிவேற்ற</a><br />
+						</p>
+					</div>
+				</div>
+				
+				<div id="popup-audiorecord-cont" class="popup-cus-cont" style="display: none;">
+					<div class="popup-cus-inner-cont">
+						<a href="javascript:;" class="close-btn popup-cus-link" >X</a>
+						<div class="">
+							<!--<div  style="height:36px;width:100%;position:relative;">
+							<button id="recordBtn" class="right btnCus waves-effect waves-dark btn-flat modal-close">ஆடியோ பதிவு</button><br />
+							<button id="stopBtn" class="right btnCus waves-effect waves-dark btn-flat modal-close">பதிவு நிறுத்து</button><br />							
+							<p id="audio_position"></p><br/>
+							<button id="attachAudio" class="right btnCus waves-effect waves-dark btn-flat modal-close">இணைக்கவும்</button></div>
+								-->
+							
+								<!--<button id="recordBtn" class="btnCus waves-effect waves-dark btn-flat modal-close" style="position:absolute;top:0;width:100%;color:#fff;text-align:left;">ஆடியோ பதிவு</button><br />
+								<button id="stopBtn" class="btnCus waves-effect waves-dark btn-flat modal-close"style="position:absolute;top:0;width:100%;color:#fff;">பதிவு நிறுத்து</button><br /> -->
+							<p class="posRel">
+								<a href="javascript:;" id="recordBtn" class=""  style="display:block;position:absolute;top:0;width:100%;text-align:left;" onclick="" >ஆடியோ பதிவு</a><br />
+								<a href="javascript:;" id="stopBtn" class="" style="display:block;position:absolute;top:0;width:100%;text-align:left;" onclick="">பதிவு நிறுத்து</a>
+							</p>
+							
+							<div class="clr"></div>
+							<p id="audio_position" style="margin:0 !important;float:right;"></p>
+							<p id="audio_position_time" style="margin:0 !important;float:right;"></p>
+							<div class="clr"></div>							
+							<!--<button id="attachAudio" class="btnCus waves-effect waves-dark btn-flat modal-close" style="width:100%;">இணைக்கவும்</button>-->
+							<button id="attachAudio" onclick='recordAudio()' class="btnOrange modal-close"  style="margin:0 auto;display:block">இணைக்கவும்</button>
+							<div class="clr"></div>
+						</div>
+					</div>
+				</div>
+				
+				
+				<header>	
+				  <nav>
+						<div class="nav-wrapper">
+							<ul class="left widthfull navUl">
+								<li><a href="javascript:;" id="open-left" style="padding:0 4px;" class="sideNavLink"><img src="img/logo.png" height="36px" style="padding:4px 0 4px 0;" /></a></li>
+                              
+								<!--
+								<li><a href="allnews.html" class="active"><i class="icon-home"></i></a></li>
+								<li><a href="mypage.html"><i class="icon-world"></i></a></li>
+								<li><a href="search.html"><i class="icon-search"></i></a></li>
+								<li class="fRight"><a href="javascript:;" class="subLink"><i class="fa fa-ellipsis-v "></i></a></li>
+								<li class="fRight"><a href="notice.html"><i class="icon-noti"></i></a></li>-->
+
+							</ul>
+						</div>
+					</nav>
+
+					<div class="subLinkCont subLinkContVisible" style="display:none;">
+						<ul class="subLinkUl">
+							<li><a href="myprofile.html"><i class="fa fa-user bgBlue"></i> சுய விவரம்</a></li>
+							<li><a href="settings.html"><i class="fa fa-cog bgGreen"></i> அமைப்புகள்</a></li>
+							<li><a href="#"><i class="fa fa-microphone bgOrange"></i> கருத்து</a></li>
+							<li><a class="modal-trigger" href="#"><i class="fa fa-star bgTeal"></i> எங்களை மதிப்பிட  </a></li>
+							<li><a class="helpContLink" href="javascript:;"><i class="fa  fa-question bgBlack"></i> உதவி பக்கம்  </a></li>
+							<li><a class="modal-trigger" href="#aboutModal"><i class="fa fa-star bgTeal"></i> எங்களை பற்றி  </a></li>
+						</ul>
+					</div>
+
+					
+
+					<div class="headBotLink pad0px">  
+						<div class="headBtWtCont">
+							<a href="javascript:;" class="backIco"><i class="fa fa-arrow-left"></i></a>  <span class="inBlock lineHeight20px marTp5px pageTitleText">உங்கள் பதிவை உருவாக்க<span>
+
+						</div>
+					</div>
+				</header>
+				<div class="headerClear"></div>
+
+				<div class="mainSection">
+						<div id="loading" style="position: absolute; width: 100%; text-align: center; top: 180px; z-index: 99; height: 103%;display:none">
+							<img src="img/gear.gif" width="100px" height="100px" />
+						</div>
+					<section class="contSection" style="padding-bottom:0;">
+						<div class="contentArea marTpBt10px">
+							<div class="content">
+								<form class="" name="conversion">
+									<div id="results"></div>
+									<input id="isTitleImage" type="hidden" value="0"/>
+									<input id="fileTypeCont" type="hidden" value="photo" />
+									<input id="titleFileName" type="hidden" />
+									<input id="fileName" type="hidden" value="" />
+									<div class="imgAddCont marBt10px">
+										<a href="javascript:;" class="imgAddLink imgUpLink">
+											<img id="proImgSrc" src="img/cam-bg.png" alt="" style="height:94%;margin:0 auto;min-width:100px;" />											
+										</a>										
+										<!--<input type="file" id="file-chooser" onChange="readURL(this);" style="display:none;" />-->
+									</div>
+
+					<!-- ###############################Media Cutter HTML Starts from here ############################### -->
+									<div class="vid-aud-cutter-container">
+										<div id="videoArea"></div>
+										<input name='trimFormat' type="hidden" id="trimFormat" value=".mp4">
+										<input name='videoSource' type='hidden' id='videoSource'>
+										<input name='videoLength' type='hidden' id='videoLength' value="6">
+										<div id='rangeSliderG' style='display:none;width:100%;margin:auto'>
+											<div data-track-theme="a" data-theme="b" data-role="rangeslider" data-highlight="false">
+											<input name="range-1a" id="range-1a" min="0" max="100" value="0" onchange="discoPlay(this.value)" type="range">
+											<input name="range-1b" id="range-1b" onchange="discoPlay(this.value)" min="0" max="100" value="100" type="range">
+											</div>
+										</div>
+                                        <div style='text-align:center;'><a id='trimVideo' href='javascript:void(0)' onclick="trimMedia()" class='btn btn-lg btn-success' style='display:none;margin:auto;color:white;width:50%;color:white;'>CUT</a></div>
+									</div>
+					<!-- ###############################Media Cutter Html Ends here #########################################-->
+
+
+									<input type="text" placeholder="தலைப்பு" id="titleText" name="saisie1" class="tamiltextbox colorBlack inputBox marBt10px notoui block" readonly="readonly" />
+									<select class=" inputBox marBt10px notoui block" name="category_id" id="catListSelect" >
+										<option value="">பிரிவை தேர்ந்தெடுக்க</option>
+										<!--
+										<option value="0">எந்த பிரிவில் சேர்க்க</option>
+										<option value="1">அரசியல்</option>
+										<option value="2">சினிமா</option>
+										<option value="3">வர்த்தகம்</option>
+										-->
+									</select>
+									<div class="row">
+										<div class="col s12 commentInputCont">
+											<!--<textarea class="commentBox notoui"  id="textboxId" name="saisie" onblur="setVisible('hide');" onfocus="setVisible('show');" onkeyup="transcrire()" class="cadr"  readonly="readonly"></textarea>-->
+											<textarea class="tamiltextbox commentBox notoui cadr"  id="descboxId" name="saisie2" onkeyup="transcrire()"  readonly="readonly" placeholder="விளக்கம்"></textarea>
+											<ul class="categoryUl commentCatUl">
+												<!--
+												<li>
+													<a class="footerLink inBlock" href="javascript:;">
+														<i class="icon-image"></i>
+													</a>
+												</li>
+												-->
+												<li id="audUpLinkCont">
+													<a class="footerLink inBlock audUpLink"  href="javascript:;">
+														<i class="icon-audio"></i>
+													</a>
+												</li>
+												<li id="vidUpLinkCont">
+													<a class="footerLink inBlock vidUpLink"  href="javascript:;">
+														<i class="icon-video"></i>
+													</a>
+												</li>
+												<li class="imgtext"><p class="imgtext-p">இணைப்பு</p></li>
+												 <li><a class="audioimage"><img src="img/audioimage.jpg" /></a></li> 
+												 <li><a class="videoimage"><img src="img/videoimage.jpg" /></a></li> 
+											</ul>
+										</div>
+									</div>
+									<div>
+										<div class="s12" style="color: rgb(200, 200, 200);" id="attachMessage"></div>
+										<div class="s12" id="videoCont"></div>
+									</div>
+									<div class="btnCont textCenter marTpBt10px">
+										<!--<button type="button" id="upload-button" class="cusBtn notoui" >போஸ்ட் </button>-->
+										<button type="button" id="upload-button" class="cusBtn notoui" >போஸ்ட் </button>
+									</div>
+									<div class="s12" style="color: rgb(200, 200, 200);" id="">ஆடியோ / வீடியோ - வின் இணைப்பு நேரம் பதிவின் அளவை (அ) கருவியின் அமைப்பை பொருத்தது</div>
+								</form>
+							</div>
+						</div>
+					</section>
+					
+					<!-- Modal Box -->
+					<div id="aboutModal" class="modal">
+						<img src="img/About-Us.png" style="width: 100%; background: white none repeat scroll 0% 0%; max-height: 500px;"/>
+						<div>
+							<button class="privacyBtn modal-close">Privacy Policy</button>
+							<button class="appBtn modal-close">App Etiquette</button>
+						</div>
+					  <div class="clr"></div>
+				    </div>
+					<!-- Modal Structure -->
+					<div id="shareModal" class="modal">
+						<div class="modal-content pad15px">
+							<h3 class="modalTitle">மறுபகிர்வு </h3>							
+							<select class="shareSelect">
+								<option>வகையை தேர்வு செய்க </option>
+							</select>
+							<div class="h10"></div>
+							<div class="lineTitle">
+								<span>அல்லது</span>
+							</div>
+							<div class="h10"></div>
+							<ul class="shareUl">
+								<li><a href="javascript:;"><i class="fa fa-facebook fbBg"></i> பேஸ்புக்</a></li>
+								<li><a href="javascript:;"><i class="fa fa-google-plus gplusBg"></i> கூகிள்</a></li>
+								<li><a href="javascript:;"><i class="fa fa-whatsapp whatsappBg"></i> வாட்ஸ் அப்</a></li>
+							</ul>
+							<div class="h10"></div>
+							<button class="right btnCus waves-effect waves-dark btn-flat modal-close">ரத்து</button>
+							<div class="clr"></div>
+						</div>
+				   </div>
+				   
+				   <!-- Audio Recoder 
+				   <div id="recoderModal" class="modal">
+						<div class="modal-content pad15px">
+							<h3 class="modalTitle"> </h3>
+							<button id="recordBtn" class="right btnCus waves-effect waves-dark btn-flat modal-close">Record</button>
+							<button id="stopBtn" class="right btnCus waves-effect waves-dark btn-flat modal-close">Stop</button>
+							<!--<button id="playBtn" class="right btnCus waves-effect waves-dark btn-flat modal-close">Play</button>
+							<div class="h10"></div>
+							<button id="attachAudio" class="right btnCus waves-effect waves-dark btn-flat modal-close">இணைக்கவும்</button>
+							<button class="right btnCus waves-effect waves-dark btn-flat modal-close">ரத்து</button>
+							<div class="clr"></div>
+						</div>
+				   </div>
+				   -->
+			    </div>
+                
+				<div style="display:none" id="tamilVirtualKeyboard" class="tamilVirtualKeyboard col s12">
+				
+					<table border=0 cellspacing=2 cellpadding=0 class="tamilKeyboardTable">
+						<tbody>
+							<tr class="phase1"> 
+								<td><input class="bt" title="A" onclick="alpha('அ')" value="அ" type="button"/></td>
+								<td><input class="bt" title="AA" onclick="alpha('ஆ')" value="ஆ" type="button"/></td>	
+								<td><input class="bt" title="I" onclick="alpha('இ')" value="இ" type="button"/></td>
+								<td><input class="bt" title="II" onclick="alpha('ஈ')" value="ஈ" type="button"/></td>		
+								<td><input class="bt" title="U" onclick="alpha('உ')" value="உ" type="button"/></td>								
+								<td><input class="bt" title="UU" onclick="alpha('ஊ')" value="ஊ" type="button"/></td>
+								<td><input class="bt" title="E" onclick="alpha('எ')" value="எ" type="button"/></td>
+								<td colspan="2"><input class="bt fa" type="button" onclick="backspace()" value="&#xf177;"/></td>
+							</tr>
+							<tr class="phase1"> 
+								<td><input class="bt" title="EE" onclick="alpha('ஏ')" value="ஏ" type="button"/></td>
+								<td><input class="bt" title="AI" onclick="alpha('ஐ')" value="ஐ" type="button"/></td>
+								<td><input class="bt" title="O" onclick="alpha('ஒ')" value="ஒ" type="button"/></td>
+								<td><input class="bt" title="OO" onclick="alpha('ஓ')" value="ஓ" type="button"/></td>
+								<td><input class="bt" title="KA" onclick="alpha('க')" value="க" type="button"/></td>
+								<td><input class="bt" title="NGA" onclick="alpha('ங')" value="ங" type="button"/></td>
+								<td><input class="bt" title="CA" onclick="alpha('ச')" value="ச" type="button"/></td>
+								<td><input class="bt" title="NYA" onclick="alpha('ஞ')" value="ஞ" type="button"/></td>
+								<td><input class="bt" title="TTA" onclick="alpha('ட')" value="ட" type="button"/></td>
+							</tr>
+							<tr class="phase1"> 
+								<td><input class="bt" title="NNA" onclick="alpha('ண')" value="ண" type="button"/></td>
+								<td><input class="bt" title="TA" onclick="alpha('த')" value="த" type="button"/></td>
+								<td><input class="bt" title="NA" onclick="alpha('ந')" value="ந" type="button"/></td>		
+								<td><input class="bt" title="PA" onclick="alpha('ப')" value="ப" type="button"/></td>
+								<td><input class="bt" title="MA" onclick="alpha('ம')" value="ம" type="button"/></td>		
+								<td><input class="bt" title="YA" onclick="alpha('ய')" value="ய" type="button"/></td>								
+								<td><input class="bt" title="RA" onclick="alpha('ர')" value="ர" type="button"/></td>
+								<td><input class="bt" title="LA" onclick="alpha('ல')" value="ல" type="button"/></td>
+								<td><input class="bt" title="VA" onclick="alpha('வ')" value="வ" type="button"/></td>
+							</tr>							
+							<tr class="phase1"> 
+								<td><input class="bt" title="LLLA" onclick="alpha('ழ')" value="ழ" type="button"/></td>
+								<td><input class="bt" title="LLA" onclick="alpha('ள')" value="ள" type="button"/></td>
+								<td><input class="bt" title="RRA" onclick="alpha('ற')" value="ற" type="button"/></td>
+								<td><input class="bt" title="NNNA" onclick="alpha('ன')" value="ன" type="button"/></td>
+								<td><input class="bt" title="virama" onclick="alpha('்')" value="்" type="button"></td>
+								<td><input class="bt" title="AA " onclick="alpha('ா')" value="ா" type="button"/></td>
+								<td><input class="bt" title="I " onclick="alpha('ி')" value="ி" type="button"/></td>
+								<td><input class="bt" title="II " onclick="alpha('ீ')" value="ீ" type="button"/></td>
+								<td><input class="bt" title="E " onclick="alpha('ெ')" value="ெ" type="button"/></td>
+							</tr>
+							<tr class="phase1">
+								<td><input class="bt" title="EE " onclick="alpha('ே')" value="ே" type="button"/></td>
+								<td><input class="bt" title="U " onclick="alpha('ு')" value="ு" type="button"/></td>
+								<td><input class="bt" title="UU " onclick="alpha('ூ')" value="ூ" type="button"/></td>
+								<td><input class="bt" title="AI " onclick="alpha('ை')" value="ை" type="button"/></td>
+								<td><input class="bt" title="JA" onclick="alpha('ஜ')" value="ஜ" type="button"/></td>	
+								<td><input class="bt" title="SHA" onclick="alpha('ஷ')" value="ஷ" type="button"/></td>	
+								<td><input class="bt" title="sa" onclick="alpha('ஸ')" value="ஸ" type="button"/></td>	
+								<td><input class="bt" title="ha" onclick="alpha('ஹ')" value="ஹ" type="button"/></td>	
+								<td><input class="bt" title="visarga" onclick="alpha('ஃ')" value="ஃ" type="button"/></td>
+							</tr>
+							<tr class="num-spl">
+								<td><input class="bt" title="Koo" onclick="alpha('1')" value="1" type="button"/></td>	
+								<td><input class="bt" title="AI " onclick="alpha('2')" value="2" type="button"/></td>
+								<td><input class="bt" title="O " onclick="alpha('3')" value="3" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('4')" value="4" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('5')" value="5" type="button"/></td>
+								<td><input class="bt" title="Koo" onclick="alpha('6')" value="6" type="button"/></td>	
+								<td><input class="bt" title="AI " onclick="alpha('7')" value="7" type="button"/></td>
+								<td colspan="2"><input class="bt fa" type="button" onclick="backspace()" value="&#xf177;"/></td>
+																
+							</tr>
+							<tr class="num-spl">
+								<td><input class="bt" title="O " onclick="alpha('8')" value="8" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('9')" value="9" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('0')" value="0" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('{')" value="{" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('}')" value="}" type="button"/></td>	
+								<td><input class="bt" title="Koo" onclick="alpha('$')" value="$" type="button"/></td>	
+								<td><input class="bt" title="O " onclick="alpha('&')" value="&" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('(')" value="(" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha(')')" value=")" type="button"/></td>	
+							</tr>
+							<tr class="num-spl">
+								<td><input class="bt" title="Koo" onclick="alpha('+')" value="+" type="button"/></td>	
+								<td><input class="bt" title="AI " onclick="alpha('-')" value="-" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('[')" value="[" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha(']')" value="]" type="button"/></td>
+								<td><input class="bt" title="O " onclick="alpha('@')" value="@" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('_')" value="_" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('\')" value="\" type="button"/></td>
+								<td><input class="bt" title="O " onclick="alpha(':')" value=":" type="button"/></td>
+								<td><input class="bt" title="O " onclick="alpha(';')" value=";" type="button"/></td>
+							</tr>
+							<tr class="num-spl">
+								<td><input class="bt" title="OO " onclick="alpha('\')" value="\" type="button"/></td>
+								<td><input class="bt" title="O " onclick="alpha('*')" value="*" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('#')" value="#" type="button"/></td>
+								<td><input class="bt" title="AU " onclick=alpha("'") value="&#x00027;" type="button"/></td>
+								<td><input class="bt" title="OO " onclick=alpha('"') value="&#x00022;" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('!')" value="!" type="button"/></td>	
+								<td><input class="bt" title="Koo" onclick="alpha('<')" value="<" type="button"/></td>	
+								<td><input class="bt" title="O " onclick="alpha('>')" value=">" type="button"/></td>
+								<td><input class="bt" title="OO " onclick="alpha('?')" value="?" type="button"/></td>
+							</tr>
+							<tr class="num-spl">
+								<td><input class="bt" title="AI " onclick="alpha('^')" value="^" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('%')" value="%" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('~')" value="~" type="button"/></td>
+								<td><input class="bt" title="Koo" onclick="alpha(',')" value="," type="button"/></td>	
+								<td><input class="bt" title="AI " onclick="alpha('.')" value="." type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('=')" value="=" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="alpha('|')" value="|" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="" value="" type="button"/></td>
+								<td><input class="bt" title="AU " onclick="" value="" type="button"/></td>									
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="2"><input class="bt fa" type="button" value="..." id="bt-pahse" /></td>	
+								<td style="width:40px !important;"><input class="bt" type="button" value="123" style="font-size:10px !important;" id="bt-num-spl"/></td>
+								<td colspan="3"><input class="bt" onclick="alpha(' ')" value="&#x023B5;" type="button" style="background: rgba(0,0,0,0.1);font-size:30px !important;"/></td>
+								<td colspan="2"><input class="bt" onclick="alpha('\n')" value="&#x021B5;" type="button" style="background: rgba(0,0,0,0.1);font-size:30px !important;font-weight:bold"/></td>
+								<td><input class="bt fa kbdHide" type="button" value="&#x02193;"/></td>
+								<!--<td><input class="bt fa" type="button" onclick="backspace()" value="&#xf177;"/></td>-->
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				
+                <div class="footerClear" style="display:none;"></div>
+				<footer style="height:0;display:none;">
+					<div class="commentInputCont">
+						<a href="javascript:;" class="footerLink inBlock"><i class="fa fa-wechat"></i></a>
+						<ul class="right footUl">
+							<li><a href="javascript:;" class="footerLink active"><i class="fa fa-wechat"></i></a></li>
+							<li><a href="javascript:;" class="footerLink"><i class="icon-dislike"></i></a></li>
+							<li><a href="javascript:;" class="footerLink"><i class="icon-smile"></i></a></li>
+						</ul>
+					</div>
+				</footer>
+                
+				
+	        </section>
+
+			
+			
+		</div>
+	
+		<script>		
+			
+		var pictureSource;   
+		var destinationType;  
+		var mediaType;
+		
+		var mediaVar = null;
+        var recordFileName = "recording.wav";
+        var status = null;
+		var audioFilePath = "";
+		/** Ondevice ready **/
+		/** Reading File in Phonegap **/
+		function ReadFile(imageURI){
+			//alert(imageURI);
+			window.resolveLocalFileSystemURI(imageURI, onResolveSuccess, fail);
+		}
+		function onFileSystemSuccess(fileSystem) {
+			console.log(fileSystem.name);
+		}
+		
+		function onResolveSuccess(fileEntry) {
+			fileEntry.file(function(file){
+			var file_reader = new FileReader();
+			var file_name = file.name;
+			var file_type = file.type;
+			var file_size = file.size;
+			
+			if(document.getElementById('fileTypeCont').value == 'audio' && file_size == 10000000){
+			 //alert("உங்கள் ஆடியோ பதிவு மிகையாகிவிட்டது - தயவசெய்து 10MB'குள் இணைக்கவும்");
+			 Materialize.toast('<span style="white-space:nowrap;font-size:10px;">"உங்கள் ஆடியோ பதிவு மிகையாகிவிட்டது - தயவசெய்து 10MB குள் இணைக்கவும்"</span>', 2000)
+			 return;
+			}
+			
+			if(document.getElementById('fileTypeCont').value == 'video' && file_size == 10000000){
+			 //alert("உங்கள் வீடியோ பதிவு மிகையாகிவிட்டது - தயவசெய்து 10 MB'குள் இணைக்கவும்");
+			 Materialize.toast('<span style="white-space:nowrap;font-size:10px;">"உங்கள் வீடியோ பதிவு மிகையாகிவிட்டது - தயவசெய்து 10 MB குள் இணைக்கவும்"</span>', 2000)
+			 return;
+			}
+			
+			file_reader.onloadend = function (evt) {
+			 console.log("Read as data URL");
+			 console.log(evt.target.result);
+			};
+			file_reader.readAsArrayBuffer(file);
+			file_reader.onload=function(){       
+			 //Uploading to S3     
+			 UploadFileToS3(file_reader.result,file_name,file_type);         
+			};
+			
+		   },fail);
+		}
+
+		function fail(evt) {
+			console.log(error.code);
+			//alert("Error"+error.code);
+			$(function(){$('#loading').hide();});
+		}
+		
+		/* S3 Uploading Action */
+		function UploadFileToS3(imageData,fileName,fileType){	
+			var fileName = "" + (new Date()).getTime() + "_"+fileName;
+			var file_data = imageData;			
+			var file_type = fileType;						
+		
+			if(document.getElementById('isTitleImage').value == '1')
+			{
+				document.getElementById('titleFileName').value = fileName;		
+				document.getElementById('isTitleImage').value = '0';
+			} 			
+			else
+			{
+				document.getElementById('fileName').value = fileName;			
+			}
+			AWS.config.update({accessKeyId: 'AKIAIIXQPW33VP55475A', secretAccessKey: '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'});
+			AWS.config.region = 'us-east-1';
+			var bucket = new AWS.S3({params: {Bucket: 'tamizhandabucket'}});
+			
+			var params = {
+				Key: fileName, 
+				ContentType: file_type, 
+				Body: file_data
+				};
+			$(function(){$('#loading').show();});
+			bucket.upload(params, function (err, data) {							
+				if(err){
+					//alert("ERROR!"+err);
+				}else
+				{
+				 console.log(data);
+					$(function(){$('#loading').hide();});
+					
+					
+					if(document.getElementById('fileTypeCont').value == 'video'){
+					  $(".imgtext-p").show();
+					  $(".videoimage").show();
+					  $("#audUpLinkCont").css('display','none');
+					  $("#vidUpLinkCont").css('display','none');
+					 }
+				   if(document.getElementById('fileTypeCont').value == 'audio'){
+					  $(".imgtext-p").show();
+					  $(".audioimage").show();
+					  $("#audUpLinkCont").css('display','none');
+					  $("#vidUpLinkCont").css('display','none');
+					 }
+					if(document.getElementById('fileTypeCont').value == 'video' || document.getElementById('fileTypeCont').value == 'audio'){
+						//alert("உங்கள் இணைப்பு வெற்றிகரமாக இணைக்கப்பட்டது.");
+						$("#attachMessage").html("உங்கள் இணைப்பு வெற்றிகரமாக இணைக்கப்பட்டது.");
+					}
+				}				
+				return;			
+				
+			});
+			
+		}
+			
+		// Image Action Event			
+		/** Called when a photo is successfully retrieved  **/			
+		function onPhotoURISuccess(imageURI) {			  
+		  var titleImage = document.getElementById('proImgSrc');
+		  titleImage.src = imageURI;
+		  
+		  ReadFile(imageURI);
+		  document.getElementById('isTitleImage').value = '1'; 			
+		  
+		}
+		function onFail(message) {
+		  //alert('Failed because: ' + message);
+		}
+			
+		/** Image Capture Event **/
+		function getPhoto(source) {
+			navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 10, 
+			destinationType: navigator.camera.DestinationType.FILE_URI,
+			allowEdit: true,
+			sourceType: source });
+		}
+		
+		/** Common Function**/
+		function captureSuccess(mediaFiles) {			
+			var res=mediaFiles[0].fullPath;
+            var video = "<video controls='controls' preload='none' id='videoAction' src='"+res+"'></video>";
+            document.getElementById("videoArea").innerHTML = video;
+            document.getElementById('videoSource').value=res;
+            document.getElementById("trimFormat").value =".mp4";
+            invokeRangeSlider();
+            enableTrim();
+            
+		}
+		
+		// capture error callback
+		var captureError = function(error) {
+			//navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+			//Materialize.toast('<span style="white-space:nowrap;font-size:10px;"></span>', 2000)
+
+		};
+		
+		/** Audio event **/						
+		
+		function getAudio(){
+			document.getElementById('fileTypeCont').value = 'audio';
+			var options = { limit: 1, duration: 300 };
+			navigator.device.capture.captureAudio(captureSuccess, captureError, options);
+		}
+		
+		function onAudioURISuccess(mediaFiles) {
+			
+			var i, len;
+			for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+				ReadFile(mediaFiles[i].fullPath);
+			}
+		}
+
+		function onAudioURIFail(error) {
+			var msg = 'An error occurred during capture: ' + error.code;
+			//alert(msg);
+			Materialize.toast('<span style="white-space:nowrap;font-size:10px;">'+msg+'</span>', 2000)
+			
+		}		
+		
+		function getAudioFile(source){
+		    document.getElementById('fileTypeCont').value = 'audio';	
+			navigator.camera.getPicture(onAudioURISuccess, onAudioURIFail, { 
+			destinationType: navigator.camera.DestinationType.FILE_URI,
+			mediaType: navigator.camera.MediaType.ALLMEDIA,
+			sourceType: source });
+		}
+		
+		
+		/** Video event **/
+		function getVideo() {
+			document.getElementById('fileTypeCont').value = 'video';			
+			var options = { limit: 1, duration: 300 };
+			navigator.device.capture.captureVideo(captureSuccess, captureError, options);
+		}
+		
+		function captureVideoSuccess(mediaFiles) {
+			
+			var i, len;
+			for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+				ReadFile(mediaFiles[i].fullPath);				
+			}
+		}
+	
+		function captureVideoError(error) {
+			var msg = 'An error occurred during capture: ' + error.code;
+			//alert(msg);
+			Materialize.toast('<span style="white-space:nowrap;font-size:10px;">'+msg+'</span>', 2000)
+		}
+		
+		function getVideoSuccess(mediaFiles) {
+			/**
+			var i, len;
+			for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+				ReadFile(mediaFiles[i].fullPath);
+			}
+			**/
+			ReadFile(mediaFiles);
+		}
+		
+		function getVideoFileOld(source){
+			document.getElementById('fileTypeCont').value = 'video';
+			navigator.camera.getPicture(getVideoSuccess, captureVideoError, {
+			destinationType: navigator.camera.DestinationType.FILE_URI,
+			mediaType: navigator.camera.MediaType.VIDEO,
+			sourceType: source });
+		}
+
+        //Code added by Omkarsoft from here.
+		function getVideoFile(){
+			document.getElementById('fileTypeCont').value = 'video';
+			navigator.camera.getPicture(videoTakenFromGallerySuccess,videoTakenFromGalleryFailed,{ sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY,
+				mediaType:navigator.camera.MediaType.VIDEO,allowEdit:true,
+			});
+		}
+
+ 
+
+		function videoTakenFromGallerySuccess(res){
+		var video = "<video controls='controls' preload='none' id='videoAction' src='"+res+"'></video>";
+        document.getElementById("videoArea").innerHTML = video;
+		document.getElementById('videoSource').value=res;
+		document.getElementById("trimFormat").value =".mp4";
+		invokeRangeSlider();
+		enableTrim();
+		}
+
+		function videoTakenFromGalleryFailed(){
+			alert("No Video File Chosen by you !");
+		}
+
+		function discoPlay(playFrameTime){
+			getVideoDuration();
+			var vid=document.getElementById('videoAction');
+			vid.play();
+			vid.currentTime=playFrameTime;
+		}
+
+		function getVideoDuration(){
+			var durian=document.getElementById('videoAction').duration;
+			console.log(parseInt(durian));
+			if(parseInt(durian)){
+
+				if(document.getElementById('range-1b').max!=Math.ceil(durian)){
+					document.getElementById('range-1b').value=Math.ceil(durian);
+					document.getElementById('range-1b').max=Math.ceil(durian);
+					document.getElementById('range-1a').max=Math.ceil(durian);
+				}
+
+				return Math.ceil(durian);
+
+			}
+			else
+				return 100;
+		}
+
+		function invokeRangeSlider(){
+			var minRange=0;
+			var maxRange=document.getElementById('videoLength').value;
+			$('#rangeSliderG').show();
+		}
+
+		function removeRangeSlider(){
+			$('#rangeSliderG').hide();
+		}
+
+
+		function disableTrim(){
+			$('#trimVideo').hide();
+		}
+
+		function enableTrim(){
+			$('#trimVideo').show();
+		}
+            
+            
+        function recordAudio(){
+           navigator.device.capture.captureAudio(audioCapturingSuccess, audioCapturingError, {limit:2});
+        }    
+            
+        function audioCapturingSuccess(mediaFiles){
+            
+            var res=mediaFiles[0].fullPath;
+            var audio = "<audio controls='controls' preload='none' id='videoAction' src='"+res+"'></audio>";
+            document.getElementById("videoArea").innerHTML = audio;
+            document.getElementById("trimFormat").value =".wav";
+            document.getElementById('videoSource').value=res;
+            invokeRangeSlider();
+            enableTrim();
+            
+        }   
+
+        function getRevFormat(s){
+        	 var o = '';
+		for (var i = s.length - 1; i >= 0; i--)
+		o += s[i];
+	    var format=o.split(".");
+
+		return format[0];
+        }
+
+        
+        function audioCapturingError(err){
+            
+            console.log(err);
+        }
+            
+            
+    //################### Video Trimming Video Starts from here ##########################        
+        function trimMedia(){
+  
+    var rikata_date=new Date();
+    var videoFilePath=$('#videoSource').val();
+    var durationStart=$('#range-1a').val();
+    var durationEnd=$('#range-1b').val();
+    var trimFormat=$('#trimFormat').val();
+
+    //alert(trimFormat);
+    
+    
+    videoFileName="Media-"+rikata_date.getFullYear()+"-"+rikata_date.getMonth()+"-"+rikata_date.getDate()+"-"+rikata_date.getHours()+"-"+rikata_date.getMinutes()+"-"+rikata_date.getSeconds();
+    console.log('FileName:',videoFileName);
+    console.log('FilePath:',videoFilePath);
+    console.log('trimStart:',durationStart);
+    console.log('trimEnd:',durationEnd);
+    
+    
+    $('#videoArea').html("<div class='' style='padding-top:20px;text-align:center'>Please wait ..</div>");
+    removeRangeSlider();
+    $('#trimVideo').hide();
+    
+    
+     VideoEditor.trim(
+         videoTrimSuccess,
+         videoTrimError,
+         {
+             fileUri: videoFilePath, 
+             outputFileName: videoFileName,
+             trimStart:durationStart,
+             trimEnd:durationEnd,
+             trimFormat:trimFormat
+         });
+
+    
+    
+   }      
+            
+  function videoTrimSuccess(result){
+      $('#videoArea').html("");
+      alert(result);
+  }
+            
+  function videoTrimError(err){
+      alert(err);
+  }            
+            
+//### Video Trimming Ends Here.
+            
+
+	   
+	    /* Audio Recorder for WAV Format */
+		// Set audio position
+		function setAudioPosition(position) {
+			document.getElementById('audio_position').innerHTML = position;
+		}
+
+		function record()
+        {
+            createMedia(function(){
+                status = "recording";
+                mediaVar.startRecord();
+                $("#recordBtn").hide();
+                $("#stopBtn").show();
+				
+				// Stop recording after 10 sec
+				var recTime = 0;
+				var recInterval = setInterval(function() {
+					recTime = recTime + 1;
+					setAudioPosition(recTime + " sec");
+					/*if (recTime >= 10) {
+						clearInterval(recInterval);
+						mediaRec.stopRecord();
+					}*/
+				}, 1000);
+
+
+                
+            },onStatusChange);
+        }
+
+        function createMedia(onMediaCreated, mediaStatusCallback){
+            if (mediaVar != null) {
+                onMediaCreated();
+                return;
+            }
+
+            if (typeof mediaStatusCallback == 'undefined') 
+                mediaStatusCallback = null;
+			if(window.device.platform === "iOS"){				
+				//first create the file
+                window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
+                    fileSystem.root.getFile(recordFileName, {
+                        create: true,
+                        exclusive: false
+                    }, function(fileEntry){
+                        console.log("File " + recordFileName + " created at " + fileEntry.fullPath);
+                        mediaVar = new Media(fileEntry.fullPath, function(){
+                            //alert("Media created successfully");
+							audioFilePath = fileEntry.fullPath;
+                        }, onError, mediaStatusCallback); //of new Media
+                        onMediaCreated();
+                    }, onError); //of getFile
+                }, onError); //of requestFileSystem			
+			}else{				
+				mediaVar = new Media(recordFileName, function(){
+					audioFilePath ="file:///mnt/sdcard/"+recordFileName;
+					//alert("Media created successfully ");
+                }, onError, mediaStatusCallback);
+                onMediaCreated();				
+			}			            
+        }
+
+        function stop()
+        {
+            if (mediaVar == null)
+                return;
+
+            if (status == 'recording')
+            {
+                mediaVar.stopRecord();
+                //alert("Recording stopped");
+            }
+            else if (status == 'playing')
+            {
+                mediaVar.stop();            
+                //alert("Play stopped");
+            } 
+            else
+            {
+                //alert("Nothing stopped");
+            }
+            $("#recordBtn").show();
+            $("#stopBtn").hide();
+            $("#playBtn").show();
+            status = 'stopped';
+			$('#audio_position').css('display','none');
+			$('#audio_position_time').html($('#audio_position').html());
+        }
+
+        function play()
+        {
+            createMedia(function(){
+                status = "playing";
+                mediaVar.play();    
+                $("#recordBtn").hide();
+                $("#stopBtn").show();
+                //$("#playBtn").hide();
+            });
+        }
+
+        function onStatusChange()
+        {
+            if (arguments[0] == 4) //play stopped
+            {
+                $("#recordBtn").show();
+                $("#stopBtn").hide();
+                //$("#playBtn").show();
+            } 
+        }
+
+        function onSuccess()
+        {
+            //do nothing
+        }
+
+        function onError(err)
+        {
+            if (typeof err.message != 'undefined')
+                err = err.message;
+            alert("Error : " + err.message);
+        }
+		
+		</script>
+		<script type="text/javascript" >
+				
+			
+			 $(function() {			 
+				
+				//Audio Player Events
+				$("#stopBtn").hide();				
+				
+				 //validation to check if device is ready is skipped
+
+				$("#recordBtn").click(function(){
+					record();    
+					$('#attachAudio').attr('disabled','disabled');					
+				});
+
+				$("#playBtn").click(function(){
+					//play();
+				});
+
+				$("#stopBtn").click(function(){
+					stop();
+					$('#attachAudio').removeAttr('disabled');
+				});
+				
+				$("#attachAudio").on("click",function(){
+					$('#popup-audiorecord-cont').fadeOut(200);
+					//alert(audioFilePath);
+					if(audioFilePath.length > 0){	
+						document.getElementById('fileTypeCont').value = 'audio';
+						ReadFile(audioFilePath);
+					}else{
+						//alert("தயவு செய்து ஆடியோ பதிவு செய்யவும்");
+						Materialize.toast('<span style="white-space:nowrap;font-size:10px;">தயவு செய்து ஆடியோ பதிவு செய்யவும்</span>', 2000)
+					}
+				});
+				
+				//Keyboard Actions
+				$('.num-spl').hide();
+				//$('.phase2').hide();
+				
+				$("#bt-num-spl").click(function(){
+					//$('.phase1').hide();
+					//$('.phase2').hide();
+					//$('.num-spl').show();
+					if($(this).val()=="123")
+					{
+						$(this).val("அஆஇ");
+					}
+					else
+					{
+						$(this).val("123");
+					}
+					if($('.phase1').is(":visible")){
+						$('.phase1').hide();
+						$('.num-spl').show();
+
+					}else if($('.num-spl').is(":visible")){
+						$('.num-spl').hide();
+						$('.phase1').show();
+					}
+				
+				});
+				
+				$('.kbdHide').click(function(){
+					$('#tamilVirtualKeyboard').css('display','none');
+					$('.tamiltextbox').attr('data-id', '0');
+				})
+				
+			 	$('.tamiltextbox').click(function(){
+					var X=$(this).attr('data-id');
+					assignFocusElement($(this).attr("name"));
+					if(X==1){
+						//$("#tamilVirtualKeyboard").hide();
+						$('#tamilVirtualKeyboard').css('display','none');
+						/*
+						$('#tamilVirtualKeyboard').css({
+							position:'fixed',
+							top:'100%',
+							bottom:'auto'
+						});*/
+						$(this).attr('data-id', '0');	
+					}else{
+						$('#tamilVirtualKeyboard').css('display','block');
+						/*
+						$('#tamilVirtualKeyboard').css({
+							position:'fixed',
+							top:'auto',
+							bottom:'0'
+						});*/
+						$('.contentScrTamil').animate({scrollTop:document.body.scrollHeight},300);
+						$(this).attr('data-id', '1');
+					}
+					
+					//$('#tamilVirtualKeyboard').css('display','block');
+					
+				});
+				
+				$("#tamilVirtualKeyboard").mouseup(function(){
+					return false
+				});
+				$(".tamiltextbox").mouseup(function(){
+					return false
+				});
+				/*
+				$(document).mouseup(function(){
+					$("#tamilVirtualKeyboard").hide();
+					$(".tamiltextbox").attr('data-id', '');
+				});
+				
+				$('.mainSection').on("touchstart",function(){
+					$("#tamilVirtualKeyboard").hide();
+					$(".tamiltextbox").attr('data-id', '');
+				});
+				*/
+				$('.mainSection').css('height','auto');
+				
+				
+			});
+				
+			function hideKeyboard(element) {
+				element.attr('readonly', 'readonly'); // Force keyboard to hide on input field.
+				element.attr('disabled', 'true'); // Force keyboard to hide on textarea field.
+				setTimeout(function() {
+					element.blur();  //actually close the keyboard
+					// Remove readonly attribute after keyboard is hidden.
+					element.removeAttr('readonly');
+					element.removeAttr('disabled');
+				}, 100);
+			}
+		</script>
+		
+		<script>
+		 (function( $ ) {
+				$(function() {
+					$('.createCont').css('height',$(window).height());
+					$('.createForm').css('height',$(window).height());
+					$('.clapCont').css('height',$(window).height());
+					
+				});
+				
+				
+				var token=window.localStorage.getItem("auth_token");
+				
+				function setHeader(xhr) {
+				  xhr.setRequestHeader('Auth-Token', token);
+				}
+				
+				/* for profile img*/
+				var user_id = window.localStorage.getItem("id");
+				var img_url = "http://dvw76oitljc1i.cloudfront.net/";
+				$.ajax({
+					type:"GET",
+					crossDomain: true,
+					url:"http://52.74.69.101:80/api/v1/users/"+user_id+".json",
+					dataType    : 'json',
+					encode          : true,
+					success:function(data){
+						console.log(data);
+						profile_img_url = data.profile_image_url;
+						if(profile_img_url === null || profile_img_url === "null" || profile_img_url === "" || profile_img_url === "http://dvw76oitljc1i.cloudfront.net/"){
+							$('.bgBigProfileImage').attr('src',"img/profile_bg.jpg");
+							$('.bgSmallProfileImage').attr('src',"img/profile_bg.jpg");
+						}
+						else {
+							$('.bgBigProfileImage').attr('src',profile_img_url);
+							$('.bgSmallProfileImage').attr('src',profile_img_url);
+						}
+					},
+					error: function (result, status, err) {
+						alert(result.responseJSON['errors']);
+						//window.location.href = 'allnews.html';
+					},
+					beforeSend : setHeader
+				});
+				/** Getting Comments For th e posts already posted  **/
+				var catListData = {
+					'per_page' : "100",
+					'page' : "1"
+				};
+				//console.log(commentData);
+					
+				$.ajax({
+					type: "GET",
+					crossDomain: true,
+					url: "http://52.74.69.101:80/api/v1/categories.json",
+					data:catListData,
+					dataType    : 'json',
+					encode          : true,
+					success : function(data){
+						console.log(data);
+						//alert("Success");
+						$.fn.catList_response(data);
+
+					},
+					error: function (result, status, err) {
+						alert(result.responseJSON['errors']);
+						//window.location.href = 'allnews.html';
+					},
+					beforeSend : setHeader
+					  
+				});		
+		   
+				$.fn.catList_response = function(catListDatas) { 
+					var catList = ''
+					$.each(catListDatas, function (index, val) {
+						catList += '<option value="'+val.id+'">'+val.name+'</option>';
+					})
+					$('#catListSelect').append(catList)
+				}
+				
+
+               	/** Listing All Categories  **/
+				var catData = {
+					'per_page' : "100",
+					'page' : "1"
+					
+				};
+				//console.log(catData);
+					
+				$.ajax({
+					type: "GET",
+					crossDomain: true,
+					url: "http://52.74.69.101:80/api/v1/categories.json",
+					data:catData,
+					dataType    : 'json',
+					encode          : true,
+					success : function(data){
+						//console.log(data);
+						//alert("Success");
+						$.fn.create_response(data);
+					},
+					error: function (result, status, err) {
+						alert(result.responseJSON['errors']);
+						//window.location.href = 'allnews.html';
+					},
+					beforeSend : setHeader
+					  
+				});
+					
+				$.fn.create_response = function(createData) { 
+					var catContent = ''
+					$.each(createData, function (index, value) {
+						//console.log(paraData);
+						catContent += '<li><a href="categories.html?category='+value.id+'" class=""><i class=" "></i><span> '+value.name+'</span></a></li>';
+					})
+					$('#catList').html(catContent);
+				}
+		
+				
+				$('body').on("click",".cusBtn",function() {
+					
+					var formData = {
+						'title' : $('#titleText').val(),
+						'category_id' : $('select[name=category_id]').val(),
+						'description' :$("#descboxId").val(),
+						'title_file_name':$('#titleFileName').val(),
+						'file_name':$('#fileName').val(),
+						'file_type':$('#fileTypeCont').val()
+					};
+					//console.log('titil'+formData.title);
+					if(formData.title=='' && formData.category_id=='' && formData.description==''){
+					    Materialize.toast('<span style="white-space:nowrap;font-size:12px;">தலைப்பு, பிரிவு மற்றும் விளக்கத்தை நிரப்பவும்</span>', 2000)
+					}
+					else if(formData.title==''){
+					      Materialize.toast('<span style="white-space:nowrap;font-size:12px;">தலைப்பு விடுபட்டுள்ளது</span>', 2000)
+					}
+					else if(formData.category_id==''){
+					       Materialize.toast('<span style="white-space:nowrap;font-size:12px;">பிரிவை சேர்க்கவும்</span>', 2000)
+					}
+					else if( formData.description==''){
+						   Materialize.toast('<span style="white-space:nowrap;font-size:12px;">பதிவை பற்றிய விளக்கத்தை அளிக்கவும்</span>', 2000)
+					}
+									
+					$.ajax({
+						type: "POST",
+						crossDomain: true,
+						url: "http://52.74.69.101:80/api/v1/posts.json",
+						data:formData,
+						dataType    : 'json',
+						encode          : true,
+						success : function(data){
+							console.log(data);
+							//alert('New Post Created...');
+							$('.clapCont').show();
+							setTimeout(function(){ window.location.href = 'allnews.html'; }, 3000);
+							
+							/*
+							$("#titleText").val('');
+							$("#descboxId").val('');
+							$('#proImgSrc').attr('src','img/defaultpostimg.png');*/
+							$('.kbdSpcPro').css('height','0px');
+							
+						},
+						error: function (result, status, err) {
+						   //alert(result.responseJSON['errors']);
+						   /* if(result.responseJSON['errors']=="Title can't be blank" || result.responseJSON['errors']=="Title can't be blank,Description can't be blank" || result.responseJSON['errors']=="Description can't be blank"  || result.responseJSON['errors']=="category_id is invalid"  )
+							{
+							//alert(" தலைப்பு, பிரிவு மற்றும் விளக்கத்தை நிரப்பவும்");
+							Materialize.toast('<span style="white-space:nowrap;font-size:12px;">தலைப்பு, பிரிவு மற்றும் விளக்கத்தை நிரப்பவும்</span>', 2000)
+							}
+							/*else
+							{
+								alert(result.responseJSON['errors']);
+							}*/
+							
+							/*if(result.responseJSON['errors']=="Title can't be blank,Description can't be blank,category_id is invalid"){
+							   Materialize.toast('<span style="white-space:nowrap;font-size:12px;">தலைப்பு, பிரிவு மற்றும் விளக்கத்தை நிரப்பவும்</span>', 2000)
+							}
+							else if(result.responseJSON['errors']=="Description can't be blank,category_id is invalid") {
+							//alert("தலைப்பு விடுபட்டுள்ளது");
+							Materialize.toast('<span style="white-space:nowrap;font-size:12px;">பதிவை பற்றிய விளக்கத்தை அளிக்கவும்</span>', 2000)
+							}
+							else if(result.responseJSON['errors']=="category_id is invalid") {
+							//alert("தலைப்பு மற்றும் விளக்கத்தை நிரப்பவும்");
+							Materialize.toast('<span style="white-space:nowrap;font-size:12px;">பிரிவை சேர்க்கவும்</span>', 2000)
+							}
+							/*else if(result.responseJSON['errors']=="Description can't be blank") {
+							//alert("பதிவை பற்றிய விளக்கத்தை அளிக்கவும்");
+							Materialize.toast('<span style="white-space:nowrap;font-size:12px;">பதிவை பற்றிய விளக்கத்தை அளிக்கவும்</span>', 2000)
+							}
+							else if(result.responseJSON['errors']=="category_id is invalid") {
+								//alert("பிரிவை சேர்க்கவும்");
+								Materialize.toast('<span style="white-space:nowrap;font-size:12px;">பிரிவை சேர்க்கவும்</span>', 2000)
+							}*/
+							
+													
+							//window.location.href = 'allnews.html';
+						},
+						
+						beforeSend: setHeader
+						  
+					});
+				
+				
+				});
+			
+			})(jQuery);
+			
+		</script>
+	<script src="js/jquery-mobile/jquery.mobile-1.4.5.min.js"></script>
+	</body>
+</html>
+
+

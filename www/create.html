@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="format-detection" content="telephone=no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <meta charset="utf-8" />
+        <!-- Stylesheet -->
+        <!--<link rel="stylesheet" type="text/css" href="css/index.css" />-->
+        <link rel="stylesheet" type="text/css" href="css/style.css" /><link rel="stylesheet" type="text/css" href="css/setting.css" />
+        <link rel="stylesheet" type="text/css" href="css/style_nan.css" />
+        
+		<!-- Materialize -->
+        <link rel="stylesheet" type="text/css" href="css/materialize.css" />
+        <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+        
+        
+        
+        <!-- Font Awesome -->
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
+        <link rel="stylesheet" type="text/css" href="css/tamilzandaFonts.css" />
+        
+        
+        
+        
+        <title>Tamizhanda</title>
+    </head>
+    <body>
+        <div class="app" style="display:none;">
+		   
+            <!-- Container Section -->
+            <section class="contentScrTamil">
+                <div class="createCont">
+                    <form action="javascript:;"  name="conversion" class="createForm">
+                        <a href="javascript:;" class="creatImgLink">
+                            <img src="img/male.png" style="height:100%;width:100%;" id="proIcon">
+                        </a>
+                        <ul class="createFormUl">
+                            <li>
+                                <label>உங்கள் பெயரை பதிவு செய்யவும்</label>
+                                <input type="text" id="userName" class="tamiltextbox createInput widthfull cadr" name="saisie" placeholder="பெயர்" readonly="readonly" />
+							</li>
+                            <li>
+                                <label>தொலைபேசி எண்ணை இடுக</label>
+                                <input type="number" class="createInput widthfull" placeholder="மொபைல் நம்பர் இடுக" name="phone_number" />
+                            </li>
+                            <li>
+                                <label> உங்கள்  வயது </label>
+								<select class="createSelect" name="age_range">
+									
+                                    <option value="18-25"> 18-25 வயது</option>
+                                    <option value="26-35">26-35 வயது</option>
+                                    <option value="36-45">36-45 வயது</option>
+									<option value="45-60">45-60 வயது</option>
+									<option value="60+">60+   வயது</option>
+									
+								<!--	<option value="13-17"> 13-17 வயது</option>
+                                    <option value="18-22">18-22 வயது</option>
+                                    <option value="23-27">23-27 வயது</option>
+									<option value="28-32">28-32 வயது</option>
+									<option value="33-37">33-37   வயது</option>
+									<option value="38-42">38-42   வயது</option>
+									<option value="43-47"> 43-47 வயது</option>
+                                    <option value="48-52">48-52 வயது</option>
+                                    <option value="53-57">53-57 வயது</option>
+									<option value="58-62">58-62 வயது</option>-->
+								</select>
+                            </li>
+                            <li>
+							<input type="text" id="genInput" style="display:none;" />
+                                <p class="inBlock">
+                                    <input type="radio" name="gender" class="with-gap createOption" id="male" checked="checked" value="male" /> <label for="male">ஆண்</label>
+                                </p>
+                                <p class="inBlock">
+								    <input type="radio" name="gender" class="with-gap createOption" id="female"  value="female"  /> <label for="female">பெண்</label>
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                  <input type="checkbox" class="filled-in createCheckBox isCheck" id="filled-in-box" checked="checked" />
+                                  <label for="filled-in-box" class="isCheck">நான் <a class="modal-trigger BgLink" href="#popupbox" style="text-decoration:underline;color:#fff;">விதிகள்  மற்றும் நிபந்தனைகளை </a>ஏற்றுக்கொள்கிறேன்</label>
+                                </p>
+                            </li>   
+                        </ul>
+                        
+                        <div class="h10"></div>
+                        <div class="textCenter block">
+							<button id="verify_button" class="cusBtn" >சுய விவரம் உருவாக்கு </button>
+                        </div>
+                        <div class="h10"></div>
+                        
+                    </form>
+					
+					<!-- popup Structure -->
+					<div id="popupbox"  class="modal">
+						<div class="popup-content pad15px">	
+							விதிகள்  மற்றும் நிபந்தனைகள்
+						</div>
+					</div>
+					
+					<!-- Keyboard -->
+					<div style="display:none;" id="tamilVirtualKeyboard" class="tamilVirtualKeyboard col s12">
+						<table border=0 cellspacing=2 cellpadding=0 class="tamilKeyboardTable">
+							<tbody>
+								<tr class="phase1"> 
+									<td><input class="bt" title="A" onclick="alpha('அ')" value="அ" type="button"/></td>
+									<td><input class="bt" title="AA" onclick="alpha('ஆ')" value="ஆ" type="button"/></td>	
+									<td><input class="bt" title="I" onclick="alpha('இ')" value="இ" type="button"/></td>
+									<td><input class="bt" title="II" onclick="alpha('ஈ')" value="ஈ" type="button"/></td>		
+									<td><input class="bt" title="U" onclick="alpha('உ')" value="உ" type="button"/></td>								
+									<td><input class="bt" title="UU" onclick="alpha('ஊ')" value="ஊ" type="button"/></td>
+									<td><input class="bt" title="E" onclick="alpha('எ')" value="எ" type="button"/></td>
+									<td colspan="2"><input class="bt fa" type="button" onclick="backspace()" value="&#xf177;"/></td>
+								</tr>
+								<tr class="phase1"> 
+									<td><input class="bt" title="EE" onclick="alpha('ஏ')" value="ஏ" type="button"/></td>
+									<td><input class="bt" title="AI" onclick="alpha('ஐ')" value="ஐ" type="button"/></td>
+									<td><input class="bt" title="O" onclick="alpha('ஒ')" value="ஒ" type="button"/></td>
+									<td><input class="bt" title="OO" onclick="alpha('ஓ')" value="ஓ" type="button"/></td>
+									<td><input class="bt" title="KA" onclick="alpha('க')" value="க" type="button"/></td>
+									<td><input class="bt" title="NGA" onclick="alpha('ங')" value="ங" type="button"/></td>
+									<td><input class="bt" title="CA" onclick="alpha('ச')" value="ச" type="button"/></td>
+									<td><input class="bt" title="NYA" onclick="alpha('ஞ')" value="ஞ" type="button"/></td>
+									<td><input class="bt" title="TTA" onclick="alpha('ட')" value="ட" type="button"/></td>
+								</tr>
+								<tr class="phase1"> 
+									<td><input class="bt" title="NNA" onclick="alpha('ண')" value="ண" type="button"/></td>
+									<td><input class="bt" title="TA" onclick="alpha('த')" value="த" type="button"/></td>
+									<td><input class="bt" title="NA" onclick="alpha('ந')" value="ந" type="button"/></td>		
+									<td><input class="bt" title="PA" onclick="alpha('ப')" value="ப" type="button"/></td>
+									<td><input class="bt" title="MA" onclick="alpha('ம')" value="ம" type="button"/></td>		
+									<td><input class="bt" title="YA" onclick="alpha('ய')" value="ய" type="button"/></td>								
+									<td><input class="bt" title="RA" onclick="alpha('ர')" value="ர" type="button"/></td>
+									<td><input class="bt" title="LA" onclick="alpha('ல')" value="ல" type="button"/></td>
+									<td><input class="bt" title="VA" onclick="alpha('வ')" value="வ" type="button"/></td>
+								</tr>							
+								<tr class="phase1"> 
+									<td><input class="bt" title="LLLA" onclick="alpha('ழ')" value="ழ" type="button"/></td>
+									<td><input class="bt" title="LLA" onclick="alpha('ள')" value="ள" type="button"/></td>
+									<td><input class="bt" title="RRA" onclick="alpha('ற')" value="ற" type="button"/></td>
+									<td><input class="bt" title="NNNA" onclick="alpha('ன')" value="ன" type="button"/></td>
+									<td><input class="bt" title="virama" onclick="alpha('்')" value="்" type="button"></td>
+									<td><input class="bt" title="AA " onclick="alpha('ா')" value="ா" type="button"/></td>
+									<td><input class="bt" title="I " onclick="alpha('ி')" value="ி" type="button"/></td>
+									<td><input class="bt" title="II " onclick="alpha('ீ')" value="ீ" type="button"/></td>
+									<td><input class="bt" title="E " onclick="alpha('ெ')" value="ெ" type="button"/></td>
+								</tr>
+								<tr class="phase1">
+									<td><input class="bt" title="EE " onclick="alpha('ே')" value="ே" type="button"/></td>
+									<td><input class="bt" title="U " onclick="alpha('ு')" value="ு" type="button"/></td>
+									<td><input class="bt" title="UU " onclick="alpha('ூ')" value="ூ" type="button"/></td>
+									<td><input class="bt" title="AI " onclick="alpha('ை')" value="ை" type="button"/></td>
+									<td><input class="bt" title="JA" onclick="alpha('ஜ')" value="ஜ" type="button"/></td>	
+									<td><input class="bt" title="SHA" onclick="alpha('ஷ')" value="ஷ" type="button"/></td>	
+									<td><input class="bt" title="sa" onclick="alpha('ஸ')" value="ஸ" type="button"/></td>	
+									<td><input class="bt" title="ha" onclick="alpha('ஹ')" value="ஹ" type="button"/></td>	
+									<td><input class="bt" title="visarga" onclick="alpha('ஃ')" value="ஃ" type="button"/></td>
+								</tr>
+								<tr class="num-spl">
+									<td><input class="bt" title="Koo" onclick="alpha('1')" value="1" type="button"/></td>	
+									<td><input class="bt" title="AI " onclick="alpha('2')" value="2" type="button"/></td>
+									<td><input class="bt" title="O " onclick="alpha('3')" value="3" type="button"/></td>
+									<td><input class="bt" title="OO " onclick="alpha('4')" value="4" type="button"/></td>
+									<td><input class="bt" title="AU " onclick="alpha('5')" value="5" type="button"/></td>
+									<td><input class="bt" title="Koo" onclick="alpha('6')" value="6" type="button"/></td>	
+									<td><input class="bt" title="AI " onclick="alpha('7')" value="7" type="button"/></td>
+									<td colspan="2"><input class="bt fa" type="button" onclick="backspace()" value="&#xf177;"/></td>
+																	
+								</tr>
+								<tr class="num-spl">
+									<td><input class="bt" title="O " onclick="alpha('8')" value="8" type="button"/></td>
+									<td><input class="bt" title="OO " onclick="alpha('9')" value="9" type="button"/></td>
+									<td><input class="bt" title="AU " onclick="alpha('0')" value="0" type="button"/></td>
+									<td><input class="bt" title="OO " onclick="alpha('{')" value="{" type="button"/></td>
+									<td><input class="bt" title="AU " onclick="alpha('}')" value="}" type="button"/></td>	
+									<td><input class="bt" title="Koo" onclick="alpha('$')" value="$" type="button"/></td>	
+									<td><input class="bt" title="O " onclick="alpha('&')" value="&" type="button"/></td>
+									<td><input class="bt" title="OO " onclick="alpha('(')" value="(" type="button"/></td>
+									<td><input class="bt" title="AU " onclick="alpha(')')" value=")" type="button"/></td>	
+								</tr>
+								<tr class="num-spl">
+									<td><input class="bt" title="Koo" onclick="alpha('+')" value="+" type="button"/></td>	
+									<td><input class="bt" title="AI " onclick="alpha('-')" value="-" type="button"/></td>
+									<td><input class="bt" title="OO " onclick="alpha('[')" value="[" type="button"/></td>
+									<td><input class="bt" title="AU " onclick="alpha(']')" value="]" type="button"/></td>
+									<td><input class="bt" title="O " onclick="alpha('@')" value="@" type="button"/></td>
+									<td><input class="bt" title="OO " onclick="alpha('_')" value="_" type="button"/></td>
+									<td><input class="bt" title="OO " onclick="alpha('\')" value="\" type="button"/></td>
+									<td><input class="bt" title="O " onclick="alpha(':')" value=":" type="button"/></td>
+									<td><input class="bt" title="O " onclick="alpha(';')" value=";" type="button"/></td>
+								</tr>
+								<tr class="num-spl">
+									<td><input class="bt" title="OO " onclick="alpha('\')" value="\" type="button"/></td>
+									<td><input class="bt" title="O " onclick="alpha('*')" value="*" type="button"/></td>
+									<td><input class="bt" title="OO " onclick="alpha('#')" value="#" type="button"/></td>
+									<td><input class="bt" title="AU " onclick=alpha("'") value="&#x00027;" type="button"/></td>
+									<td><input class="bt" title="OO " onclick=alpha('"') value="&#x00022;" type="button"/></td>
+									<td><input class="bt" title="AU " onclick="alpha('!')" value="!" type="button"/></td>	
+									<td><input class="bt" title="Koo" onclick="alpha('<')" value="<" type="button"/></td>	
+									<td><input class="bt" title="O " onclick="alpha('>')" value=">" type="button"/></td>
+									<td><input class="bt" title="OO " onclick="alpha('?')" value="?" type="button"/></td>
+								</tr>
+								<tr class="num-spl">
+									<td><input class="bt" title="AI " onclick="alpha('^')" value="^" type="button"/></td>
+									<td><input class="bt" title="AU " onclick="alpha('%')" value="%" type="button"/></td>
+									<td><input class="bt" title="AU " onclick="alpha('~')" value="~" type="button"/></td>
+									<td><input class="bt" title="Koo" onclick="alpha(',')" value="," type="button"/></td>	
+									<td><input class="bt" title="AI " onclick="alpha('.')" value="." type="button"/></td>
+									<td><input class="bt" title="AU " onclick="alpha('=')" value="=" type="button"/></td>
+									<td><input class="bt" title="AU " onclick="alpha('|')" value="|" type="button"/></td>
+									<td><input class="bt" title="AU " onclick="" value="" type="button"/></td>
+									<td><input class="bt" title="AU " onclick="" value="" type="button"/></td>									
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="2"><input class="bt fa" type="button" value="..." id="bt-pahse" /></td>	
+									<td style="width:40px !important;"><input class="bt" type="button" value="123" style="font-size:10px !important;" id="bt-num-spl"/></td>
+									<td colspan="3"><input class="bt" onclick="alpha(' ')" value="&#x023B5;" type="button" style="background: rgba(0,0,0,0.1);font-size:30px !important;"/></td>
+									<td colspan="2"><input class="bt" onclick="alpha('\n')" value="&#x021B5;" type="button" style="background: rgba(0,0,0,0.1);font-size:30px !important;font-weight:bold"/></td>
+									<td><input class="bt fa kbdHide" type="button" value="&#x02193;"/></td>
+									<!--<td><input class="bt fa" type="button" onclick="backspace()" value="&#xf177;"/></td>-->
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+				</div>
+			</section>
+        </div>
+        
+        <!-- Custom -->
+        
+        <!-- Library -->
+        
+        <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="js/jqueryui-1.11.4.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/jqueryui-1.11.4.css" />
+        <script type="text/javascript" src="js/jquery-2.1.3.js"></script>
+        <script type="text/javascript" src="js/materialize.js"></script>
+        <script type="text/javascript" src="js/custom.js"></script>
+        <!-- Scripts -->
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        
+		<!--Tamil Keyboard -->
+		<style type="text/css">
+			.bt {cursor:pointer; font-size:8pt; color:#CC0033; font-family:Latha, Arial Unicode MS;width:100% }
+			.bt:hover {cursor:pointer; font-size:8pt; color:blue; font-family:Latha, Arial Unicode MS; } 
+			.bf {cursor:pointer; font-size:9pt; color:#666666; }
+			.lat { font-family:Arial; }
+			.cadr {color:blue; font-family:Latha, Arial Unicode MS; font-size:10pt; crollbar-base-color:transparent; scrollbar-track-color:transparent; }
+		</style>
+		<link href="TamilKeyboard/style.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="TamilKeyboard/comlat.js"></script>
+		<script type="text/javascript" src="TamilKeyboard/cartam.js"></script>
+		<script type="text/javascript" src="TamilKeyboard/jquery.js"></script>
+		<script type="text/javascript" src="TamilKeyboard/jquery.min.js"></script>
+
+		<script type="text/javascript" >
+			$(function() {
+				//$('body').css('minHeight',$(window).height());
+				$('.createCont').css('height',$(window).height());
+				var token=window.localStorage.getItem("auth_token");
+				//alert(token);
+				/*
+				var token_id=window.localStorage.getItem("id");
+				var token_full_name=window.localStorage.getItem("full_name");
+				var token_gender=window.localStorage.getItem("gender");
+				var token_phone_number=window.localStorage.getItem("phone_number");
+				var token_is_notifications_enabled=window.localStorage.getItem("is_notifications_enabled");
+				*/
+				if(token=='null'||token==''||token=='undefined'||token==null||token==undefined)
+				{
+				    $('.app').css('display','block');
+				}
+				else
+				{
+					//$('.app').css('display','block');
+					window.location.href = 'allnews.html';
+				}
+			
+				$('.isCheck').click(function(){
+					if($('input.createCheckBox[type=checkbox]').is(":checked")==1)
+					{
+						$('#verify_button').removeAttr('disabled');
+						
+					}
+					else
+					{
+						$('#verify_button').attr('disabled','disabled');
+					}
+				});
+				
+				//$('.mainSection').css('height','auto');
+				//Keyboard Actions
+				$('.num-spl').hide();
+				//$('.phase2').hide();
+				
+				$("#bt-num-spl").click(function(){
+					//$('.phase1').hide();
+					//$('.phase2').hide();
+					//$('.num-spl').show();
+					if($(this).val()=="123")
+					{
+						$(this).val("அஆஇ");
+					}
+					else
+					{
+						$(this).val("123");
+					}
+					if($('.phase1').is(":visible")){
+						$('.phase1').hide();
+						$('.num-spl').show();
+
+					}else if($('.num-spl').is(":visible")){
+						$('.num-spl').hide();
+						$('.phase1').show();
+					}
+				
+				});
+				
+				$('.kbdHide').click(function(){
+					$('#tamilVirtualKeyboard').css('display','none');
+					$('.tamiltextbox').attr('data-id', '0');
+				})
+				
+				$('.tamiltextbox').click(function(){
+					var X=$(this).attr('data-id');
+					assignFocusElement($(this).attr("name"));
+					if(X==1){
+						$('#tamilVirtualKeyboard').css('display','none');
+						$('#tamilVirtualKeyboard').css({
+							position:'fixed',
+							top:'100%',
+							bottom:'auto'
+						});
+						$(this).attr('data-id', '0');	
+					}else{
+						$('#tamilVirtualKeyboard').css('display','block');
+						$('#tamilVirtualKeyboard').css({
+							position:'fixed',
+							top:'auto',
+							bottom:'0'
+						});
+						$('.contentScrTamil').animate({scrollTop:document.body.scrollHeight},300);
+						$(this).attr('data-id', '1');
+						
+					}
+					
+					//$('#tamilVirtualKeyboard').css('display','block');
+					
+				});
+				
+				$("#tamilVirtualKeyboard").mouseup(function(){
+					return false
+				});
+				$(".tamiltextbox").mouseup(function(){
+					return false
+				});
+				
+				$(document).mouseup(function(){
+					$("#tamilVirtualKeyboard").hide();
+					$(".tamiltextbox").attr('data-id', '');
+				});
+				
+				$('.mainSection').on("touchstart",function(){
+					$("#tamilVirtualKeyboard").hide();
+					$(".tamiltextbox").attr('data-id', '');
+				});
+				//$('input[name=gender]').val()
+				$('.createOption').click(function(){
+					$('#genInput').val($(this).val());
+					if($('#genInput').val()=='female')
+					{
+						//alert('fe');
+						$('#proIcon').attr('src','img/female.png');
+					}
+					else
+					{
+						//alert('mal');
+						$('#proIcon').attr('src','img/male.png');
+					}
+				})
+				
+				$('body').on("click",".cusBtn",function() {
+						var formData = {
+						'full_name' : $('#userName').val(),
+						'phone_number' : $('input[name=phone_number]').val(),
+						'country_code' :"+91",
+						'age_range':$('select[name=age_range]').val(),
+						'gender':$('#genInput').val()
+					};
+					//console.log(formData);
+					$.ajax({
+						type: "POST",
+						crossDomain: true,
+						url: "http://52.74.69.101:80/api/v1/users/sign_up.json",
+						data:formData,
+						dataType    : 'json',
+						encode          : true,
+						success : function(data){
+							console.log(data);
+							console.log(data.id);
+							console.log(data.full_name);
+							console.log(data.gender);
+							console.log(data.phone_number);
+							console.log(data.auth_token);
+							window.localStorage.setItem("id", data.id);
+							window.localStorage.setItem("full_name", data.full_name);
+							window.localStorage.setItem("gender", data.gender);
+							window.localStorage.setItem("phone_number", data.phone_number);
+							window.localStorage.setItem("auth_token", data.auth_token);
+							window.localStorage.setItem("is_notifications_enabled", data.is_notifications_enabled);
+							//alert("Success");
+							//window.location='home.html';
+							window.location='allnews.html';
+						},
+						error: function (result, status, err) {
+							alert(result.responseJSON['errors']);
+							console.log(result.responseJSON['errors']);
+							//window.location='allnews.html';
+						}
+						  
+					});
+					
+				});
+				
+				function hideKeyboard(element) {
+					element.attr('readonly', 'readonly'); // Force keyboard to hide on input field.
+					element.attr('disabled', 'true'); // Force keyboard to hide on textarea field.
+					setTimeout(function() {
+						element.blur();  //actually close the keyboard
+						// Remove readonly attribute after keyboard is hidden.
+						element.removeAttr('readonly');
+						element.removeAttr('disabled');
+					}, 100);
+				}
+			
+			});
+			
+		</script>
+    </body>
+</html>

@@ -1,0 +1,20 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-whitelist": {},
+        "cordova-plugin-camera": {},
+        "cordova-plugin-media-capture": {},
+        "cordova-plugin-file-transfer": {},
+        "cordova-plugin-media": {},
+        "cordova-plugin-video-editor": {}
+    },
+    "dependent_plugins": {
+        "cordova-plugin-file": {}
+    }
+}

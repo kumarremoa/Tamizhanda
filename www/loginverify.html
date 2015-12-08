@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <meta charset="utf-8" />
+        <!-- Stylesheet -->
+        <!--<link rel="stylesheet" type="text/css" href="css/index.css" />-->
+        <link rel="stylesheet" type="text/css" href="css/style.css" /><link rel="stylesheet" type="text/css" href="css/setting.css" />
+        <link rel="stylesheet" type="text/css" href="css/style_nan.css" />
+        
+       
+		
+        
+        <!-- Materialize -->
+        <link rel="stylesheet" type="text/css" href="css/materialize.css" />
+        <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+        
+        
+        
+        <!-- Font Awesome -->
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
+        <link rel="stylesheet" type="text/css" href="css/tamilzandaFonts.css" />
+      
+        
+        <title>Tamizhanda</title>
+    </head>
+    <body>
+        <div class="app">
+            <!-- Container Section -->
+            <section>
+                <div class="loginCont">
+					<img src="img/loginbg1.jpg" class="bgLogin" alt="" />
+					<div class="loginInnerForm">
+				
+						<img src="img/logo_tamilzanda.png" class="logoTamilzanda" alt="Tamilzanda" />
+						<form action="javascript:;" class="loginForm">
+							<h3 class="loginHead">SMS-இல் பெற்ற ரகசிய எண்ணை இங்கு இடுக</h3>
+							<div class="inputGrpCont width100px">
+								<input type="tel" id="password" class="grpInput widthfull textCenter" name="verification_code" placeholder="" />
+							</div>
+							<div class="h10"></div>
+							<button id="verify_button" class="cusBtn" >உள்நுழைய</button>
+						</form>
+					</div>
+                </div>
+            </section>
+        </div>
+        
+        <!-- Custom -->
+        
+        <!-- Library -->
+        
+        <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="js/jqueryui-1.11.4.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/jqueryui-1.11.4.css" />
+        <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/materialize.js"></script>
+        
+        <!-- Scripts -->
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+		
+        
+
+        
+        <script type="text/javascript">
+            $.noConflict();
+            (function( $ ) {
+                
+				$(function() {
+					
+					var token=window.localStorage.getItem("auth_token");
+					
+					
+					$('.loginCont').css({
+						height:$(window).height()
+					});
+					$('.bgLogin').css('height',$(window).height());
+					
+				});
+
+				var parseQueryString = function() {
+					var str = window.location.search;
+					var objURL = {};
+					str.replace(
+						new RegExp( "([^?=&]+)(=([^&]*))?", "g" ),
+						function( $0, $1, $2, $3 ){
+							objURL[ $1 ] = $3;
+						}
+					);
+					return objURL;
+				};
+				var params = parseQueryString();
+				
+				
+
+				$('body').on("click",".cusBtn",function() {
+					var formData = {
+					'phone_number'              : params["m_number"],
+					'verification_code'         : $('input[name=verification_code]').val(),
+					'country_code'				: "+91"
+					};
+			
+					$.ajax({
+					  type: "POST",
+					  crossDomain: true,
+					  url: "http://52.74.69.101:80/api/v1/users/verify_code.json",
+					  data:formData,
+					  dataType    : 'json',
+					  encode          : true,
+					  success : function(data){
+						//console.log(data);
+						//window.location='create.html';
+						console.log(data);
+						window.localStorage.setItem("id", data.id);
+						window.localStorage.setItem("full_name", data.full_name);
+						window.localStorage.setItem("gender", data.gender);
+						window.localStorage.setItem("phone_number", data.phone_number);
+						window.localStorage.setItem("auth_token", data.auth_token);
+						window.localStorage.setItem("is_notifications_enabled", data.is_notifications_enabled);
+						console.log("Success");
+						window.location.href='create.html';
+					  },
+					  error: function (result, status, err) {
+						  if(result.responseJSON['errors']=="Invalid verification code"){
+					   	   Materialize.toast('<span style="white-space:nowrap;font-size:12px;">இரகசிய எண்ணை சரிபார்க்கவும்</span>', 2000)
+						   }
+						//window.location.href='create.html';
+					  }
+					  
+					});
+				});
+        
+			})(jQuery);
+            
+        </script>
+    </body>
+</html>
